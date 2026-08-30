@@ -121,7 +121,7 @@ public class QCHandler {
         String fieldName = isDefect ? "BG_VTS" : "RQ_VTS";
         List<GenericArtifactField> genArtifactFields = artifact
                 .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
-        if (genArtifactFields != null && genArtifactFields.get(0) != null) {
+        if (null != genArtifactFields && null != genArtifactFields.get(0)) {
             genArtifactFields.get(0).setFieldValue(lastModifiedDate);
         }
         String lastModifiedDateStr = DateUtil.format(lastModifiedDate);
@@ -261,7 +261,7 @@ public class QCHandler {
             bug.post();
         } catch (Exception e) {
             String bugId = null;
-            if (bug != null) {
+            if (null != bug) {
                 bugId = bug.getId();
                 bugFactory.removeItem(bugId);
                 bug = null;
@@ -270,7 +270,7 @@ public class QCHandler {
             log.error(message, e);
             throw new CCFRuntimeException(message + ": " + e.getMessage(), e);
         } finally {
-            if (bug != null) {
+            if (null != bug) {
                 bug.unlockObject();
             }
             bugFactory = null;
@@ -301,7 +301,7 @@ public class QCHandler {
 
         try {
             reqFactory = qcc.getRequirementsFactory();
-            if (parentArtifactId != null
+            if (null != parentArtifactId
                     && !parentArtifactId.equals(GenericArtifact.VALUE_UNKNOWN)
                     && !parentArtifactId.equals(GenericArtifact.VALUE_NONE)) {
                 req = reqFactory.addItem(parentArtifactId);
@@ -311,7 +311,7 @@ public class QCHandler {
             }
             req.lockObject();
             versionControl = req.getVersionControlObject();
-            if (versionControl != null) {
+            if (null != versionControl) {
                 versionControlSupported = ccfCheckoutReq(qcc, req,
                         versionControl);
             }
@@ -363,8 +363,8 @@ public class QCHandler {
                         if ("RQ_TARGET_REL".equals(fieldName)
                                 || "RQ_TARGET_RCYC".equals(fieldName)) {
                             // hard-code the linked fields here
-                            if (fieldValue == null
-                                    || fieldValue.trim().length() == 0) {
+                            if (null == fieldValue
+                                    || 0 == fieldValue.trim().length()) {
                                 req.clearListValuedField(fieldName);
                             } else {
                                 req.setListValuedField(fieldName, fieldValue);
@@ -393,7 +393,7 @@ public class QCHandler {
             req.post();
         } catch (Exception e) {
             String reqId = null;
-            if (req != null) {
+            if (null != req) {
                 reqId = req.getId();
                 reqFactory.removeItem(reqId);
                 req = null;
@@ -414,7 +414,7 @@ public class QCHandler {
                     throw new CCFRuntimeException(message, e);
                 }
             }
-            if (req != null) {
+            if (null != req) {
                 req.unlockObject();
             }
             reqFactory = null;
@@ -454,7 +454,7 @@ public class QCHandler {
     public IRecordSet getAuditPropertiesRecordSet(IConnection qcc,
             List<String> txnIds) {
         String sql;
-        if (txnIds.size() > 1000 && qcc.isOracle()) {
+        if (1000 < txnIds.size() && qcc.isOracle()) {
             sql = getAuditPropertiesWithTuplesQuery(qcc, txnIds);
         } else {
             sql = getAuditPropertiesWithSimpleINClause(qcc, txnIds);
@@ -473,7 +473,7 @@ public class QCHandler {
         IRecordSet rs = null;
         try {
             rs = qcc.executeSQL(sql);
-            if (rs != null) {
+            if (null != rs) {
                 String bugId = rs.getFieldValueAsString("AU_ENTITY_ID");
                 String actionIdStr = rs.getFieldValueAsString("AU_ACTION_ID");
                 int actionId = Integer.parseInt(actionIdStr);
@@ -484,7 +484,7 @@ public class QCHandler {
                 defectState.setArtifactVersion(actionId);
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -501,7 +501,7 @@ public class QCHandler {
         IRecordSet rs = null;
         try {
             rs = qcc.executeSQL(sql);
-            if (rs != null) {
+            if (null != rs) {
                 String bugId = rs.getFieldValueAsString("AU_ENTITY_ID");
                 String actionIdStr = rs.getFieldValueAsString("AU_ACTION_ID");
                 int actionId = Integer.parseInt(actionIdStr);
@@ -512,7 +512,7 @@ public class QCHandler {
                 defectState.setArtifactVersion(actionId);
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -682,7 +682,7 @@ public class QCHandler {
         IRecordSet rs = null;
         try {
             rs = qcc.executeSQL(sql);
-            if (rs != null)
+            if (null != rs)
                 rc = rs.getRecordCount();
 
             for (int cnt = 0; cnt < rc; cnt++, rs.next()) {
@@ -707,7 +707,7 @@ public class QCHandler {
                 }
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -728,7 +728,7 @@ public class QCHandler {
         IRecordSet rs = null;
         try {
             rs = qcc.executeSQL(sql);
-            if (rs != null)
+            if (null != rs)
                 rc = rs.getRecordCount();
 
             for (int cnt = 0; cnt < rc; cnt++, rs.next()) {
@@ -753,7 +753,7 @@ public class QCHandler {
                 }
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -788,7 +788,7 @@ public class QCHandler {
             case DATE: {
                 GregorianCalendar gcal = (GregorianCalendar) thisField
                         .getFieldValue();
-                if (gcal != null) {
+                if (null != gcal) {
                     Date targetTimezoneDate = gcal.getTime();
                     if (DateUtil.isAbsoluteDateInTimezone(targetTimezoneDate,
                             DateUtil.GMT_TIME_ZONE_STRING)) {
@@ -804,7 +804,7 @@ public class QCHandler {
             }
             case DATETIME: {
                 Date targetTimezoneDate = (Date) thisField.getFieldValue();
-                if (targetTimezoneDate != null) {
+                if (null != targetTimezoneDate) {
                     fieldValue = DateUtil.formatQCDate(targetTimezoneDate);
                 }
                 break;
@@ -854,7 +854,7 @@ public class QCHandler {
                 listOfTxnIds.add(fieldValue);
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -891,7 +891,7 @@ public class QCHandler {
                 listOfTxnIds.add(fieldValue);
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -1161,7 +1161,7 @@ public class QCHandler {
             log.error(message, e);
             throw new CCFRuntimeException(message + ": " + e.getMessage(), e);
         } finally {
-            if (bug != null) {
+            if (null != bug) {
                 if (lockedBug) {
                     bug.unlockObject();
                 }
@@ -1234,7 +1234,7 @@ public class QCHandler {
             req = reqFactory.getItem(requirementId);
             versionControl = req.getVersionControlObject();
 
-            if (versionControl != null) {
+            if (null != versionControl) {
                 versionControlSupported = ccfCheckoutReq(qcc, req,
                         versionControl);
             }
@@ -1341,8 +1341,8 @@ public class QCHandler {
                         } else if ("RQ_TARGET_REL".equals(fieldName)
                                 || "RQ_TARGET_RCYC".equals(fieldName)) {
                             // hard-code the linked fields here
-                            if (fieldValue == null
-                                    || fieldValue.trim().length() == 0) {
+                            if (null == fieldValue
+                                    || 0 == fieldValue.trim().length()) {
                                 req.clearListValuedField(fieldName);
                             } else {
                                 req.setListValuedField(fieldName, fieldValue);
@@ -1368,7 +1368,7 @@ public class QCHandler {
 
             String parentId = req.getParentId();
             // move to other parent if necessary
-            if (targetParentArtifactId != null
+            if (null != targetParentArtifactId
                     && !targetParentArtifactId
                             .equals(GenericArtifact.VALUE_UNKNOWN)
                     && !targetParentArtifactId.equals(parentId)) {
@@ -1447,7 +1447,7 @@ public class QCHandler {
                     throw new CCFRuntimeException(message, e);
                 }
             }
-            if (req != null) {
+            if (null != req) {
                 if (lockedReq) {
                     req.unlockObject();
                 }
@@ -1567,7 +1567,7 @@ public class QCHandler {
         try {
             rs = qcc.executeSQL(sql);
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -1672,7 +1672,7 @@ public class QCHandler {
                                  */
                                 final String commentPrefix = QC_COMMENT_PREFIX;
                                 final int offset = delta.indexOf(commentPrefix);
-                                if (offset > 0) {
+                                if (0 < offset) {
                                     delta = delta.substring(offset);
                                 }
                             } else {
@@ -1710,14 +1710,14 @@ public class QCHandler {
             rs = qcc.executeSQL(String
                     .format("SELECT LK_USER FROM LOCKS WHERE LK_OBJECT_KEY = '%s' AND LK_OBJECT_TYPE = '%s'",
                             artifactId, artifactTypeString(isDefect)));
-            if (rs.getRecordCount() != 1) {
+            if (1 != rs.getRecordCount()) {
                 return null;
             } else {
                 String userName = rs.getFieldValueAsString("LK_USER");
                 return userName;
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -1739,7 +1739,7 @@ public class QCHandler {
     private String getTechnicalNameForQCField(
             Map<String, String> qcDefectSchemaMetadataCache, String fieldName) {
         String technicalName = qcDefectSchemaMetadataCache.get(fieldName);
-        if (technicalName == null) {
+        if (null == technicalName) {
             technicalName = fieldName;
         }
         return technicalName;
@@ -1755,7 +1755,7 @@ public class QCHandler {
         try {
             rs = qcc.executeSQL(sql);
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -1774,7 +1774,7 @@ public class QCHandler {
         } catch (Exception e) {
             deleteStaleMovedLock(qcc, artifactId, isDefect);
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -1830,7 +1830,7 @@ public class QCHandler {
         try {
             rs = qcc.executeSQL("SELECT TPR_TYPE_ID FROM REQ_TYPE WHERE TPR_NAME = '"
                     + requirementTypeName + "'");
-            if (rs.getRecordCount() != 1) {
+            if (1 != rs.getRecordCount()) {
                 throw new CCFRuntimeException(
                         "Could not retrieve technical id for requirements type "
                                 + requirementTypeName);
@@ -1838,7 +1838,7 @@ public class QCHandler {
                 return rs.getFieldValueAsString("TPR_TYPE_ID");
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }

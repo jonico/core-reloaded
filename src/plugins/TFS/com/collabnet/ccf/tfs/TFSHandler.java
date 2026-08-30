@@ -87,7 +87,7 @@ public class TFSHandler {
                     List<GenericArtifactField> gaFields = ga
                             .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
 
-                    if (gaFields != null) {
+                    if (null != gaFields) {
                         Object fieldValue = gaFields.get(0).getFieldValue();
 
                         if (fieldDef.getReferenceName().equals(
@@ -137,7 +137,7 @@ public class TFSHandler {
 
                 newWorkItem.save();
 
-                if (state != null) {
+                if (null != state) {
                     newWorkItem.getFields()
                             .getField(CoreFieldReferenceNames.STATE)
                             .setValue(state);
@@ -166,7 +166,7 @@ public class TFSHandler {
 
             List<GenericArtifactField> comments = ga
                     .getAllGenericArtifactFieldsWithSameFieldName(CoreFieldReferenceNames.HISTORY);
-            if (comments != null) {
+            if (null != comments) {
 
                 for (ListIterator<GenericArtifactField> iterator = comments
                         .listIterator(comments.size()); iterator.hasPrevious();) {
@@ -253,11 +253,11 @@ public class TFSHandler {
 
             Date artifactLastModifiedDate = new Date(0);
 
-            if (workItemTimeStamp != null) {
+            if (null != workItemTimeStamp) {
                 artifactLastModifiedDate = workItemTimeStamp;
             }
 
-            if (artifactLastModifiedDate.compareTo(lastModifiedDate) >= 0) {
+            if (0 <= artifactLastModifiedDate.compareTo(lastModifiedDate)) {
 
                 String workItemRevisionNumber = workItem.getFields()
                         .getField(CoreFieldReferenceNames.REVISION)
@@ -404,7 +404,7 @@ public class TFSHandler {
 
                 Date changedDate = (Date) rev.getField(
                         CoreFieldReferenceNames.CHANGED_DATE).getValue();
-                if (lastModifiedDate.compareTo(changedDate) >= 0) {
+                if (0 <= lastModifiedDate.compareTo(changedDate)) {
                     continue;
                 }
 
@@ -424,7 +424,7 @@ public class TFSHandler {
         genericArtifact.setSourceArtifactVersion(revisionNumber);
 
         // looking for a parent-child relationship
-        if (workItem.getLinks().size() > 0) {
+        if (0 < workItem.getLinks().size()) {
 
             workItem.getLinks().iterator().next();
             Iterator<Link> linkIterator = workItem.getLinks().iterator();
@@ -434,12 +434,12 @@ public class TFSHandler {
                 Link link = linkIterator.next();
 
                 // it looks for a Related relationship
-                if (link.getLinkID() == -1) {
+                if (-1 == link.getLinkID()) {
 
                     RelatedLinkImpl relatedLink = (RelatedLinkImpl) link;
 
                     // it looks for a Parent relationship
-                    if (relatedLink.getWorkItemLinkTypeID() == -2) {
+                    if (-2 == relatedLink.getWorkItemLinkTypeID()) {
 
                         WorkItem fatherWorkItem = connection
                                 .getTpc()
@@ -508,7 +508,7 @@ public class TFSHandler {
                     List<GenericArtifactField> gaFields = ga
                             .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
 
-                    if (gaFields != null
+                    if (null != gaFields
                             && gaFields.get(0).getFieldValueHasChanged()) {
 
                         boolean shouldBeOverwritten = true;
@@ -581,7 +581,7 @@ public class TFSHandler {
                     // If there is an old parent relationship and the parent changed, the old relationship has to be deleted.
                     boolean parentChanged = true;
 
-                    if (workItem.getLinks().size() > 0) {
+                    if (0 < workItem.getLinks().size()) {
 
                         workItem.getLinks().iterator().next();
                         Iterator<Link> linkIterator = workItem.getLinks()
@@ -592,12 +592,12 @@ public class TFSHandler {
                             Link link = linkIterator.next();
 
                             // it looks for a Related relationship
-                            if (link.getLinkID() == -1) {
+                            if (-1 == link.getLinkID()) {
 
                                 RelatedLinkImpl relatedLink = (RelatedLinkImpl) link;
 
                                 // it looks for a Parent relationship
-                                if (relatedLink.getWorkItemLinkTypeID() == -2) {
+                                if (-2 == relatedLink.getWorkItemLinkTypeID()) {
                                     if (relatedLink.getTargetWorkItemID() == Integer
                                             .valueOf(ga
                                                     .getDepParentTargetArtifactId())) {
@@ -642,7 +642,7 @@ public class TFSHandler {
                 } else if (GenericArtifact.VALUE_NONE.equals(ga
                         .getDepParentTargetArtifactId())) {
                     // If the work item has no parent, the existing Parent relationship should be removed.
-                    if (workItem.getLinks().size() > 0) {
+                    if (0 < workItem.getLinks().size()) {
 
                         workItem.getLinks().iterator().next();
                         Iterator<Link> linkIterator = workItem.getLinks()
@@ -653,12 +653,12 @@ public class TFSHandler {
                             Link link = linkIterator.next();
 
                             // it looks for a Related relationship
-                            if (link.getLinkID() == -1) {
+                            if (-1 == link.getLinkID()) {
 
                                 RelatedLinkImpl relatedLink = (RelatedLinkImpl) link;
 
                                 // it looks for a Parent relationship
-                                if (relatedLink.getWorkItemLinkTypeID() == -2) {
+                                if (-2 == relatedLink.getWorkItemLinkTypeID()) {
                                     workItem.getLinks().remove(relatedLink);
                                     workItem.save();
                                 }
@@ -686,7 +686,7 @@ public class TFSHandler {
             List<GenericArtifactField> comments = ga
                     .getAllGenericArtifactFieldsWithSameFieldName(CoreFieldReferenceNames.HISTORY);
 
-            if (comments != null) {
+            if (null != comments) {
 
                 for (ListIterator<GenericArtifactField> iterator = comments
                         .listIterator(comments.size()); iterator.hasPrevious();) {

@@ -145,7 +145,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
 
         QCDefect thisDefect = qcGAHelper.getDefectWithId(connection, bugId);
 
-        if (thisDefect != null)
+        if (null != thisDefect)
             return true;
         else
             return false;
@@ -172,9 +172,9 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                 continue;
             }
             if (!(allFieldNames.contains(allFields.get(cnt).getFieldName()))
-                    && genericArtifact
+                    && 1 < genericArtifact
                             .getAllGenericArtifactFieldsWithSameFieldName(
-                                    allFields.get(cnt).getFieldName()).size() > 1) {
+                                    allFields.get(cnt).getFieldName()).size()) {
                 List<GenericArtifactField> allSameFields = genericArtifact
                         .getAllGenericArtifactFieldsWithSameFieldName(allFields
                                 .get(cnt).getFieldName());
@@ -184,7 +184,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                     // this code assumes that multi select fields are always of type string
                     String value = (String) field.getFieldValue();
                     if (!StringUtils.isEmpty(value)) {
-                        if (concatenatedString.length() != 0) {
+                        if (0 != concatenatedString.length()) {
                             concatenatedString.append(";");
                         }
                         concatenatedString.append(value);
@@ -211,7 +211,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
         try {
             if ((!ga.getArtifactAction().equals(
                     GenericArtifact.ArtifactActionValue.CREATE))
-                    || getResyncUserName() == null) {
+                    || null == getResyncUserName()) {
                 connection = connect(targetSystemId, targetSystemKind,
                         targetRepositoryId, targetRepositoryKind, serverUrl,
                         getUserName() + QCConnectionFactory.PARAM_DELIMITER
@@ -301,7 +301,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                     createdArtifact = artifactHandler
                             .createDefect(connection, allFields,
                                     this.getUserName(), targetSystemTimezone);
-                    if (createdArtifact != null) {
+                    if (null != createdArtifact) {
                         targetArtifactIdAfterCreation = createdArtifact.getId();
                         log.info("Defect " + targetArtifactIdAfterCreation
                                 + " is created on "
@@ -326,7 +326,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                                                 .get(1))));
                     }
                 } finally {
-                    if (createdArtifact != null) {
+                    if (null != createdArtifact) {
                         createdArtifact.safeRelease();
                         createdArtifact = null;
                     }
@@ -343,7 +343,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                             connection, allFields, this.getUserName(),
                             targetSystemTimezone, informalRequirementsType,
                             parentArtifactId);
-                    if (createdArtifact != null) {
+                    if (null != createdArtifact) {
                         targetArtifactIdAfterCreation = createdArtifact.getId();
                         log.info("Requirement " + targetArtifactIdAfterCreation
                                 + " is created on "
@@ -366,7 +366,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                                                 .get(1))));
                     }
                 } finally {
-                    if (createdArtifact != null) {
+                    if (null != createdArtifact) {
                         createdArtifact.safeRelease();
                         createdArtifact = null;
                     }
@@ -453,7 +453,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                     throw new CCFRuntimeException(message);
                 }
             }
-            if (attachmentFile == null || (!attachmentFile.exists())) {
+            if (null == attachmentFile || (!attachmentFile.exists())) {
                 String message = "The attachment data file "
                         + attachmentFile.getAbsolutePath()
                         + " does not exist. So the attachment "
@@ -462,7 +462,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                         + parentArtifactId;
                 log.error(message);
                 throw new CCFRuntimeException(message);
-            } else if (attachmentFile.length() == 0) {
+            } else if (0 == attachmentFile.length()) {
                 log.warn("The attachment file "
                         + attachmentFile.getAbsolutePath()
                         + " contains no data. It is uploaded to the bug "
@@ -573,7 +573,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                     .setErrorCode(GenericArtifact.ERROR_EXTERNAL_SYSTEM_CONNECTION);
             throw new CCFRuntimeException(cause, e);
         } finally {
-            if (attachmentFile != null) {
+            if (null != attachmentFile) {
                 boolean deletingSuccess = attachmentFile.delete();
                 if (!deletingSuccess) {
                     log.warn("Could not delete the attachment file "
@@ -701,7 +701,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
             log.error(cause, e);
             throw new CCFRuntimeException(cause, e);
         } finally {
-            if (connection != null)
+            if (null != connection)
                 this.disconnect(connection);
         }
         Document attachmentDoc = this.returnDocument(genericArtifact);
@@ -737,14 +737,14 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
             newRs = qcc.executeSQL(sql);
             int newRc = newRs.getRecordCount();
             for (int newCnt = 0; newCnt < newRc; newCnt++, newRs.next()) {
-                if (newCnt == 0) {
+                if (0 == newCnt) {
                     transactionId = newRs.getFieldValueAsString("AU_ACTION_ID");
                     auTime = newRs.getFieldValueAsString("AU_TIME");
                     break;
                 }
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
             }
         }
@@ -772,13 +772,13 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
             log.debug("In QCWriter.getAuTimeAndTxnIdForDefect, sql=" + sql);
             int newRc = newRs.getRecordCount();
             for (int newCnt = 0; newCnt < newRc; newCnt++, newRs.next()) {
-                if (newCnt == 0) {
+                if (0 == newCnt) {
                     transactionId = newRs.getFieldValueAsString("AU_ACTION_ID");
                     auTime = newRs.getFieldValueAsString("AU_TIME");
 
                     String transactionDesc = newRs
                             .getFieldValueAsString("AU_DESCRIPTION");
-                    if (transactionDesc != null) {
+                    if (null != transactionDesc) {
                         if (transactionDesc.contains("Attachment added:")) {
                             int transactionIdInt = Integer
                                     .parseInt(transactionId);
@@ -796,7 +796,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                 }
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
             }
         }
@@ -824,12 +824,12 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
             newRs = qcc.executeSQL(sql);
             int newRc = newRs.getRecordCount();
             for (int newCnt = 0; newCnt < newRc; newCnt++, newRs.next()) {
-                if (newCnt == 0) {
+                if (0 == newCnt) {
                     transactionId = newRs.getFieldValueAsString("AU_ACTION_ID");
                     auTime = newRs.getFieldValueAsString("AU_TIME");
                     String transactionDesc = newRs
                             .getFieldValueAsString("AU_DESCRIPTION");
-                    if (transactionDesc != null) {
+                    if (null != transactionDesc) {
                         if (transactionDesc.contains("Attachment added:")) {
                             int transactionIdInt = Integer
                                     .parseInt(transactionId);
@@ -847,7 +847,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                 }
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
             }
         }
@@ -900,7 +900,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
     @Override
     public boolean handleException(Throwable rootCause,
             ConnectionManager<IConnection> connectionManager, Document ga) {
-        if (rootCause == null)
+        if (null == rootCause)
             return false;
         if (rootCause instanceof ConnectionException) {
             Throwable cause = rootCause.getCause();
@@ -996,7 +996,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
 
     public Object[] process(Object data) {
         Object[] result = null;
-        if (this.connectCounts == 0) {
+        if (0 == this.connectCounts) {
             initCOM();
         }
         try {
@@ -1147,7 +1147,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
         String targetRepositoryId = genericArtifact.getTargetRepositoryId();
         IConnection connection = this.connect(genericArtifact);
         try {
-            if (allFields != null) {
+            if (null != allFields) {
                 if (QCConnectionFactory.isDefectRepository(targetRepositoryId)) {
                     this.updateDefect(connection, targetArtifactId,
                             genericArtifact, allFields);
@@ -1203,20 +1203,20 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
          * ); }
          */
 
-        if (this.getServerUrl() == null) {
+        if (null == this.getServerUrl()) {
             exceptions.add(new ValidationException(
                     "serverUrl property is not set for the QCWriter", this));
         }
-        if (this.getUserName() == null) {
+        if (null == this.getUserName()) {
             exceptions.add(new ValidationException(
                     "userName property is not set for the QCWriter", this));
         }
-        if (this.getPassword() == null) {
+        if (null == this.getPassword()) {
             exceptions.add(new ValidationException(
                     "password property is not set for the QCWriter", this));
         }
 
-        if (exceptions.size() == 0) {
+        if (0 == exceptions.size()) {
             artifactHandler = new QCHandler(isUseAlternativeFieldName());
             attachmentHandler = new QCAttachmentHandler();
             qcGAHelper = new QCGAHelper();
@@ -1231,7 +1231,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
     protected void disconnect(IConnection connection) {
         ConnectionManager<IConnection> connectionManager = (ConnectionManager<IConnection>) this
                 .getConnectionManager();
-        if (connection != null) {
+        if (null != connection) {
             connectionManager.releaseConnection(connection);
         }
         isConnected = false;
@@ -1241,7 +1241,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
             GenericArtifact genericArtifact) {
         List<GenericArtifactField> allFields = genericArtifact
                 .getAllGenericArtifactFields();
-        if (allFields != null)
+        if (null != allFields)
             genericArtifact = concatValuesOfSameFieldNames(genericArtifact);
         allFields = genericArtifact.getAllGenericArtifactFields();
         return allFields;
@@ -1470,9 +1470,9 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
             GenericArtifact individualGenericArtifact, String fieldName) {
 
         String fieldValue = null;
-        if (individualGenericArtifact.getAllGenericArtifactFields() != null
-                && individualGenericArtifact
-                        .getAllGenericArtifactFieldsWithSameFieldName(fieldName) != null)
+        if (null != individualGenericArtifact.getAllGenericArtifactFields()
+                && null != individualGenericArtifact
+                        .getAllGenericArtifactFieldsWithSameFieldName(fieldName))
             fieldValue = (String) individualGenericArtifact
                     .getAllGenericArtifactFieldsWithSameFieldName(fieldName)
                     .get(0).getFieldValue();

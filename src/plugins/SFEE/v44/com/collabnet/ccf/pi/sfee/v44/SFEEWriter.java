@@ -116,7 +116,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
         try {
             if ((!ga.getArtifactAction().equals(
                     GenericArtifact.ArtifactActionValue.CREATE))
-                    || getResyncUserName() == null) {
+                    || null == getResyncUserName()) {
                 connection = connect(targetSystemId, targetSystemKind,
                         targetRepositoryId, targetRepositoryKind, serverUrl,
                         getUsername() + SFEEConnectionFactory.PARAM_DELIMITER
@@ -198,7 +198,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
         } finally {
             disconnect(connection);
         }
-        if (result != null) {
+        if (null != result) {
             this.populateTargetArtifactAttributes(ga, result);
         }
         return this.returnDocument(ga);
@@ -359,7 +359,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (connection != null) {
+            if (null != connection) {
                 this.disconnect(connection);
             }
         }
@@ -420,7 +420,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<Connection> connectionManager, Document ga) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -577,7 +577,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
 
         // otherwise a conflict has happened and the generic artifact has been
         // already prepared
-        if (result != null) {
+        if (null != result) {
             this.populateTargetArtifactAttributes(ga, result);
         }
         return this.returnDocument(ga);
@@ -605,29 +605,29 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
     public void validate(List exceptions) {
         super.validate(exceptions);
 
-        if (getResyncUserName() == null) {
+        if (null == getResyncUserName()) {
             log.warn("resyncUserName-property has not been set, so that initial resyncs after artifact creation are not possible.");
         }
 
-        if (getUpdateComment() == null) {
+        if (null == getUpdateComment()) {
             log.error("updateComment-property not set");
             exceptions.add(new ValidationException(
                     "updateComment-property not set", this));
         }
 
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property not set");
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
 
-        if (getUsername() == null) {
+        if (null == getUsername()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
 
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));
@@ -635,7 +635,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
 
         ConnectionManager<Connection> connectionManager = getConnectionManager();
 
-        if (exceptions.size() == 0) {
+        if (0 == exceptions.size()) {
             trackerHandler = new SFEETrackerHandler(getServerUrl(),
                     connectionManager);
             attachmentHandler = new SFEEAttachmentHandler(getServerUrl(),
@@ -664,7 +664,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
         List<GenericArtifactField> gaFields = ga
                 .getAllGenericArtifactFieldsWithSameFieldType(GenericArtifactField.VALUE_FIELD_TYPE_FLEX_FIELD);
         String targetSystemTimezone = ga.getTargetSystemTimezone();
-        if (gaFields != null) {
+        if (null != gaFields) {
             for (GenericArtifactField gaField : gaFields) {
                 String fieldName = gaField.getFieldName();
                 String trackerFieldValueType = ArtifactMetaData
@@ -676,10 +676,10 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
                 FieldValueTypeValue fieldType = gaField.getFieldValueType();
                 if (trackerFieldValueType
                         .equals(TrackerFieldSoapDO.FIELD_VALUE_TYPE_DATE)) {
-                    if (fieldType == FieldValueTypeValue.DATE) {
+                    if (FieldValueTypeValue.DATE == fieldType) {
                         GregorianCalendar gc = (GregorianCalendar) gaField
                                 .getFieldValue();
-                        if (gc != null) {
+                        if (null != gc) {
                             Date dateValue = gc.getTime();
                             if (DateUtil.isAbsoluteDateInTimezone(dateValue,
                                     "GMT")) {
@@ -690,7 +690,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
                                 value = dateValue;
                             }
                         }
-                    } else if (fieldType == FieldValueTypeValue.DATETIME) {
+                    } else if (FieldValueTypeValue.DATETIME == fieldType) {
                         value = gaField.getFieldValue();
                     }
                 } else {
@@ -773,10 +773,10 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
                         GenericArtifactField.VALUE_FIELD_TYPE_FLEX_FIELD,
                         ArtifactMetaData.SFEEFields.commentText.getFieldName());
         int commentsSize = 0;
-        if (gaFields != null) {
+        if (null != gaFields) {
             commentsSize = gaFields.size();
         }
-        if (commentsSize > 0) {
+        if (0 < commentsSize) {
             comments = new String[commentsSize];
             for (int i = 0; i < commentsSize; i++) {
                 GenericArtifactField field = gaFields.get(i);
@@ -784,7 +784,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
                 comments[i] = comment;
             }
         }
-        if (comments == null) {
+        if (null == comments) {
             comments = new String[0];
         }
         return comments;
@@ -831,7 +831,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
         String targetArtifactId = ga.getTargetArtifactId();
         String tracker = targetRepositoryId;
 
-        if (artifactAction == GenericArtifact.ArtifactActionValue.UPDATE) {
+        if (GenericArtifact.ArtifactActionValue.UPDATE == artifactAction) {
             if (SFEEGAHelper.containsSingleMandatoryField(ga,
                     ArtifactMetaData.SFEEFields.id.getFieldName())) {
                 SFEEGAHelper.updateSingleMandatoryField(ga,
@@ -890,7 +890,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
         List<GenericArtifactField> gaFields = ga
                 .getAllGenericArtifactFieldsWithSameFieldType(GenericArtifactField.VALUE_FIELD_TYPE_FLEX_FIELD);
         String targetSystemTimezone = ga.getTargetSystemTimezone();
-        if (gaFields != null) {
+        if (null != gaFields) {
             for (GenericArtifactField gaField : gaFields) {
                 String fieldName = gaField.getFieldName();
                 if (gaField.getFieldValueHasChanged()) {
@@ -907,10 +907,10 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
                 FieldValueTypeValue fieldType = gaField.getFieldValueType();
                 if (trackerFieldValueType
                         .equals(TrackerFieldSoapDO.FIELD_VALUE_TYPE_DATE)) {
-                    if (fieldType == FieldValueTypeValue.DATE) {
+                    if (FieldValueTypeValue.DATE == fieldType) {
                         GregorianCalendar gc = (GregorianCalendar) gaField
                                 .getFieldValue();
-                        if (gc != null) {
+                        if (null != gc) {
                             Date dateValue = gc.getTime();
                             if (DateUtil.isAbsoluteDateInTimezone(dateValue,
                                     "GMT")) {
@@ -921,7 +921,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
                                 value = dateValue;
                             }
                         }
-                    } else if (fieldType == FieldValueTypeValue.DATETIME) {
+                    } else if (FieldValueTypeValue.DATETIME == fieldType) {
                         value = gaField.getFieldValue();
                     }
                 } else {
@@ -992,7 +992,7 @@ public class SFEEWriter extends AbstractWriter<Connection> implements IDataProce
                     reportedReleaseId, resolvedReleaseId, flexFieldNames,
                     flexFieldValues, flexFieldTypes, overriddenFlexFields,
                     title, id, comments, translateTechnicalReleaseIds);
-            if (result != null) {
+            if (null != result) {
                 log.info("Artifact " + id + " is updated successfully");
             }
         } catch (RemoteException e) {

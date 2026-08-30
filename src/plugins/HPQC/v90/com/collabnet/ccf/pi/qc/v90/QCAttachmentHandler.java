@@ -170,7 +170,7 @@ public class QCAttachmentHandler {
                 }
             }
         } finally {
-            if (bug != null) {
+            if (null != bug) {
                 bug.safeRelease();
                 bug = null;
             }
@@ -253,7 +253,7 @@ public class QCAttachmentHandler {
             reqFactory = qcc.getRequirementsFactory();
             req = reqFactory.getItem(entityId);
             versionControl = req.getVersionControlObject();
-            if (versionControl != null) {
+            if (null != versionControl) {
                 try {
                     versionControlSupported = versionControl
                             .checkOut("CCF Checkout");
@@ -324,7 +324,7 @@ public class QCAttachmentHandler {
                 }
             }
 
-            if (req != null) {
+            if (null != req) {
                 req.safeRelease();
                 req = null;
             }
@@ -344,12 +344,12 @@ public class QCAttachmentHandler {
             attachmentFactory = bug.getAttachmentFactory();
             attachmentFactory.removeItem(attachmentId);
         } finally {
-            if (attachmentFactory != null) {
+            if (null != attachmentFactory) {
                 attachmentFactory.safeRelease();
                 attachmentFactory = null;
             }
 
-            if (bug != null) {
+            if (null != bug) {
                 bug.safeRelease();
                 bug = null;
             }
@@ -370,7 +370,7 @@ public class QCAttachmentHandler {
             req = reqFactory.getItem(defectId);
 
             versionControl = req.getVersionControlObject();
-            if (versionControl != null) {
+            if (null != versionControl) {
                 try {
                     versionControlSupported = versionControl
                             .checkOut("CCF Checkout");
@@ -414,11 +414,11 @@ public class QCAttachmentHandler {
                 }
             }
 
-            if (attachmentFactory != null) {
+            if (null != attachmentFactory) {
                 attachmentFactory.safeRelease();
                 attachmentFactory = null;
             }
-            if (req != null) {
+            if (null != req) {
                 req.safeRelease();
                 req = null;
             }
@@ -460,16 +460,16 @@ public class QCAttachmentHandler {
             boolean isDefectRepository) {
         long attachmentSize = 0;
         String thisMimeType = null;
-        if (attachmentName != null) {
+        if (null != attachmentName) {
             genericArtifact = getSchemaAttachment(qcc, entityId,
                     attachmentName, deletedAttachments, deleteTransactionId);
         }
-        if (genericArtifact == null)
+        if (null == genericArtifact)
             return null;
         if (!deletedAttachments) {
 
             MimetypesFileTypeMap mimeType = new MimetypesFileTypeMap();
-            if (attachmentName != null)
+            if (null != attachmentName)
                 thisMimeType = mimeType.getContentType(attachmentName);
             byte data[] = null;
             File qcAttachmentFile = null;
@@ -513,7 +513,7 @@ public class QCAttachmentHandler {
                                     throw new CCFRuntimeException(message, e);
                                 } finally {
                                     bugFactory = null;
-                                    if (bug != null) {
+                                    if (null != bug) {
                                         bug.safeRelease();
                                     }
                                 }
@@ -538,12 +538,12 @@ public class QCAttachmentHandler {
                                     throw new CCFRuntimeException(message, e);
                                 } finally {
                                     reqFactory = null;
-                                    if (req != null) {
+                                    if (null != req) {
                                         req.safeRelease();
                                     }
                                 }
                             }
-                            if (qcAttachmentFile == null) {
+                            if (null == qcAttachmentFile) {
                                 return null;
                             }
                             attachmentSize = qcAttachmentFile.length();
@@ -582,7 +582,7 @@ public class QCAttachmentHandler {
                                                 .setFieldValue(attachmentDataFileName);
                                         log.debug("Shipping the reference of the attachment "
                                                 + attachmentDataFileName);
-                                        if (tempFile.length() == 0) {
+                                        if (0 == tempFile.length()) {
                                             log.warn("The file "
                                                     + attachmentDataFileName
                                                     + " does not contain any data.");
@@ -607,7 +607,7 @@ public class QCAttachmentHandler {
                                                 qcAttachmentFile);
                                         int readCount = 0;
                                         byte[] tmpData = new byte[1024 * 3];
-                                        if ((readCount = fis.read(tmpData)) != -1) {
+                                        if (-1 != (readCount = fis.read(tmpData))) {
                                             baOS.write(tmpData, 0, readCount);
                                         }
                                         data = baOS.toByteArray();
@@ -673,7 +673,7 @@ public class QCAttachmentHandler {
                             .setFieldValueType(GenericArtifactField.FieldValueTypeValue.STRING);
                 } else if (thisField.getFieldName().equals(
                         AttachmentMetaData.getAttachmentValueIsNull())) {
-                    if (data != null)
+                    if (null != data)
                         thisField
                                 .setFieldValue(AttachmentMetaData.AttachmentValueIsNull.FALSE);
                     else
@@ -683,7 +683,7 @@ public class QCAttachmentHandler {
                             .setFieldValueType(GenericArtifactField.FieldValueTypeValue.STRING);
                 }
             }
-            if (data != null) {
+            if (null != data) {
                 genericArtifact.setRawAttachmentData(data);
             }
         }
@@ -743,7 +743,7 @@ public class QCAttachmentHandler {
                             lowerTransactionId, upperTransactionId, qcc,
                             connectorUser, resyncUser == null ? "" : resyncUser);
         }
-        if (transactionIdAndAttachOperation == null)
+        if (null == transactionIdAndAttachOperation)
             return modifiedAttachmentArtifacts;
         String thisTransactionId = (String) transactionIdAndAttachOperation
                 .get(0);
@@ -754,7 +754,7 @@ public class QCAttachmentHandler {
         //		log.debug("In getLatestChangedDefects, txnId=" + thisTransactionId
         //				+ " and attachmentNames=" + attachmentNames);
 
-        if (attachmentNames != null) {
+        if (null != attachmentNames) {
             for (Entry<String, Map<String, String>> entry : attachmentNames
                     .entrySet()) {
                 String attachmentName = entry.getKey();
@@ -762,7 +762,7 @@ public class QCAttachmentHandler {
                         qcc, artifactId, attachmentName,
                         maxAttachmentSizePerArtifact, false, null,
                         shouldShipAttachmentsWithArtifact, isDefectRepository);
-                if (latestAttachmentArtifact == null)
+                if (null == latestAttachmentArtifact)
                     continue;
                 Map<String, String> versionDetails = entry.getValue();
                 //String attTransactionId = versionDetails.get("AU_ACTION_ID");
@@ -794,7 +794,7 @@ public class QCAttachmentHandler {
                 modifiedAttachmentArtifacts.add(latestAttachmentArtifact);
             }
         }
-        if (deletedAttachmentNames != null) {
+        if (null != deletedAttachmentNames) {
             for (Entry<String, Map<String, String>> entry : deletedAttachmentNames
                     .entrySet()) {
                 String deleteAttachmentName = entry.getKey();
@@ -805,7 +805,7 @@ public class QCAttachmentHandler {
                         qcc, artifactId, deleteAttachmentName,
                         maxAttachmentSizePerArtifact, true, attTransactionId,
                         false, isDefectRepository);
-                if (latestAttachmentArtifact == null)
+                if (null == latestAttachmentArtifact)
                     continue;
                 //				latestAttachmentArtifact = getArtifactAction(
                 //						latestAttachmentArtifact, qcc, thisTransactionId,
@@ -861,12 +861,12 @@ public class QCAttachmentHandler {
         GenericArtifact genericArtifact = new GenericArtifact();
         String[] attachmentMetaData = AttachmentMetaData
                 .getAttachmentMetaData();
-        if (attachmentName != null) {
+        if (null != attachmentName) {
             List<String> attachmentIdAndType = null;
             if (!deletedAttachments) {
                 attachmentIdAndType = QCGAHelper.getFromTable(qcc, entityId,
                         attachmentName);
-                if (attachmentIdAndType != null) {
+                if (null != attachmentIdAndType) {
                     String attachmentId = attachmentIdAndType.get(0); // CR_REF_ID
                     String attachmentType = attachmentIdAndType.get(1); // CR_REF_TYPE
                     String attachmentDescription = attachmentIdAndType.get(2); // CR_DESCRIPTION

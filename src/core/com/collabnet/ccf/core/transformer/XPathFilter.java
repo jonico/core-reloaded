@@ -33,7 +33,7 @@ public class XPathFilter implements IDataProcessor {
         if (data instanceof Document) {
             Document document = (Document) data;
             Node node = document.selectSingleNode(xPath);
-            if (node != null) {
+            if (null != node) {
                 return new Object[] { data };
             } else {
                 return null;

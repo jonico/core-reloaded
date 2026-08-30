@@ -52,7 +52,7 @@ public class TimeoutWrapper {
         Throwable cause = e.getCause();
         if (cause instanceof java.net.SocketException
                 || cause instanceof java.net.UnknownHostException) {
-            if (numberOfTries == 1) {
+            if (1 == numberOfTries) {
                 // first try, long error message
                 log.warn(
                         "Network related problem occurred while calling TF/CSFE webservice. Try operation again",
@@ -108,7 +108,7 @@ public class TimeoutWrapper {
             throws AxisFault {
         if (!connectionManager.isEnableReloginAfterSessionTimeout())
             throw e;
-        if (numberOfTries == 1) {
+        if (1 == numberOfTries) {
             // first try, long error message
             log.warn(
                     "Login related problem occurred while calling TF/CSFE webservice. Try logging in again",
@@ -120,7 +120,7 @@ public class TimeoutWrapper {
         // first try to retrieve connection associated with invalid session id
         Connection connection = connectionManager
                 .lookupRegisteredConnection(sessionId);
-        if (connection == null) {
+        if (null == connection) {
             log.error("Could not retrieve connection associated with invalid session id, cannot login again.");
             throw e;
         }

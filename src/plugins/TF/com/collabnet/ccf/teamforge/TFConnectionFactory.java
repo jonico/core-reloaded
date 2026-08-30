@@ -81,13 +81,13 @@ public class TFConnectionFactory implements ConnectionFactory<Connection> {
 
         String username = null;
         String password = null;
-        if (credentialInfo != null) {
+        if (null != credentialInfo) {
             String[] splitCredentials = credentialInfo.split(PARAM_DELIMITER);
-            if (splitCredentials != null) {
-                if (splitCredentials.length == 1) {
+            if (null != splitCredentials) {
+                if (1 == splitCredentials.length) {
                     username = splitCredentials[0];
                     password = "";
-                } else if (splitCredentials.length == 2) {
+                } else if (2 == splitCredentials.length) {
                     username = splitCredentials[0];
                     password = splitCredentials[1];
                 } else {
@@ -155,10 +155,10 @@ public class TFConnectionFactory implements ConnectionFactory<Connection> {
      * @return project id
      */
     public static String extractProjectFromRepositoryId(String repositoryId) {
-        if (repositoryId != null) {
+        if (null != repositoryId) {
             String[] splitRepo = repositoryId.split("-");
-            if (splitRepo != null) {
-                if (splitRepo.length != 2) {
+            if (null != splitRepo) {
+                if (2 != splitRepo.length) {
                     throw new IllegalArgumentException(
                             "Repository id is not valid.");
                 } else {
@@ -178,10 +178,10 @@ public class TFConnectionFactory implements ConnectionFactory<Connection> {
      */
     public static String extractTrackerFromMetaDataRepositoryId(
             String repositoryId) {
-        if (repositoryId != null) {
+        if (null != repositoryId) {
             String[] splitRepo = repositoryId.split("-");
-            if (splitRepo != null) {
-                if (splitRepo.length != 2) {
+            if (null != splitRepo) {
+                if (2 != splitRepo.length) {
                     throw new IllegalArgumentException(
                             "MetaData Repository id is not valid.");
                 } else {

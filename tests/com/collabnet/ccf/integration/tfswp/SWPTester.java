@@ -228,7 +228,7 @@ public class SWPTester {
         Validate.notNull(title, "null title");
         Validate.notNull(backlogItemId, "null backlog item id");
 
-        if (status == null) {
+        if (null == status) {
             status = TaskStatus.NOT_STARTED;
         }
 
@@ -257,7 +257,7 @@ public class SWPTester {
         Product product = getSWPEndpoint().getProductByName(getSwpProduct());
         List<BacklogItem> pbis = getSWPEndpoint().getBacklogItemsInProduct(
                 product.getId(), false);
-        if (pbis != null) {
+        if (null != pbis) {
             for (BacklogItem backlogItem : pbis) {
                 getSWPEndpoint().deleteBacklogItem(backlogItem.getId(), false);
             }
@@ -275,7 +275,7 @@ public class SWPTester {
     public void deleteAllTasksInSWP() throws ScrumWorksException {
         Product product = getSWPEndpoint().getProductByName(getSwpProduct());
         List<Task> tasks = getSWPEndpoint().getTasksForProduct(product.getId());
-        if (tasks != null) {
+        if (null != tasks) {
             for (Task task : tasks) {
                 getSWPEndpoint().deleteTask(task.getId());
             }
@@ -446,7 +446,7 @@ public class SWPTester {
      */
     public BusinessWeight transformToBusinessWeightWSO(final String benefit,
             final String penalty) {
-        if (benefit == null & penalty == null) {
+        if (null == benefit & null == penalty) {
             return null;
         }
         Long businessWeightBenefit = benefit == null ? 0 : Long
@@ -474,7 +474,7 @@ public class SWPTester {
      */
     public List<Theme> transformToThemeWSO(final String... themes)
             throws ScrumWorksException {
-        if (themes == null) {
+        if (null == themes) {
             return null;
         }
 
@@ -575,7 +575,7 @@ public class SWPTester {
                 : customTimeout); i += ccfRetryInterval) {
             pbis = getSWPEndpoint().getBacklogItemsInProduct(product.getId(),
                     false);
-            if (pbis == null || pbis.size() < numberOfPBIs) {
+            if (null == pbis || pbis.size() < numberOfPBIs) {
                 Thread.sleep(ccfRetryInterval);
             } else {
                 return pbis;
@@ -607,7 +607,7 @@ public class SWPTester {
                 backlogItemNames.add(backlogItem.getName());
             }
             int indexOfUpdateBacklogItem = backlogItemNames.indexOf(title);
-            if (indexOfUpdateBacklogItem == -1) {
+            if (-1 == indexOfUpdateBacklogItem) {
                 Thread.sleep(ccfRetryInterval);
             } else {
                 return backlogItems.get(indexOfUpdateBacklogItem);
@@ -653,8 +653,8 @@ public class SWPTester {
                 taskNames.add(task.getName());
             }
             int indexOfMatchingTaskTitle = taskNames.indexOf(expectedTaskTitle);
-            if (tasks == null || tasks.size() < numberOfTasks
-                    || indexOfMatchingTaskTitle == -1) {
+            if (null == tasks || tasks.size() < numberOfTasks
+                    || -1 == indexOfMatchingTaskTitle) {
                 Thread.sleep(ccfRetryInterval);
             } else {
                 return tasks.get(indexOfMatchingTaskTitle);

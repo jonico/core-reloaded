@@ -175,7 +175,7 @@ public class QCRequirement extends Requirement implements IQCRequirement {
                             .equals(GenericArtifactField.FieldValueTypeValue.DATETIME)) {
                 String connectorSystemTimeZone = TimeZone.getDefault().getID();
                 Date dateValue = getFieldAsDate(thisField.getFieldName());
-                if (dateValue != null) {
+                if (null != dateValue) {
                     if (DateUtil.isAbsoluteDateInTimezone(dateValue,
                             connectorSystemTimeZone)) {
                         dateValue = DateUtil.convertToGMTAbsoluteDate(
@@ -202,7 +202,7 @@ public class QCRequirement extends Requirement implements IQCRequirement {
                 // INFO Changes for user attributes handling...
                 String fieldValue = getFieldAsString(thisField.getFieldName());
 
-                if (StringUtils.isEmpty(fieldValue) || fieldValue == null) {
+                if (StringUtils.isEmpty(fieldValue) || null == fieldValue) {
                     thisField.setFieldValue(null);
                 } else {
                     StringTokenizer st = new StringTokenizer(fieldValue, ";");
@@ -232,17 +232,17 @@ public class QCRequirement extends Requirement implements IQCRequirement {
                         .setFieldValue(getFieldAsInt(thisField.getFieldName()));
             } else if (thisFieldsDatatype
                     .equals(GenericArtifactField.FieldValueTypeValue.STRING)) {
-                if (thisField.getMaxOccurs() == GenericArtifactField.CARDINALITY_UNBOUNDED) {
+                if (GenericArtifactField.CARDINALITY_UNBOUNDED == thisField.getMaxOccurs()) {
 
                     String fieldValue = getFieldAsString(thisField
                             .getFieldName());
                     List<String> fieldValues = new ArrayList<String>();
                     int size = 0;
-                    if (fieldValue != null) {
+                    if (null != fieldValue) {
                         fieldValues = getFieldValues(fieldValue);
                         size = fieldValues.size();
                     }
-                    if (size >= 1)
+                    if (1 <= size)
                         thisField.setFieldValue(fieldValues.get(0));
                     for (int sizeCnt = 1; sizeCnt < size; sizeCnt++) {
                         GenericArtifactField field;
@@ -290,7 +290,7 @@ public class QCRequirement extends Requirement implements IQCRequirement {
                                 qcc);
             }
         } finally {
-            if (auditPropertiesRS != null) {
+            if (null != auditPropertiesRS) {
                 auditPropertiesRS.safeRelease();
             }
         }

@@ -159,10 +159,10 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
         GenericArtifact[] gas = null;
         gas = this.createProjectTrackerAttachment(ga);
         Document[] returnDocs = null;
-        if (gas != null) {
+        if (null != gas) {
             returnDocs = new Document[gas.length];
             for (int i = 0; i < gas.length; i++) {
-                if (gas[i] != null)
+                if (null != gas[i])
                     returnDocs[i] = this.returnGenericArtifactDocument(gas[i]);
             }
         }
@@ -274,12 +274,12 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (twsclient != null) {
+            if (null != twsclient) {
                 this.releaseConnection(twsclient);
             }
         }
         Document parentArtifactDocument = null;
-        if (parentArtifact != null) {
+        if (null != parentArtifact) {
             parentArtifactDocument = this
                     .returnGenericArtifactDocument(parentArtifact);
         }
@@ -323,7 +323,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             ConnectionManager<TrackerWebServicesClient> connectionManager,
             Document ga) {
         // TODO What about invalid sessions?
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -457,19 +457,19 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
          * ); }
          */
 
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property not set");
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
 
-        if (getUsername() == null) {
+        if (null == getUsername()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
 
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));
@@ -509,7 +509,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
         // INFO If this attribute is a DATE attribute then do not pass on null
         // values to the web service
         if (trackerAttribute.getAttributeType().equals("DATE")) {
-            if (attributeValue != null) {
+            if (null != attributeValue) {
                 // INFO In case of a DATE attribute we set the value only when
                 // it is not null
                 ca.addAttributeValue(attributeNamespace, attributeTagName,
@@ -519,7 +519,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
         // INFO When creating an artifact if the LONG_TEXT fields are null the
         // PT Web Services throws exception
         else if (trackerAttribute.getAttributeType().equals("EMAIL")) {
-            if (attributeValue != null) {
+            if (null != attributeValue) {
                 // INFO In case of a Long, text attribute we set the value only
                 // when it is not null
                 ca.addAttributeValue(attributeNamespace, attributeTagName,
@@ -540,18 +540,18 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
     private String convertAttributeValue(FieldValueTypeValue fieldType,
             Object fieldValue, String targetSystemTimezone) {
         String attributeValue = null;
-        if (fieldValue == null)
+        if (null == fieldValue)
             return null;
-        if (fieldType == FieldValueTypeValue.STRING) {
+        if (FieldValueTypeValue.STRING == fieldType) {
             attributeValue = fieldValue.toString();
-        } else if (fieldType == FieldValueTypeValue.INTEGER) {
+        } else if (FieldValueTypeValue.INTEGER == fieldType) {
             attributeValue = fieldValue.toString();
-        } else if (fieldType == FieldValueTypeValue.DOUBLE) {
+        } else if (FieldValueTypeValue.DOUBLE == fieldType) {
             attributeValue = fieldValue.toString();
-        } else if (fieldType == FieldValueTypeValue.DATE) {
+        } else if (FieldValueTypeValue.DATE == fieldType) {
             GregorianCalendar gc = (GregorianCalendar) fieldValue;
             attributeValue = Long.toString(gc.getTime().getTime());
-        } else if (fieldType == FieldValueTypeValue.DATETIME) {
+        } else if (FieldValueTypeValue.DATETIME == fieldType) {
             Date date = (Date) fieldValue;
             if (!StringUtils.isEmpty(targetSystemTimezone)
                     && (!targetSystemTimezone
@@ -563,14 +563,14 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                 }
             }
             attributeValue = Long.toString(date.getTime());
-        } else if (fieldType == FieldValueTypeValue.BOOLEAN) {
+        } else if (FieldValueTypeValue.BOOLEAN == fieldType) {
             Boolean value = (Boolean) fieldValue;
             attributeValue = value.toString();
-        } else if (fieldType == FieldValueTypeValue.BASE64STRING) {
+        } else if (FieldValueTypeValue.BASE64STRING == fieldType) {
             attributeValue = fieldValue.toString();
-        } else if (fieldType == FieldValueTypeValue.HTMLSTRING) {
+        } else if (FieldValueTypeValue.HTMLSTRING == fieldType) {
             attributeValue = fieldValue.toString();
-        } else if (fieldType == FieldValueTypeValue.USER) {
+        } else if (FieldValueTypeValue.USER == fieldType) {
             attributeValue = fieldValue.toString();
         }
         return attributeValue;
@@ -596,7 +596,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                 }
             }
         }
-        if (optionValue == null && (!stateField))
+        if (null == optionValue && (!stateField))
             throw new CCFRuntimeException("Option tagname for option "
                     + attributeValue + "is not available in {"
                     + attributeNamespace + "}" + attributeTagName);
@@ -616,13 +616,13 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             twsclient = this.getConnection(ga);
             TrackerArtifactType trackerArtifactType = metadataHelper
                     .getTrackerArtifactType(repositoryKey);
-            if (trackerArtifactType == null) {
+            if (null == trackerArtifactType) {
                 trackerArtifactType = metadataHelper
                         .getTrackerArtifactType(repositoryKey,
                                 artifactTypeDisplayName, twsclient, true);
             }
 
-            if (trackerArtifactType == null) {
+            if (null == trackerArtifactType) {
                 throw new CCFRuntimeException("Artifact type for repository "
                         + repositoryKey
                         + " unknown, cannot synchronize repository.");
@@ -655,7 +655,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                                 .getTrackerArtifactType(repositoryKey,
                                         artifactTypeDisplayName, twsclient,
                                         false);
-                        if (trackerArtifactType == null) {
+                        if (null == trackerArtifactType) {
                             throw new CCFRuntimeException(
                                     "Artifact type for repository "
                                             + repositoryKey
@@ -676,7 +676,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             ptHelper.processWSErrors(artifactHelper);
 
             List<ClientArtifact> artifacts = artifactHelper.getAllArtifacts();
-            if (artifacts.size() == 1) {
+            if (1 == artifacts.size()) {
                 ClientArtifact artifact = artifacts.get(0);
                 String targetArtifactId = "{" + targetArtifactTypeNamespace
                         + "}" + targetArtifactTypeTagName + ":"
@@ -717,7 +717,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (twsclient != null) {
+            if (null != twsclient) {
                 this.releaseConnection(twsclient);
             }
         }
@@ -750,12 +750,12 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                 return new GenericArtifact[] { ga };
             }
             String retrievedProject = currentArtifact.getProject();
-            if (retrievedProject != null) {
+            if (null != retrievedProject) {
                 String projectName = null;
-                if (repositoryId != null) {
+                if (null != repositoryId) {
                     String[] splitProjectName = repositoryId.split(":");
-                    if (splitProjectName != null) {
-                        if (splitProjectName.length >= 1) {
+                    if (null != splitProjectName) {
+                        if (1 <= splitProjectName.length) {
                             projectName = splitProjectName[0];
                         } else {
                             throw new IllegalArgumentException(
@@ -766,7 +766,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                         }
                     }
                 }
-                if (projectName != null) {
+                if (null != projectName) {
                     if (!retrievedProject.equals(projectName)) {
                         log.warn("PT Artifact with id " + artifactId
                                 + " has moved from project " + projectName
@@ -913,7 +913,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (attachmentFile != null) {
+            if (null != attachmentFile) {
                 boolean fileDeleted = attachmentFile.delete();
                 if (!fileDeleted) {
                     log.warn("The temporary attachment file"
@@ -921,7 +921,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                             + " could not be deleted");
                 }
             }
-            if (twsclient != null) {
+            if (null != twsclient) {
                 this.releaseConnection(twsclient);
             }
         }
@@ -951,7 +951,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
         ClientArtifact ca = new ClientArtifact();
         ca.setTagName(targetArtifactTypeTagName);
         ca.setNamespace(targetArtifactTypeNameSpace);
-        if (artifactId != null) {
+        if (null != artifactId) {
             ca.addAttributeValue(TrackerWebServicesClient.DEFAULT_NAMESPACE,
                     "id", artifactId);
         }
@@ -962,7 +962,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             String fieldName = field.getFieldName();
             String fieldDisplayName = null;
             String namespace = ptHelper.getNamespace(fieldName);
-            if (namespace == null) {
+            if (null == namespace) {
                 fieldDisplayName = fieldName;
                 namespace = targetArtifactTypeNameSpace;
             } else {
@@ -985,7 +985,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                 setFoundReasonForCurrentlyProcessedArtifact(true);
                 setReasonForCurrentlyProcessedArtifact((String) field
                         .getFieldValue());
-            } else if (field.getFieldValueType() == GenericArtifactField.FieldValueTypeValue.USER) {
+            } else if (GenericArtifactField.FieldValueTypeValue.USER == field.getFieldValueType()) {
                 if (!processedUserFields.contains(fieldName)) {
                     List<GenericArtifactField> gaUserFields = ga
                             .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
@@ -1051,7 +1051,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                     // }
                     // } else {
                     for (GenericArtifactField userField : gaUserFields) {
-                        if (userField.getFieldValue() == null) {
+                        if (null == userField.getFieldValue()) {
                             userField.setFieldValue("");
                         }
                         this.addAttribute(userField, ca, trackerAttribute,
@@ -1080,7 +1080,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
         try {
             if ((!ga.getArtifactAction().equals(
                     GenericArtifact.ArtifactActionValue.CREATE))
-                    || getResyncUserName() == null) {
+                    || null == getResyncUserName()) {
                 String credentialInfo = this.getUsername()
                         + CollabNetConnectionFactory.PARAM_DELIMITER
                         + this.getPassword();
@@ -1094,14 +1094,14 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                         repositoryKind, connectionInfo, credentialInfo, true);
             }
         } catch (MaxConnectionsReachedException e) {
-            if (twsclient != null) {
+            if (null != twsclient) {
                 this.releaseConnection(twsclient);
             }
             String message = "Could not get connection for PT";
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } catch (ConnectionException e) {
-            if (twsclient != null) {
+            if (null != twsclient) {
                 this.releaseConnection(twsclient);
             }
             String message = "Could not get connection for PT";
@@ -1125,7 +1125,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                 if (artifactTypeNamespace.equals(namespace)) {
                     return attributeFullyQualifiedName;
                 } else {
-                    if (fullyQualifiedFieldTagName == null) {
+                    if (null == fullyQualifiedFieldTagName) {
                         fullyQualifiedFieldTagName = attributeFullyQualifiedName;
                     } else {
                         String message = "There are two fields with the same name "
@@ -1140,7 +1140,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                 }
             }
         }
-        if (fullyQualifiedFieldTagName == null) {
+        if (null == fullyQualifiedFieldTagName) {
             String message = "There is no field with the name "
                     + fieldDisplayName + " in " + artifactTypeNamespace + " "
                     + artifactType.getDisplayName();
@@ -1276,12 +1276,12 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                 return ga;
             }
             String retrievedProject = currentArtifact.getProject();
-            if (retrievedProject != null) {
+            if (null != retrievedProject) {
                 String projectName = null;
-                if (repositoryId != null) {
+                if (null != repositoryId) {
                     String[] splitProjectName = repositoryId.split(":");
-                    if (splitProjectName != null) {
-                        if (splitProjectName.length >= 1) {
+                    if (null != splitProjectName) {
+                        if (1 <= splitProjectName.length) {
                             projectName = splitProjectName[0];
                         } else {
                             throw new IllegalArgumentException(
@@ -1292,7 +1292,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                         }
                     }
                 }
-                if (projectName != null) {
+                if (null != projectName) {
                     if (!retrievedProject.equals(projectName)) {
                         log.warn("PT Artifact with id " + artifactId
                                 + " has moved from project " + projectName
@@ -1306,13 +1306,13 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             TrackerArtifactType trackerArtifactType = null;
             trackerArtifactType = metadataHelper
                     .getTrackerArtifactType(repositoryKey);
-            if (trackerArtifactType == null) {
+            if (null == trackerArtifactType) {
                 trackerArtifactType = metadataHelper
                         .getTrackerArtifactType(repositoryKey,
                                 artifactTypeDisplayName, twsclient, true);
             }
-            if (targetArtifactTypeNameSpace == null
-                    || targetArtifactTypeTagName == null) {
+            if (null == targetArtifactTypeNameSpace
+                    || null == targetArtifactTypeTagName) {
                 targetArtifactTypeNameSpace = trackerArtifactType
                         .getNamespace();
                 targetArtifactTypeTagName = trackerArtifactType.getTagName();
@@ -1354,7 +1354,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                                 .getTrackerArtifactType(repositoryKey,
                                         artifactTypeDisplayName, twsclient,
                                         false);
-                        if (trackerArtifactType == null) {
+                        if (null == trackerArtifactType) {
                             throw new CCFRuntimeException(
                                     "Artifact type for repository "
                                             + repositoryKey
@@ -1380,7 +1380,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
                     + " updated successfully with the changes from "
                     + ga.getSourceArtifactId());
             List<ClientArtifact> artifacts = artifactHelper.getAllArtifacts();
-            if (artifacts.size() == 1) {
+            if (1 == artifacts.size()) {
                 // FIXME This is not atomic too, what happened if the artifact
                 // has been changed again
                 ClientArtifact artifact = artifacts.get(0);
@@ -1428,7 +1428,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (twsclient != null) {
+            if (null != twsclient) {
                 this.releaseConnection(twsclient);
             }
         }

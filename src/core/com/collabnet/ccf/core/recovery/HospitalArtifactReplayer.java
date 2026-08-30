@@ -92,7 +92,7 @@ public class HospitalArtifactReplayer extends SpringAdaptor {
                     + OPENADAPTOR_SPRING_CONFIG;
         }
         String protocol = "";
-        if (url.indexOf(':') != -1) {
+        if (-1 != url.indexOf(':')) {
             protocol = url.substring(0, url.indexOf(':'));
         }
 
@@ -209,7 +209,7 @@ public class HospitalArtifactReplayer extends SpringAdaptor {
             reader = new PropertiesBeanDefinitionReader(context);
         }
 
-        if (reader != null) {
+        if (null != reader) {
             reader.loadBeanDefinitions(new ClassPathResource(resourceName));
         } else {
             throw new RuntimeException(
@@ -227,7 +227,7 @@ public class HospitalArtifactReplayer extends SpringAdaptor {
             reader = new PropertiesBeanDefinitionReader(context);
         }
 
-        if (reader != null) {
+        if (null != reader) {
             try {
                 UrlResource urlResource = new UrlResource(url);
                 InputStream is = urlResource.getInputStream();

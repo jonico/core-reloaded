@@ -105,30 +105,30 @@ public class JIRAAttachmentHandler {
 
         Issue issue = null;
 
-        if (attAction == GenericArtifact.ArtifactActionValue.CREATE) {
+        if (GenericArtifact.ArtifactActionValue.CREATE == attAction) {
 
-            if (AttachmentMetaData.AttachmentType.valueOf(contentType) == AttachmentMetaData.AttachmentType.DATA) {
+            if (AttachmentMetaData.AttachmentType.DATA == AttachmentMetaData.AttachmentType.valueOf(contentType)) {
                 issue = this.attachFileToArtifact(connection,
                         targetParentArtifactId, attachDescription,
                         attachmentName, attachmentMimeType, ga, null);
 
-            } else if (AttachmentMetaData.AttachmentType.valueOf(contentType) == AttachmentMetaData.AttachmentType.EMPTY) {
+            } else if (AttachmentMetaData.AttachmentType.EMPTY == AttachmentMetaData.AttachmentType.valueOf(contentType)) {
                 log.error("Attachment type is unknown, doing nothing");
             }
 
-        } else if (attAction == GenericArtifact.ArtifactActionValue.UNKNOWN) {
+        } else if (GenericArtifact.ArtifactActionValue.UNKNOWN == attAction) {
 
             log.error("Attachment action value is unknown");
         }
 
-        if (issue != null) {
+        if (null != issue) {
 
             Date attachmentLastModifiedDate = issue.getUpdateDate().toDate();
 
             com.atlassian.jira.rest.client.domain.Attachment attachment = getLastAttachmentAddByConnectorUser(
                     connection, issue);
 
-            if (attachment != null) {
+            if (null != attachment) {
                 ga.setTargetArtifactLastModifiedDate(GenericArtifactHelper.df
                         .format(attachment.getCreationDate().toDate()));
                 ga.setTargetArtifactVersion(String.valueOf(attachment
@@ -197,7 +197,7 @@ public class JIRAAttachmentHandler {
                     ga.setSourceArtifactId(StringUtils.substringAfterLast(
                             attachment.getSelf().getPath(), "/"));
 
-                    if (artifactData != null) {
+                    if (null != artifactData) {
                         ga.setSourceArtifactVersion(artifactData
                                 .getSourceArtifactVersion());
                         ga.setSourceArtifactLastModifiedDate(artifactData

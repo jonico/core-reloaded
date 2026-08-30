@@ -87,7 +87,7 @@ public class SFEEAppHandler {
         String[] fieldNames = null;
         Object[] fieldValues = null;
         String[] fieldTypes = null;
-        if (flexFields != null) {
+        if (null != flexFields) {
             fieldNames = flexFields.getNames();
             fieldValues = flexFields.getValues();
             fieldTypes = flexFields.getTypes();
@@ -97,7 +97,7 @@ public class SFEEAppHandler {
             fieldValues = flexFields.getValues();
             fieldTypes = flexFields.getTypes();
         }
-        if (fieldNames != null) {
+        if (null != fieldNames) {
             String[] newFieldNames = new String[fieldNames.length + 1];
             // FIXME This does not perform well, why not use a list instead?
             System.arraycopy(fieldNames, 0, newFieldNames, 0, fieldNames.length);
@@ -106,7 +106,7 @@ public class SFEEAppHandler {
         } else {
             fieldNames = new String[] { fieldName };
         }
-        if (fieldValues != null) {
+        if (null != fieldValues) {
             Object[] newfieldValues = new Object[fieldValues.length + 1];
             // FIXME This does not perform well, why not use a list instead?
             System.arraycopy(fieldValues, 0, newfieldValues, 0,
@@ -116,7 +116,7 @@ public class SFEEAppHandler {
         } else {
             fieldValues = new Object[] { value };
         }
-        if (fieldTypes != null) {
+        if (null != fieldTypes) {
             String[] newfieldTypes = new String[fieldTypes.length + 1];
             // FIXME This does not perform well, why not use a list instead?
             System.arraycopy(fieldTypes, 0, newfieldTypes, 0, fieldTypes.length);
@@ -141,7 +141,7 @@ public class SFEEAppHandler {
             CommentSoapList commentList = mSfSoap.getCommentList(mSessionId,
                     artifact.getId());
             CommentSoapRow[] comments = commentList.getDataRows();
-            if (comments != null) {
+            if (null != comments) {
                 for (CommentSoapRow comment : comments) {
                     String createdBy = comment.getCreatedBy();
                     Date createdDate = comment.getDateCreated();
@@ -186,15 +186,15 @@ public class SFEEAppHandler {
             HashMap<String, List<TrackerFieldSoapDO>> fieldsMap,
             String fieldName) {
         List<TrackerFieldSoapDO> fieldsList = fieldsMap.get(fieldName);
-        if (fieldsList != null) {
-            if (fieldsList.size() == 1) {
+        if (null != fieldsList) {
+            if (1 == fieldsList.size()) {
                 return fieldsList.get(0);
-            } else if (fieldsList.size() > 1) {
+            } else if (1 < fieldsList.size()) {
 
                 // FIXME What is a configurable field in this context?
                 // TODO We are in trouble. We have a configurable field and a
                 // flex field with the same name
-            } else if (fieldsList.size() == 0) {
+            } else if (0 == fieldsList.size()) {
                 // No way. This should never happen.
             }
         } else {

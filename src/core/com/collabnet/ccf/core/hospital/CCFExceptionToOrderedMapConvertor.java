@@ -220,7 +220,7 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
             // log.warn("Artifact reached ambulance");
             // first of all we pass the record in our parent method
             Object preprocessedMap = super.convert(record);
-            if (preprocessedMap == null
+            if (null == preprocessedMap
                     || (!(preprocessedMap instanceof IOrderedMap))) {
                 return preprocessedMap;
             }
@@ -238,7 +238,7 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
                     .getMessage());
 
             Throwable cause = messageException.getException().getCause();
-            if (cause != null) {
+            if (null != cause) {
                 map.put(causeExceptionClassColName, cause.getClass().getName());
                 map.put(causeExceptionMessageColName, cause.getMessage());
             } else {
@@ -254,7 +254,7 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
                 stackTraceBuf.append("\n");
             }
             /* Append cause exception stack trace */
-            if (cause != null) {
+            if (null != cause) {
                 stackTraceBuf.append("\n\n");
                 stackTrace = cause.getStackTrace();
                 for (int i = 0; i < stackTrace.length; i++) {
@@ -269,7 +269,7 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
 
             Object data = messageException.getData();
             String dataType = null;
-            if (data != null) {
+            if (null != data) {
                 dataType = data.getClass().getName();
             }
             map.put(dataTypeColName, dataType);
@@ -279,7 +279,7 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
                 dataDoc = (Document) data;
                 element = dataDoc.getRootElement();
             }
-            if (element != null) {
+            if (null != element) {
                 try {
                     GenericArtifact ga = GenericArtifactHelper
                             .createGenericArtifactJavaObject(dataDoc);
@@ -319,7 +319,7 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
                         // use the earliest date possible
                         sourceLastModifiedDate = new Date(0);
                     }
-                    if (sourceLastModifiedDate == null) {
+                    if (null == sourceLastModifiedDate) {
                         sourceLastModifiedDate = new Date(0);
                     }
                     java.sql.Timestamp sourceTime = new Timestamp(
@@ -449,7 +449,7 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
     }
 
     public static final String removeInvalidXmlCharacters(String input) {
-        if (input == null) {
+        if (null == input) {
             return input;
         }
         char character;
@@ -457,10 +457,10 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
         for (int i = 0; i < input.length(); i++) {
             character = input.charAt(i);
             //see http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char for valid XML character list.
-            if ((character == 0x9) || (character == 0xA) || (character == 0xD)
-                    || ((character >= 0x20) && (character <= 0xD7FF))
-                    || ((character >= 0xE000) && (character <= 0xFFFD))
-                    || ((character >= 0x10000) && (character <= 0x10FFFF))) {
+            if ((0x9 == character) || (0xA == character) || (0xD == character)
+                    || ((0x20 <= character) && (0xD7FF >= character))
+                    || ((0xE000 <= character) && (0xFFFD >= character))
+                    || ((0x10000 <= character) && (0x10FFFF >= character))) {
                 sb.append(character);
             }
         }

@@ -348,7 +348,7 @@ public class SFEEReader extends AbstractReader<Connection> {
             throw new CCFRuntimeException(cause, e);
         }
         Date lastModifiedDate = this.getLastModifiedDate(syncInfo);
-        if (lastModifiedDate == null) {
+        if (null == lastModifiedDate) {
             lastModifiedDate = new Date(0);
         }
         ArrayList<ArtifactState> artifactStates = new ArrayList<ArtifactState>();
@@ -365,7 +365,7 @@ public class SFEEReader extends AbstractReader<Connection> {
         } finally {
             this.disconnect(connection);
         }
-        if (artifactRows != null) {
+        if (null != artifactRows) {
             for (ArtifactSoapDO artifact : artifactRows) {
                 String artifactId = artifact.getId();
                 ArtifactState artifactState = new ArtifactState();
@@ -410,7 +410,7 @@ public class SFEEReader extends AbstractReader<Connection> {
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<Connection> connectionManager) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -557,7 +557,7 @@ public class SFEEReader extends AbstractReader<Connection> {
     public void validate(List exceptions) {
         super.validate(exceptions);
 
-        if (getResyncUserName() == null) {
+        if (null == getResyncUserName()) {
             log.warn("resyncUserName-property has not been set, so that initial resyncs after artifact creation are not possible.");
         }
 
@@ -569,11 +569,11 @@ public class SFEEReader extends AbstractReader<Connection> {
             exceptions.add(new ValidationException("username-property not set",
                     this));
         }
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
-        if (exceptions.size() == 0) {
+        if (0 == exceptions.size()) {
             trackerHandler = new SFEETrackerHandler(getServerUrl(),
                     getConnectionManager());
             attachmentHandler = new SFEEAttachmentHandler(getServerUrl(),

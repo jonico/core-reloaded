@@ -77,17 +77,17 @@ public class Requirement extends ActiveXComponent implements IRequirement {
 
             attachment.putFileName(fileName);
             attachment.putType(type);
-            if (description != null) {
+            if (null != description) {
                 attachment.putDescription(description);
             }
             attachment.post();
             return attachment.getId();
         } finally {
-            if (attachment != null) {
+            if (null != attachment) {
                 attachment.safeRelease();
                 attachment = null;
             }
-            if (attachmentFactory != null) {
+            if (null != attachmentFactory) {
                 attachmentFactory.safeRelease();
                 attachmentFactory = null;
             }
@@ -110,7 +110,7 @@ public class Requirement extends ActiveXComponent implements IRequirement {
 
             String shortName = fileName;
             int slash = shortName.lastIndexOf(File.separatorChar);
-            if (slash >= 0) {
+            if (0 <= slash) {
                 shortName = shortName.substring(slash + 1);
             }
 
@@ -141,7 +141,7 @@ public class Requirement extends ActiveXComponent implements IRequirement {
         double ddate = 0.0;
         if (res.isNull()) {
             return null;
-        } else if (res.getvt() == Variant.VariantString) {
+        } else if (Variant.VariantString == res.getvt()) {
             logger.warn("Field " + field
                     + " should have contained a date but contained a string: "
                     + res.getString());
@@ -167,9 +167,9 @@ public class Requirement extends ActiveXComponent implements IRequirement {
 
     public Integer getFieldAsInt(String field) {
         Variant res = Dispatch.call(this, "Field", field);
-        if (res.isNull() || res.getvt() == Variant.VariantDispatch) {
+        if (res.isNull() || Variant.VariantDispatch == res.getvt()) {
             return null;
-        } else if (res.getvt() == Variant.VariantString) {
+        } else if (Variant.VariantString == res.getvt()) {
             logger.warn("Field " + field
                     + " should have contained an int but contained a string: "
                     + res.getString());
@@ -183,10 +183,10 @@ public class Requirement extends ActiveXComponent implements IRequirement {
         Variant res = Dispatch.call(this, "Field", field);
         if (res.isNull()) {
             return null;
-        } else if (res.getvt() == Variant.VariantInt) {
+        } else if (Variant.VariantInt == res.getvt()) {
             int val = res.getInt();
             return Integer.toString(val);
-        } else if (res.getvt() == Variant.VariantDate) {
+        } else if (Variant.VariantDate == res.getvt()) {
             logger.warn("Field " + field
                     + " should have contained a string but contained a date: "
                     + res.getDate());
@@ -295,7 +295,7 @@ public class Requirement extends ActiveXComponent implements IRequirement {
         } catch (Exception e) {
             ; // do nothing
         }
-        if (result == null || result.getvt() != Variant.VariantDispatch) {
+        if (null == result || Variant.VariantDispatch != result.getvt()) {
             return null;
         } else {
             Dispatch dispatch = result.getDispatch();
@@ -390,7 +390,7 @@ public class Requirement extends ActiveXComponent implements IRequirement {
             boolean maxRetryCountReached = retryCount >= (size == 0 ? maximumAttachmentRetryCount
                     : maximumAttachmentRetryCount);
             if (!attachmentFile.exists()
-                    || (attachmentFile.length() == 0 && !maxRetryCountReached)) {
+                    || (0 == attachmentFile.length() && !maxRetryCountReached)) {
                 /*
                  * If an attachment is still being uploaded when CCF tries to
                  * retrieve it, the QC 9.2 COM-API seems to succeed, but the
@@ -541,7 +541,7 @@ public class Requirement extends ActiveXComponent implements IRequirement {
             fileSize = Dispatch.get(item, "FileSize").getInt();
             break;
         }
-        if (fileName != null) {
+        if (null != fileName) {
             long currentDownloadedFileLenght = new File(fileName).length();
             return (currentDownloadedFileLenght > fileSize) ? currentDownloadedFileLenght
                     : fileSize;

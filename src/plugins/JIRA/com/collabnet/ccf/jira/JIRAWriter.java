@@ -120,7 +120,7 @@ public class JIRAWriter extends AbstractWriter<JIRAConnection> {
 
                 BasicIssue result = createIssue(ga, projectKey, issueType,
                         connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Created issue " + result.getId()
                             + " with data from " + ga.getSourceArtifactId());
                 }
@@ -174,7 +174,7 @@ public class JIRAWriter extends AbstractWriter<JIRAConnection> {
             Issue issue = attachmentHandler.handleAttachment(connection, ga,
                     targetParentArtifactId, this.getUserName());
 
-            if (issue == null) {
+            if (null == issue) {
                 issue = connection.getJiraRestClient().getIssueClient()
                         .getIssue(targetParentArtifactId, pm);
             }
@@ -284,7 +284,7 @@ public class JIRAWriter extends AbstractWriter<JIRAConnection> {
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<JIRAConnection> connectionManager, Document ga) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -389,7 +389,7 @@ public class JIRAWriter extends AbstractWriter<JIRAConnection> {
 
                 Issue result = updateIssue(ga, projectName, workItemType,
                         connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Updated work item " + result.getKey()
                             + " with data from " + ga.getSourceArtifactId());
                 }
@@ -423,19 +423,19 @@ public class JIRAWriter extends AbstractWriter<JIRAConnection> {
     public void validate(List exceptions) {
         super.validate(exceptions);
 
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property not set");
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
 
-        if (getUserName() == null) {
+        if (null == getUserName()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
 
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));

@@ -190,7 +190,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
      * method will only handle Dom4J documents encoded in the generic XML schema
      */
     public Object[] process(Object data) {
-        if (data == null) {
+        if (null == data) {
             String cause = "Expected Document. Null record not permitted.";
             log.error(cause);
             throw new CCFRuntimeException(cause);
@@ -328,15 +328,15 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
      */
     public void validate(List exceptions) {
         super.validate(exceptions);
-        if (getIdentityMappingDatabaseReader() == null) {
+        if (null == getIdentityMappingDatabaseReader()) {
             log.error("identityMappingDatabaseReader-property not set");
             exceptions.add(new ValidationException(
                     "identityMappingDatabaseReader-property not set", this));
         }
-        if (getHospitalDatabaseReader() == null) {
+        if (null == getHospitalDatabaseReader()) {
             log.warn("Entity service does not check whether artifacts are quarantined since hospitalDatabaseReader property has not been set.");
         }
-        if (getParentIdentityMappingDatabaseReader() == null) {
+        if (null == getParentIdentityMappingDatabaseReader()) {
             log.warn("Entity service will not support advanced dependency features since parentIdentityMappingDatabaseReader property has not been set.");
         }
     }
@@ -391,19 +391,19 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                 1000);
 
         Object[] results = null;
-        if (resultSet == null || resultSet.length == 0) {
+        if (null == resultSet || 0 == resultSet.length) {
             log.debug(sourceArtifactId + "-" + sourceRepositoryId + "-"
                     + sourceSystemId + "-" + "???" + "-" + targetSystemId
                     + " are not mapped.");
-        } else if (resultSet.length == 1) {
+        } else if (1 == resultSet.length) {
             if (resultSet[0] instanceof OrderedHashMap) {
                 OrderedHashMap result = (OrderedHashMap) resultSet[0];
-                if (result.size() == 5) {
+                if (5 == result.size()) {
                     results = new Object[5];
                     results[0] = result.get(0);
                     Timestamp timeStamp = (Timestamp) result.get(1);
                     Date date;
-                    if (timeStamp == null) {
+                    if (null == timeStamp) {
                         // use earliest date possible
                         date = new Date(0);
                     } else {
@@ -513,7 +513,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
             // identityMappingDatabaseReader.disconnect();
             if (artifactAction
                     .equals(GenericArtifactHelper.ARTIFACT_ACTION_RESYNC)) {
-                if (resultSet == null || resultSet.length == 0) {
+                if (null == resultSet || 0 == resultSet.length) {
                     if (++waitCount < this.getIdentityMapEventWaitCount()) {
                         waitForIdentityMappedEvent = true;
                         try {
@@ -557,19 +557,19 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
             }
         } while (waitForIdentityMappedEvent);
         Object[] results = null;
-        if (resultSet == null || resultSet.length == 0) {
+        if (null == resultSet || 0 == resultSet.length) {
             log.debug(sourceArtifactId + "-" + sourceRepositoryId + "-"
                     + sourceSystemId + "-" + targetRepositoryId + "-"
                     + targetSystemId + " are not mapped.");
-        } else if (resultSet.length == 1) {
+        } else if (1 == resultSet.length) {
             if (resultSet[0] instanceof OrderedHashMap) {
                 OrderedHashMap result = (OrderedHashMap) resultSet[0];
-                if (result.size() == 4) {
+                if (4 == result.size()) {
                     results = new Object[4];
                     results[0] = result.get(0);
                     Timestamp timeStamp = (Timestamp) result.get(1);
                     Date date;
-                    if (timeStamp == null) {
+                    if (null == timeStamp) {
                         // use earliest date possible
                         date = new Date(0);
                     } else {
@@ -662,7 +662,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
             boolean replayedArtifact = (transactionId != null && !transactionId
                     .equals(GenericArtifact.VALUE_UNKNOWN));
 
-            if (sourceArtifactVersion == null
+            if (null == sourceArtifactVersion
                     || sourceArtifactVersion
                             .equals(GenericArtifact.VALUE_UNKNOWN)) {
                 sourceArtifactVersion = GenericArtifactHelper.ARTIFACT_VERSION_FORCE_RESYNC;
@@ -710,7 +710,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                     sourceSystemId, sourceRepositoryId, targetSystemId,
                     targetRepositoryId, artifactType);
 
-            if (results != null && results.length != 0) {
+            if (null != results && 0 != results.length) {
                 targetArtifactIdFromTable = results[0].toString();
                 Date sourceArtifactLastModifiedDateFromTable = (Date) results[1];
                 String sourceArtifactVersionFromTable = results[2].toString();
@@ -725,8 +725,8 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                 // || sourceArtifactVersionLongFromTable >=
                 // sourceArtifactVersionLong) {
                 if (sourceArtifactVersionLongFromTable >= sourceArtifactVersionLong) {
-                    if (sourceArtifactVersionLong == -1
-                            && sourceArtifactVersionLongFromTable == -1) {
+                    if (-1 == sourceArtifactVersionLong
+                            && -1 == sourceArtifactVersionLongFromTable) {
                         log.warn("It seems as if artifact synchronization is done exclusively with a system that does not support version control for combination "
                                 + sourceArtifactId
                                 + "-"
@@ -797,7 +797,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                         targetParentRepositoryId,
                         GenericArtifactHelper.ARTIFACT_TYPE_PLAIN_ARTIFACT);
                 String targetParentArtifactId = null;
-                if (resultsDep != null && resultsDep[0] != null) {
+                if (null != resultsDep && null != resultsDep[0]) {
                     targetParentArtifactId = resultsDep[0].toString();
                 }
                 if (StringUtils.isEmpty(targetParentArtifactId)) {
@@ -881,7 +881,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                 String sourceParentArtifactId = XPathUtils.getAttributeValue(
                         element,
                         GenericArtifactHelper.DEP_PARENT_SOURCE_ARTIFACT_ID);
-                if (sourceParentArtifactId != null
+                if (null != sourceParentArtifactId
                         && !sourceParentArtifactId
                                 .equals(GenericArtifact.VALUE_UNKNOWN)) {
                     // looks as if dependency lookup has been required
@@ -893,7 +893,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                                         element,
                                         GenericArtifactHelper.DEP_PARENT_TARGET_ARTIFACT_ID,
                                         GenericArtifact.VALUE_NONE);
-                    } else if (getParentIdentityMappingDatabaseReader() == null) {
+                    } else if (null == getParentIdentityMappingDatabaseReader()) {
                         log.warn("Seems the artifact required advanced dependency lookup but this feature has not been configured. "
                                 + "Skipped parent lookup for artifact with source artifact id "
                                 + sourceArtifactId
@@ -922,16 +922,16 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                                 GenericArtifactHelper.ARTIFACT_TYPE_PLAIN_ARTIFACT);
                         String targetParentArtifactId = null;
                         String targetParentRepositoryId = null;
-                        if (resultsDep != null && resultsDep[0] != null) {
+                        if (null != resultsDep && null != resultsDep[0]) {
                             targetParentArtifactId = resultsDep[0].toString();
                         }
-                        if (resultsDep != null && resultsDep[4] != null) {
+                        if (null != resultsDep && null != resultsDep[4]) {
                             targetParentRepositoryId = resultsDep[4].toString();
                         }
                         if (StringUtils.isEmpty(targetParentArtifactId)
                                 || StringUtils
                                         .isEmpty(targetParentRepositoryId)) {
-                            if (getProjectMappingDatabaseReader() != null) {
+                            if (null != getProjectMappingDatabaseReader()) {
                                 // if it turns out that the repository the
                                 // parent artifact belongs to is not mapped at
                                 // all,
@@ -1050,7 +1050,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                 }
             }
 
-            if (targetArtifactIdFromTable != null) {
+            if (null != targetArtifactIdFromTable) {
                 XPathUtils.addAttribute(element,
                         GenericArtifactHelper.TARGET_ARTIFACT_ID,
                         targetArtifactIdFromTable);
@@ -1149,7 +1149,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
         Object[] resultSet = null;
         projectMappingDatabaseReader.connect();
         resultSet = projectMappingDatabaseReader.next(inputParameters, 1);
-        if (resultSet == null || resultSet.length == 0) {
+        if (null == resultSet || 0 == resultSet.length) {
             return false;
         }
         return true;
@@ -1190,7 +1190,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
 
         // only if a connection to the hospital table is possible we can skip
         // artifacts
-        if (getHospitalDatabaseReader() == null) {
+        if (null == getHospitalDatabaseReader()) {
             return false;
         }
 
@@ -1208,7 +1208,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
         Object[] resultSet = hospitalDatabaseReader
                 .next(inputParameters, 10000);
         // hospitalDatabaseReader.disconnect();
-        if (resultSet == null || resultSet.length == 0) {
+        if (null == resultSet || 0 == resultSet.length) {
             // artifact is not in the hospital
             return false;
         } else if (onlyCheckIfQuarantinedArtifactExists) {
@@ -1232,11 +1232,11 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
         for (Object resultObject : resultSet) {
             if (resultObject instanceof OrderedHashMap) {
                 OrderedHashMap result = (OrderedHashMap) resultObject;
-                if (result.size() == 3) {
+                if (3 == result.size()) {
                     Date sourceArtifactLastModifiedDateFromTable;
                     String hospitalId = result.get(0).toString();
                     Timestamp timeStamp = (Timestamp) result.get(1);
-                    if (timeStamp == null) {
+                    if (null == timeStamp) {
                         // use earliest date possible
                         sourceArtifactLastModifiedDateFromTable = new Date(0);
                     } else {
@@ -1254,8 +1254,8 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                     if (sourceArtifactLastModifiedDateFromTable
                             .after(sourceArtifactLastModifiedDate)
                             || sourceArtifactVersionLongFromTable >= sourceArtifactVersionLong) {
-                        if (sourceArtifactVersionLong == -1
-                                && sourceArtifactVersionLongFromTable == -1) {
+                        if (-1 == sourceArtifactVersionLong
+                                && -1 == sourceArtifactVersionLongFromTable) {
                             log.warn("It seems as if artifact synchronization is done exclusively with a system that does not support version control, so artifact from combination "
                                     + sourceArtifactId
                                     + "-"

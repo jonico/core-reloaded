@@ -51,7 +51,7 @@ public class TFSMetaData {
 
     public static String formatDate(Date date) {
         String formattedDate = null;
-        if (date != null) {
+        if (null != date) {
             String dateString = isoLocal.format(date);
             formattedDate = dateString.substring(0, dateString.length() - 1);
         }
@@ -60,13 +60,13 @@ public class TFSMetaData {
 
     public static TFSType retrieveTFSTypeFromRepositoryId(String repositoryId) {
 
-        if (repositoryId == null) {
+        if (null == repositoryId) {
             return TFSType.UNKNOWN;
         }
 
         int delimiterCounter = repositoryId.split(TFS_REPOSITORY_DELIMITER).length;
 
-        if (delimiterCounter != 3) {
+        if (3 != delimiterCounter) {
             return TFSType.UNKNOWN;
         } else {
             return TFSType.WORKITEM;

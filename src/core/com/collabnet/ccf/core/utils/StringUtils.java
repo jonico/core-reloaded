@@ -669,10 +669,10 @@ public class StringUtils implements FormatterProxy {
      *         also returns <code>null</code>
      */
     public static String convertEntities(String text) {
-        if (text == null) {
+        if (null == text) {
             return (null);
         }
-        if (text.indexOf('&') < 0) {
+        if (0 > text.indexOf('&')) {
             /* There are no entities, nothing to do */
             return (text);
         }
@@ -680,7 +680,7 @@ public class StringUtils implements FormatterProxy {
         StringBuffer sb = new StringBuffer(originalTextLength);
         for (int i = 0; i < originalTextLength; i++) {
             int whereAmp = text.indexOf('&', i);
-            if (whereAmp < 0) {
+            if (0 > whereAmp) {
                 /* no more &s, we are done: Append all remaining text */
                 sb.append(text.substring(i));
                 break;
@@ -693,7 +693,7 @@ public class StringUtils implements FormatterProxy {
                 String possEntity = text.substring(i + 1,
                         Math.min(i + LONGEST_ENTITY, text.length()));
                 char t = potentialEntityToChar(possEntity);
-                if (t != 0) {
+                if (0 != t) {
                     /* It was a good entity, keep its equivalent char. */
                     sb.append(t);
                     /* Avoid reprocessing chars forming the entity */
@@ -738,7 +738,7 @@ public class StringUtils implements FormatterProxy {
         for (int i = 0; i < html.length(); i++) {
             char c = html.charAt(i);
             String entity = CHAR_ENTITY_MAPPING.get(c);
-            if (entity != null) {
+            if (null != entity) {
                 sb.append('&');
                 sb.append(entity);
                 sb.append(';');
@@ -765,15 +765,15 @@ public class StringUtils implements FormatterProxy {
      */
     public static char entityToChar(String entity) {
         Character code = (Character) ENTITY_MAPPING.get(entity);
-        if (code != null) {
+        if (null != code) {
             return (code.charValue());
         }
         code = (Character) ENTITY_MAPPING.get(entity.toLowerCase());
-        if (code != null) {
+        if (null != code) {
             return (code.charValue());
         }
         /* Check at least having &#1; */
-        if (entity.length() < 2) {
+        if (2 > entity.length()) {
             return (0);
         }
 
@@ -782,11 +782,11 @@ public class StringUtils implements FormatterProxy {
                 case 'x':
                 case 'X':
                     /* Handle entities denoted in hexadecimal */
-                    if (entity.charAt(1) != '#') {
+                    if ('#' != entity.charAt(1)) {
                         return (0);
                     }
                     /* Ensure at least having &x#1; */
-                    if (entity.length() < 3) {
+                    if (3 > entity.length()) {
                         return (0);
                     }
                     return (char) Integer.parseInt(entity.substring(2), 16);
@@ -863,7 +863,7 @@ public class StringUtils implements FormatterProxy {
      *         specified <code>null</code> is also returned
      */
     public static String stripHTML(String text) {
-        if (text != null) {
+        if (null != text) {
             text = text.replaceAll(BR_PATTERN, "\n");
             text = text.replaceAll(HTML_PATTERN, EMPTY_STRING);
             text = StringUtils.convertEntities(text);
@@ -885,7 +885,7 @@ public class StringUtils implements FormatterProxy {
      *         <code>null</code> is specified <code>null</code> is also returned
      */
     public static String stripSpecificDelimiter(String text) {
-        if (text != null) {
+        if (null != text) {
             return (text.replaceAll(UNDERSCORE_PATTERN, EMPTY_STRING));
         } else {
             return (null);

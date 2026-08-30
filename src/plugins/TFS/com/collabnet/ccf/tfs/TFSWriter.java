@@ -124,7 +124,7 @@ public class TFSWriter extends AbstractWriter<TFSConnection> {
 
                 WorkItem result = createWorkItem(ga, collectionName,
                         projectName, workItemType, connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Created work item " + result.getID()
                             + " with data from " + ga.getSourceArtifactId());
                 }
@@ -296,7 +296,7 @@ public class TFSWriter extends AbstractWriter<TFSConnection> {
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<TFSConnection> connectionManager, Document ga) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -408,7 +408,7 @@ public class TFSWriter extends AbstractWriter<TFSConnection> {
 
                 WorkItem result = updateWorkItem(ga, collectionName,
                         projectName, workItemType, connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Updated work item " + result.getID()
                             + " with data from " + ga.getSourceArtifactId());
                 }
@@ -442,19 +442,19 @@ public class TFSWriter extends AbstractWriter<TFSConnection> {
     public void validate(List exceptions) {
         super.validate(exceptions);
 
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property not set");
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
 
-        if (getUserName() == null) {
+        if (null == getUserName()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
 
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));

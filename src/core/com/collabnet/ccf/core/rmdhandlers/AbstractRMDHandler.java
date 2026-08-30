@@ -73,7 +73,7 @@ public abstract class AbstractRMDHandler {
         String query = EMPTY_STRING;
         String filterVal = getValForRMDConfig(rmdID);
         String[] filterVals = splitFilterValToArray(filterVal);
-        if (filterVals != null && filterVals.length == 2) {
+        if (null != filterVals && 2 == filterVals.length) {
             query = filterVals[1];
         }
         return query;
@@ -83,7 +83,7 @@ public abstract class AbstractRMDHandler {
         String filterType = EMPTY_STRING;
         String filterVal = getValForRMDConfig(rmdID);
         String[] filterVals = splitFilterValToArray(filterVal);
-        if (filterVals != null && filterVals.length == 2) {
+        if (null != filterVals && 2 == filterVals.length) {
             filterType = filterVals[0];
         }
         return filterType;

@@ -27,7 +27,7 @@ public class TestScrumWorksCreateandDeleteThemeInTeamForge extends TFSWPIntegrat
 
     @AfterEach
     public void tearDown() throws ScrumWorksException, RemoteException {
-        if (theme != null) {
+        if (null != theme) {
             getSWPTester().getSWPEndpoint().deleteTheme(theme.getId());
         }
         super.tearDown();

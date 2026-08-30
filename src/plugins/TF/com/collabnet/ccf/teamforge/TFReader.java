@@ -242,7 +242,7 @@ public class TFReader extends AbstractReader<Connection> {
         artifactIds.add(artifactId);
         List<GenericArtifact> attachments = null;
         try {
-            if (getIdentityMappingDatabaseReader() != null) {
+            if (null != getIdentityMappingDatabaseReader()) {
                 lastModifiedDate = artifactLastModifiedDate;
             }
             attachments = attachmentHandler.listAttachments(connection,
@@ -349,7 +349,7 @@ public class TFReader extends AbstractReader<Connection> {
 
                 if (!isIgnore) {
                     // we're interested in the comments.
-                    if (getIdentityMappingDatabaseReader() != null) {
+                    if (null != getIdentityMappingDatabaseReader()) {
                         lastModifiedDate = artifactLastModifiedDate;
                     }
                     TFAppHandler appHandler = new TFAppHandler(connection);
@@ -392,12 +392,12 @@ public class TFReader extends AbstractReader<Connection> {
                     ArtifactDependencyRow[] parents = trackerHandler
                             .getArtifactParentDependencies(connection,
                                     artifactId);
-                    if (parents.length == 0) {
+                    if (0 == parents.length) {
                         // we do not have any parent, so maybe we set a planning folder as our parent
                         if (connection.supports53()) {
                             String planningFolderId = artifact
                                     .getPlanningFolderId();
-                            if (planningFolderId == null) {
+                            if (null == planningFolderId) {
                                 genericArtifact
                                         .setDepParentSourceArtifactId(GenericArtifact.VALUE_NONE);
                             } else {
@@ -551,7 +551,7 @@ public class TFReader extends AbstractReader<Connection> {
         Connection connection = connect(syncInfo);
         try {
             Date lastModifiedDate = this.getLastModifiedDate(syncInfo);
-            if (lastModifiedDate == null) {
+            if (null == lastModifiedDate) {
                 lastModifiedDate = new Date(0);
             }
             ArrayList<ArtifactState> artifactStates = new ArrayList<ArtifactState>();
@@ -567,7 +567,7 @@ public class TFReader extends AbstractReader<Connection> {
                     log.error(cause, e);
                     throw new CCFRuntimeException(cause, e);
                 }
-                if (artifactRows != null) {
+                if (null != artifactRows) {
                     for (ArtifactDetailRow artifact : artifactRows) {
                         String artifactId = artifact.getId();
                         ArtifactState artifactState = new ArtifactState();
@@ -599,7 +599,7 @@ public class TFReader extends AbstractReader<Connection> {
                         log.error(cause, e);
                         throw new CCFRuntimeException(cause, e);
                     }
-                    if (artifactRows != null) {
+                    if (null != artifactRows) {
                         for (PlanningFolderDO planningFolder : artifactRows) {
                             String artifactId = planningFolder.getId();
                             ArtifactState artifactState = new ArtifactState();
@@ -635,7 +635,7 @@ public class TFReader extends AbstractReader<Connection> {
                         ArtifactDO artifactData = trackerHandler
                                 .getChangedArtifactDataToForce(connection,
                                         artifactId);
-                        if (artifactData != null
+                        if (null != artifactData
                                 && artifactData.getFolderId().equals(
                                         sourceRepositoryId)) {
                             ArtifactState artifactState = new ArtifactState();
@@ -668,7 +668,7 @@ public class TFReader extends AbstractReader<Connection> {
                             PlanningFolderDO planningFolder = trackerHandler
                                     .getChangedPlanningFolderToForce(
                                             connection, artifactId);
-                            if (planningFolder != null
+                            if (null != planningFolder
                                     && planningFolder.getProjectId().equals(
                                             projectId)) {
                                 ArtifactState artifactState = new ArtifactState();
@@ -756,7 +756,7 @@ public class TFReader extends AbstractReader<Connection> {
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<Connection> connectionManager) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -1025,11 +1025,11 @@ public class TFReader extends AbstractReader<Connection> {
             exceptions.add(new ValidationException("username-property not set",
                     this));
         }
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
-        if (exceptions.size() == 0) {
+        if (0 == exceptions.size()) {
             trackerHandler = new TFTrackerHandler(getServerUrl(),
                     getConnectionManager());
             attachmentHandler = new TFAttachmentHandler(getServerUrl(),
@@ -1041,7 +1041,7 @@ public class TFReader extends AbstractReader<Connection> {
         boolean doRetrieveParentInfo = isRetrieveParentInfoForTrackerItems();
         String rmdConfigValue = this.getRmdConfigExtractor().getRMDConfigValue(
                 rmdID, RMD_TF_RETRIEVE_PARENT_INFO_FOR_TRACKER_ITEMS);
-        if (rmdConfigValue != null) {
+        if (null != rmdConfigValue) {
             doRetrieveParentInfo = Boolean.parseBoolean(rmdConfigValue);
         }
         return doRetrieveParentInfo;

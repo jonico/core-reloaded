@@ -67,7 +67,7 @@ public class GenericArtifactMultiLineParser extends Component implements IDataPr
      *             if the record type is not supported
      */
     public Object[] process(Object record) throws ProcessingException {
-        if (record == null)
+        if (null == record)
             return null;
 
         Document dom4JXmlDocument;

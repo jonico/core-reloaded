@@ -258,7 +258,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
 
     public String getArtifactLastModifiedTime(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(ARTIFACT_LAST_MODIFIED_DATE);
-        if (node == null)
+        if (null == node)
             return null;
         String dbTime = node.getText();
         if (!StringUtils.isEmpty(dbTime)) {
@@ -272,7 +272,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
 
     public String getArtifactLastModifiedVersion(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(ARTIFACT_LAST_MODIFIED_VERSION);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -308,7 +308,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     public String getConflictResolutionPriority(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(CONFLICT_RESOLUTION_PRIORITY);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -345,7 +345,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
         String repositoryKey = sourceSystemId + ":" + sourceRepositoryId + ":"
                 + targetSystemId + ":" + targetRepositoryId;
         RepositoryRecord record = repositoryRecordHashMap.get(repositoryKey);
-        if (record == null) {
+        if (null == record) {
             return null;
         } else {
             return record.getSyncInfo();
@@ -385,7 +385,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
         // LAST_SOURCE_ARTIFACT_MODIFICATION_DATE
         Node node = syncInfo
                 .selectSingleNode(LAST_SOURCE_ARTIFACT_MODIFICATION_DATE);
-        if (node == null)
+        if (null == node)
             return null;
         String dbTime = node.getText();
         if (!StringUtils.isEmpty(dbTime)) {
@@ -441,11 +441,11 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
         String repositoryKey = sourceSystemId + ":" + sourceRepositoryId + ":"
                 + targetSystemId + ":" + targetRepositoryId;
         RepositoryRecord record = repositoryRecordHashMap.get(repositoryKey);
-        if (record == null) {
+        if (null == record) {
             return "Not in queue at the moment.";
         } else {
             List<ArtifactState> list = record.getArtifactsToBeReadList();
-            if (list == null) {
+            if (null == list) {
                 return "0";
             } else {
                 return Integer.toString(list.size());
@@ -472,15 +472,15 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
         for (String key : keys) {
             if (key.startsWith(repositoryKey)) {
                 RepositoryRecord record = repositoryRecordHashMap.get(key);
-                if (record != null) {
+                if (null != record) {
                     List<ArtifactState> list = record
                             .getArtifactsToBeReadList();
-                    if (list != null) {
+                    if (null != list) {
                         number += list.size();
                     }
                     List<GenericArtifact> shippedList = record
                             .getArtifactsToBeShippedList();
-                    if (shippedList != null) {
+                    if (null != shippedList) {
                         number += shippedList.size();
                     }
                 }
@@ -523,7 +523,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     public String getSourceRepositoryId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(SOURCE_REPOSITORY_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -588,14 +588,14 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
             return xsltDirectory;
         }
         Node node = syncInfo.selectSingleNode(SOURCE_REPOSITORY_KIND);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     public String getSourceSystemEncoding(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(SOURCE_SYSTEM_ENCODING);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -609,7 +609,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     public String getSourceSystemId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(SOURCE_SYSTEM_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -629,14 +629,14 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
             return getRepositoryMappingDirectionId(syncInfo);
         }
         Node node = syncInfo.selectSingleNode(SOURCE_SYSTEM_KIND);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     public String getSourceSystemTimezone(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(SOURCE_SYSTEM_TIMEZONE);
-        if (node == null)
+        if (null == node)
             return null;
         return convertTimeZoneFromCCF2xDataBaseFormat(node.getText());
     }
@@ -650,7 +650,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     public String getTargetRepositoryId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(TARGET_REPOSITORY_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -670,14 +670,14 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
             return getFieldMappingKind(syncInfo);
         }
         Node node = syncInfo.selectSingleNode(TARGET_REPOSITORY_KIND);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     public String getTargetSystemEncoding(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(TARGET_SYSTEM_ENCODING);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -691,7 +691,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     public String getTargetSystemId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(TARGET_SYSTEM_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -711,14 +711,14 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
             return getRepositoryMappingId(syncInfo);
         }
         Node node = syncInfo.selectSingleNode(TARGET_SYSTEM_KIND);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     public String getTargetSystemTimezone(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(TARGET_SYSTEM_TIMEZONE);
-        if (node == null)
+        if (null == node)
             return null;
         return convertTimeZoneFromCCF2xDataBaseFormat(node.getText());
     }
@@ -730,7 +730,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
 
     public boolean isArtifactForced(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(FORCED_ARTIFACT);
-        if (node == null)
+        if (null == node)
             return false;
         String val = node.getText();
         if (!StringUtils.isEmpty(val)) {
@@ -824,7 +824,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
             return null;
         }
 
-        if (getAutoRestartPeriod() > 0) {
+        if (0 < getAutoRestartPeriod()) {
             if (new Date().getTime() - startedDate.getTime() > getAutoRestartPeriod()) {
                 log.debug("Preparing to restart CCF, flushing buffers ...");
                 setRestartConnector(true);
@@ -844,7 +844,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                 + sourceRepositoryId + ", target systemId " + targetSystemId
                 + " and target repository id " + targetRepositoryId);
         RepositoryRecord record = repositoryRecordHashMap.get(repositoryKey);
-        if (record == null) {
+        if (null == record) {
             log.debug("No RepositoryRecord available for source system id"
                     + sourceSystemId + ", source repository id "
                     + sourceRepositoryId + ", target systemId "
@@ -982,7 +982,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                             }
                         } else {
                             retry = true;
-                            if (numberOfTries == 1) {
+                            if (1 == numberOfTries) {
                                 // first try, long error message
                                 log.warn(
                                         "Network related problem occurred while connecting to external system. Try operation again",
@@ -1092,7 +1092,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                             // As per java documentation Document.clone() method provides
                             //detached and deep copy of the Object
                             Document tempSyncInfo = (Document) syncInfo.clone();
-                            if (getIdentityMappingDatabaseReader() != null) {
+                            if (null != getIdentityMappingDatabaseReader()) {
                                 // Update the syncinfo with the artifact lastmodifiedtime and lastModifiedVersion
                                 // fetched from the identity mapping.Modifying the syncinfo does not has any side effects
                                 // because artifactsToBeShippedList has already been populated with the artifact data
@@ -1105,7 +1105,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                             }
                             GenericArtifact artifactData = this
                                     .getArtifactData(tempSyncInfo, artifactId);
-                            if (artifactData != null) {
+                            if (null != artifactData) {
                                 log.debug("Finding out whether artifact data is stale ...");
                                 if (isArtifactStale(artifactState, artifactData)) {
                                     log.debug("Artifact data is stale, pick up in next update cycle ...");
@@ -1172,7 +1172,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                                 }
                             } else {
                                 retry = true;
-                                if (numberOfTries == 1) {
+                                if (1 == numberOfTries) {
                                     // first try, long error message
                                     log.warn(
                                             "Network related problem occurred while retrieving data for artifact "
@@ -1464,23 +1464,23 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
 
     @SuppressWarnings("unchecked")
     public void validate(List exceptions) {
-        if (getConnectionManager() == null) {
+        if (null == getConnectionManager()) {
             log.error("connectionManager property is not set");
             exceptions.add(new ValidationException(
                     "connectionManager property is not set", this));
         }
 
-        if (getSleepInterval() == -1) {
+        if (-1 == getSleepInterval()) {
             log.error("sleepInterval is not set");
             exceptions.add(new ValidationException("sleepInterval is not set",
                     this));
         }
 
-        if (getHospitalDatabaseReader() == null) {
+        if (null == getHospitalDatabaseReader()) {
             log.warn("Reader will not poll hospital for quarantined entries since hospitalDatabaseReader property has not been set.");
         }
 
-        if (getNameOfEntityService() == null) {
+        if (null == getNameOfEntityService()) {
             log.warn("Retransformation of replayed artifacts is not configured since nameOfEntityService property has not been set.");
         }
 
@@ -1500,28 +1500,28 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
 
     protected String getExternalAppLinkId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(EXTERNAL_APP_LINK_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     protected String getFieldMappingKind(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(FIELD_MAPPING_KIND);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     protected String getFieldMappingName(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(FIELD_MAPPING_NAME);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     protected String getFieldMappingScope(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(FIELD_MAPPING_SCOPE);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -1548,7 +1548,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     protected String getLastSourceArtifactId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(LAST_SOURCE_ARTIFACT_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -1563,7 +1563,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     protected String getLastSourceVersion(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(LAST_SOURCE_ARTIFACT_VERSION);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
@@ -1571,28 +1571,28 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
     protected String getRepositoryMappingDirectionDirection(Document syncInfo) {
         Node node = syncInfo
                 .selectSingleNode(REPOSITORY_MAPPING_DIRECTION_DIRECTION);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     protected String getRepositoryMappingDirectionId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(REPOSITORY_MAPPING_DIRECTION_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     protected String getRepositoryMappingId(Document syncInfo) {
         Node node = syncInfo.selectSingleNode(REPOSITORY_MAPPING_ID);
-        if (node == null)
+        if (null == node)
             return null;
         return node.getText();
     }
 
     private void addArtifactStateFromHospital(
             ArrayList<ArtifactState> quarantinedArtifact, Object[] resultSet) {
-        if (resultSet.length != 0) {
+        if (0 != resultSet.length) {
             OrderedHashMap result = (OrderedHashMap) resultSet[0];
 
             ArtifactState artifactState = new ArtifactState();
@@ -1602,9 +1602,9 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
             // whether the artifact should be transformed
             // again. Otherwise, we will not change the default error code
             // (ok) and no transformation will take place
-            if (getNameOfEntityService() != null) {
+            if (null != getNameOfEntityService()) {
                 Object originatingComponent = result.get(2);
-                if (originatingComponent == null
+                if (null == originatingComponent
                         || !originatingComponent
                                 .equals(getNameOfEntityService())) {
                     log.debug("Do not trigger a further transformation of quarantined artifact's payload.");
@@ -1662,7 +1662,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
         ArrayList<ArtifactState> quarantinedArtifact = new ArrayList<ArtifactState>();
         // only if a connection to the hospital table is present, we can query
         // quarantined artifacts
-        if (getHospitalDatabaseReader() != null) {
+        if (null != getHospitalDatabaseReader()) {
             IOrderedMap inputParameters = new OrderedHashMap();
 
             if (!isCCF2xProcess()) {
@@ -1743,21 +1743,21 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                     return -1;
                 } else {
                     String firstSourceArtifactId = null;
-                    if (first.getArtifactType() == GenericArtifact.ArtifactTypeValue.PLAINARTIFACT) {
+                    if (GenericArtifact.ArtifactTypeValue.PLAINARTIFACT == first.getArtifactType()) {
                         firstSourceArtifactId = first.getSourceArtifactId();
                     } else {
                         firstSourceArtifactId = first
                                 .getDepParentSourceArtifactId();
                     }
                     String secondSourceArtifactId = null;
-                    if (second.getArtifactType() == GenericArtifact.ArtifactTypeValue.PLAINARTIFACT) {
+                    if (GenericArtifact.ArtifactTypeValue.PLAINARTIFACT == second.getArtifactType()) {
                         secondSourceArtifactId = second.getSourceArtifactId();
                     } else {
                         secondSourceArtifactId = second
                                 .getDepParentSourceArtifactId();
                     }
                     if (firstSourceArtifactId.equals(secondSourceArtifactId)) {
-                        if (first.getArtifactType() == GenericArtifact.ArtifactTypeValue.PLAINARTIFACT) {
+                        if (GenericArtifact.ArtifactTypeValue.PLAINARTIFACT == first.getArtifactType()) {
                             return -1;
                         } else {
                             return 1;
@@ -1812,8 +1812,8 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
 
     private void modifySyncInfo(Document syncInfo,
             String lastArtifactModifiedTime, String lastArtifactModifiedVersion) {
-        if (lastArtifactModifiedTime == null
-                && lastArtifactModifiedVersion == null) {
+        if (null == lastArtifactModifiedTime
+                && null == lastArtifactModifiedVersion) {
             return;
         }
         //Cloned syncInfo is used to create two new element - ARTIFACT_LAST_MODIFIED_DATE and ARTIFACT_LAST_MODIFIED_VERSION
@@ -1885,7 +1885,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
             identityMappingDatabaseReader.connect();
             Object[] resultSet = identityMappingDatabaseReader.next(
                     inputParameters, 1000);
-            if (resultSet == null || resultSet.length == 0) {
+            if (null == resultSet || 0 == resultSet.length) {
                 lastModifiedTime = new Timestamp(0).toString();
                 lastModifiedVersion = "0";
                 log.debug("Setting the lastModifiedTime and lastModifiedVersion to default values");

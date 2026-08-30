@@ -190,7 +190,7 @@ public class ArtifactMetaData {
         if (fieldName.equals(SFEEFields.commentText.getFieldName())) {
             field = SFEEFields.commentText;
         }
-        if (field != null) {
+        if (null != field) {
             return field.getValueType();
         }
         return null;
@@ -200,7 +200,7 @@ public class ArtifactMetaData {
             String fieldType) {
         FieldValueTypeValue fieldValueType = fieldValueTypeGAFieldTypeMap
                 .get(fieldType);
-        if (fieldValueType != null) {
+        if (null != fieldValueType) {
             return fieldValueType;
         } else {
             log.error("No type found for " + fieldType);
@@ -211,7 +211,7 @@ public class ArtifactMetaData {
     public static String getSFEEFieldValueTypeForGAFieldType(
             FieldValueTypeValue fieldType) {
         String fieldValueType = fieldGAValueTypeFieldTypeMap.get(fieldType);
-        if (fieldValueType != null) {
+        if (null != fieldValueType) {
             return fieldValueType;
         } else {
             log.error("No TF type found for GA type " + fieldType);
@@ -233,7 +233,7 @@ public class ArtifactMetaData {
             dateValue = returnDate;
         }
 
-        if (dateValue == null) {
+        if (null == dateValue) {
             field.setFieldValue(null);
             field.setFieldValueType(GenericArtifactField.FieldValueTypeValue.DATETIME);
         } else if (DateUtil.isAbsoluteDateInTimezone(dateValue,

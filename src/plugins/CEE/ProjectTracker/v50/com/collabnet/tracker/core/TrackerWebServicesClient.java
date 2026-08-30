@@ -223,7 +223,7 @@ public class TrackerWebServicesClient {
         ProjectTrackerHelper ptHelper = ProjectTrackerHelper.getInstance();
         ptHelper.processWSErrors(helper);
         List<ClientArtifactComment> comments = artifact.getComments();
-        if (comments != null && comments.size() > 0) {
+        if (null != comments && 0 < comments.size()) {
             List<ClientArtifact> responseArtifacts = helper.getAllArtifacts();
             ClientArtifact responseArtifact = responseArtifacts.get(0);
             String createdArtifactId = responseArtifact.getAttributeValue(
@@ -297,7 +297,7 @@ public class TrackerWebServicesClient {
             String artifactType = ca.getTagName();
             // int nsCtr;
             // check if the namespace alrady exists in the xml so far
-            if (nameSpaces.get(nsXNameSpace) == null) {
+            if (null == nameSpaces.get(nsXNameSpace)) {
                 nameSpaces.put(nsXNameSpace, ++nameSpaceCount);
             }
 
@@ -311,7 +311,7 @@ public class TrackerWebServicesClient {
                     + MODIFIED_BY_FIELD_NAME);
             modByNode.appendChild(doc.createTextNode(mClient.getUserName()));
             artifactNode.appendChild(modByNode);
-            if (lastReadOn != null) {
+            if (null != lastReadOn) {
                 Element lastReadNode = doc.createElementNS(DEFAULT_NAMESPACE,
                         "ns1:" + LAST_READ_ON_FIELD_NAME);
                 lastReadNode.appendChild(doc.createTextNode(Long
@@ -337,14 +337,14 @@ public class TrackerWebServicesClient {
                 String[] parts = attribute.substring(1).split("\\}");
                 String attributeNamespace = parts[0];
                 attribute = parts[1];
-                if (nameSpaces.get(attributeNamespace) == null) {
+                if (null == nameSpaces.get(attributeNamespace)) {
                     nameSpaces.put(attributeNamespace, ++nameSpaceCount);
                 }
                 nsNumberString = "ns" + nameSpaces.get(attributeNamespace)
                         + ":";
                 Element attributeNode = doc.createElementNS(attributeNamespace,
                         nsNumberString + attribute);
-                if (values.size() > 1
+                if (1 < values.size()
                         || (attributeNamespace.equals(DEFAULT_NAMESPACE) && attribute
                                 .equals("id"))) {
                     for (String value : values) {
@@ -367,7 +367,7 @@ public class TrackerWebServicesClient {
                     // attributeNode.setNodeValue(values.get(0));
                     String value = values.get(0);
                     value = TrackerUtil.removeInvalidXmlCharacters(value);
-                    if (value == null)
+                    if (null == value)
                         value = "";
                     attributeNode.appendChild(doc.createTextNode(value));
                 }
@@ -499,7 +499,7 @@ public class TrackerWebServicesClient {
 
     public List<ClientArtifact> getAllArtifacts(String artifactType,
             String nameSpace) throws Exception {
-        if (nameSpace == null)
+        if (null == nameSpace)
             nameSpace = mClient.getDefaultNamespace();
         EngineConfiguration config = mClient.getEngineConfiguration();
         DispatcherService service = new DispatcherServiceLocator(config);
@@ -652,9 +652,9 @@ public class TrackerWebServicesClient {
         String key;
         for (ArtifactType type : artifactTypes) {
             key = TrackerUtil.getKey(type.getNamespace(), type.getTagName());
-            if (repositoryData == null)
+            if (null == repositoryData)
                 repositoryData = new TrackerClientData();
-            if (repositoryData.getArtifactTypeFromKey(key) == null)
+            if (null == repositoryData.getArtifactTypeFromKey(key))
                 repositoryData.addArtifactType(new TrackerArtifactType(type));
         }
 
@@ -768,7 +768,7 @@ public class TrackerWebServicesClient {
         ClientArtifactListXMLHelper helper = new ClientArtifactListXMLHelper(
                 result);
 
-        if (helper.getErrorSize() > 0) {
+        if (0 < helper.getErrorSize()) {
             // if we have an error, we will make it update so that we can try to
             // sync
             return new ArrayList<String>(0);
@@ -846,7 +846,7 @@ public class TrackerWebServicesClient {
         TrackerArtifactType type = repositoryData
                 .getArtifactTypeFromKey(TrackerUtil.getKey(namespace,
                         artifactType));
-        if (type == null) {
+        if (null == type) {
             type = new TrackerArtifactType(metaData.getArtifactType()
                     .getDisplayName(), metaData.getArtifactType().getTagName(),
                     metaData.getArtifactType().getNamespace());
@@ -926,7 +926,7 @@ public class TrackerWebServicesClient {
      */
     public String getProjectNameFromUrl() {
         String aUrl = mClient.getURL();
-        if (aUrl == null)
+        if (null == aUrl)
             return "";
 
         int prefixIndex = aUrl.indexOf("//");
@@ -963,7 +963,7 @@ public class TrackerWebServicesClient {
             String dateString) throws Exception {
         List<String> ids = this.getChangedIds(artitfactNamespaceAndType,
                 taskId, taskId, dateString);
-        if (ids == null)
+        if (null == ids)
             return true;
         return ids.contains(taskId);
     }
@@ -1067,8 +1067,8 @@ public class TrackerWebServicesClient {
             name = child.getNodeName();
             value = child.getTextContent();
             if (name.contains("queryReference")) {
-                if (value == null || value.length() < 1) {
-                    if (altQueryRef == null)
+                if (null == value || 1 > value.length()) {
+                    if (null == altQueryRef)
                         throw new Exception(msg);
                     child.setTextContent(altQueryRef);
                 }
@@ -1168,7 +1168,7 @@ public class TrackerWebServicesClient {
 
     private void sanitizeComments(ClientArtifact artifact) {
         List<ClientArtifactComment> comments = artifact.getComments();
-        if (comments != null) {
+        if (null != comments) {
             Iterator<ClientArtifactComment> itComments = comments.iterator();
             while (itComments.hasNext()) {
                 ClientArtifactComment comment = itComments.next();

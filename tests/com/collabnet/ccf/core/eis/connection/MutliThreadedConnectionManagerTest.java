@@ -106,7 +106,7 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
                 } else if (name.contains("closeConnection")) {
                     String connection = (String) params.get(0);
                     Object closedConnection = connections.remove(connection);
-                    if (closedConnection == null) {
+                    if (null == closedConnection) {
                         throw new ConnectionException(
                                 "Trying to close a non-existent connection...!");
                     }
@@ -157,7 +157,7 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
                                                     + jTmp, connectionInfo
                                                     + jTmp, credentialInfo
                                                     + jTmp);
-                            if (connection == null) {
+                            if (null == connection) {
                                 fail("Connection is null for " + iTmp + " "
                                         + jTmp);
                             }
@@ -182,7 +182,7 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
     }
 
     protected void runTestCaseRunnables(final TestCaseRunnable[] runnables) {
-        if (runnables == null) {
+        if (null == runnables) {
             throw new IllegalArgumentException("runnables is null");
         }
         threads = new Thread[runnables.length];

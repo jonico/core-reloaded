@@ -94,17 +94,17 @@ public class SFEETrackerHandler {
             String projectId = trackerDO.getProjectId();
             PackageSoapList packageList = fileReleaseApp.getPackageList(
                     sessionId, projectId);
-            if (packageList != null) {
+            if (null != packageList) {
                 PackageSoapRow[] packages = packageList.getDataRows();
-                if (packages != null && packages.length > 0) {
+                if (null != packages && 0 < packages.length) {
                     for (PackageSoapRow packageRow : packages) {
                         String packageId = packageRow.getId();
                         ReleaseSoapList releasesList = fileReleaseApp
                                 .getReleaseList(sessionId, packageId);
-                        if (releasesList != null) {
+                        if (null != releasesList) {
                             ReleaseSoapRow[] releases = releasesList
                                     .getDataRows();
-                            if (releases != null && releases.length > 0) {
+                            if (null != releases && 0 < releases.length) {
                                 for (ReleaseSoapRow release : releases) {
                                     String title = release.getTitle();
                                     if (title.equals(releaseId)) {
@@ -198,7 +198,7 @@ public class SFEETrackerHandler {
         }
 
         // we have to increase the version number to add the comments
-        if (comments.length != 0) {
+        if (0 != comments.length) {
             artifactData.setVersion(artifactData.getVersion() + 1);
         }
 
@@ -233,7 +233,7 @@ public class SFEETrackerHandler {
         // we have to increase the version after the update
         // TODO Find out whether this really works if last modified date differs
         // from actual last modified date
-        if (comments.length == 0) {
+        if (0 == comments.length) {
             artifactData.setVersion(artifactData.getVersion() + 1);
         }
         log.info("Artifact created: " + artifactData.getId());
@@ -296,7 +296,7 @@ public class SFEETrackerHandler {
         ArtifactDetailSoapRow[] rows = mTrackerApp.getArtifactDetailList(
                 sessionID, trackerId, selectedColumns, filter, sortKeys, 0, -1,
                 false, true).getDataRows();
-        if (rows != null) {
+        if (null != rows) {
             log.debug("There were " + rows.length + " artifacts changed");
         }
         ArrayList<ArtifactSoapDO> detailRowsFull = new ArrayList<ArtifactSoapDO>();
@@ -304,7 +304,7 @@ public class SFEETrackerHandler {
         // retrieve artifact details
         log.debug("Getting the details of the changed artifacts");
         boolean duplicateFound = false;
-        if (rows != null) {
+        if (null != rows) {
             for (int i = 0; i < rows.length; ++i) {
                 String id = rows[i].getId();
                 if (id.equals(lastArtifactId)
@@ -568,38 +568,38 @@ public class SFEETrackerHandler {
                 flexFields.setTypes(finalFlexFieldTypes.toArray(new String[0]));
 
                 String folderIdString = artifactData.getFolderId();
-                if (trackerId != null && trackerId.getFieldValueHasChanged()) {
+                if (null != trackerId && trackerId.getFieldValueHasChanged()) {
                     folderIdString = (String) trackerId.getFieldValue();
                     artifactData.setFolderId(folderIdString);
                 }
 
-                if (title != null && title.getFieldValueHasChanged()) {
+                if (null != title && title.getFieldValueHasChanged()) {
                     artifactData.setTitle((String) title.getFieldValue());
                 }
 
-                if (description != null
+                if (null != description
                         && description.getFieldValueHasChanged()) {
                     artifactData.setDescription((String) description
                             .getFieldValue());
                 }
 
-                if (group != null && group.getFieldValueHasChanged()) {
+                if (null != group && group.getFieldValueHasChanged()) {
                     artifactData.setGroup((String) group.getFieldValue());
                 }
 
-                if (category != null && category.getFieldValueHasChanged()) {
+                if (null != category && category.getFieldValueHasChanged()) {
                     artifactData.setCategory((String) category.getFieldValue());
                 }
 
-                if (status != null && status.getFieldValueHasChanged()) {
+                if (null != status && status.getFieldValueHasChanged()) {
                     artifactData.setStatus((String) status.getFieldValue());
                 }
 
-                if (customer != null && customer.getFieldValueHasChanged()) {
+                if (null != customer && customer.getFieldValueHasChanged()) {
                     artifactData.setCustomer((String) customer.getFieldValue());
                 }
 
-                if (priority != null && priority.getFieldValueHasChanged()) {
+                if (null != priority && priority.getFieldValueHasChanged()) {
                     Object fieldValueObj = priority.getFieldValue();
                     int fieldValue = 0;
                     if (fieldValueObj instanceof String) {
@@ -617,7 +617,7 @@ public class SFEETrackerHandler {
                     artifactData.setPriority(fieldValue);
                 }
 
-                if (estimatedHours != null
+                if (null != estimatedHours
                         && estimatedHours.getFieldValueHasChanged()) {
                     Object fieldValueObj = estimatedHours.getFieldValue();
                     int fieldValue = 0;
@@ -636,7 +636,7 @@ public class SFEETrackerHandler {
                     artifactData.setEstimatedHours(fieldValue);
                 }
 
-                if (actualHours != null
+                if (null != actualHours
                         && actualHours.getFieldValueHasChanged()) {
                     Object fieldValueObj = actualHours.getFieldValue();
                     int fieldValue = 0;
@@ -655,18 +655,18 @@ public class SFEETrackerHandler {
                     artifactData.setActualHours(fieldValue);
                 }
 
-                if (assignedTo != null && assignedTo.getFieldValueHasChanged()) {
+                if (null != assignedTo && assignedTo.getFieldValueHasChanged()) {
                     artifactData.setAssignedTo((String) assignedTo
                             .getFieldValue());
                 }
 
-                if (statusClass != null
+                if (null != statusClass
                         && statusClass.getFieldValueHasChanged()) {
                     artifactData.setStatusClass((String) statusClass
                             .getFieldValue());
                 }
 
-                if (closeDate != null && closeDate.getFieldValueHasChanged()) {
+                if (null != closeDate && closeDate.getFieldValueHasChanged()) {
                     Object fieldValueObj = closeDate.getFieldValue();
                     Date fieldValue = null;
                     if (fieldValueObj instanceof String) {
@@ -678,7 +678,7 @@ public class SFEETrackerHandler {
                     artifactData.setCloseDate(fieldValue);
                 }
 
-                if (reportedReleaseId != null
+                if (null != reportedReleaseId
                         && reportedReleaseId.getFieldValueHasChanged()) {
                     String reportedReleaseIdString = (String) reportedReleaseId
                             .getFieldValue();
@@ -689,7 +689,7 @@ public class SFEETrackerHandler {
                     artifactData.setReportedReleaseId(reportedReleaseIdString);
                 }
 
-                if (resolvedReleaseId != null
+                if (null != resolvedReleaseId
                         && resolvedReleaseId.getFieldValueHasChanged()) {
                     String resolvedReleaseIdString = (String) resolvedReleaseId
                             .getFieldValue();
@@ -716,7 +716,7 @@ public class SFEETrackerHandler {
             }
         }
         // increase version number for comment updates
-        if (comments.length != 0) {
+        if (0 != comments.length) {
             artifactData.setVersion(artifactData.getVersion() + 1);
         }
 
@@ -746,7 +746,7 @@ public class SFEETrackerHandler {
         }
 
         // since TF 5.3, we cannot be sure that the version number has increased automatically
-        if (comments.length == 0) {
+        if (0 == comments.length) {
             // artifactData.setVersion(artifactData.getVersion() + 1);
             artifactData = mTrackerApp.getArtifactData(sessionId, Id);
         }
@@ -774,7 +774,7 @@ public class SFEETrackerHandler {
                 projectId);
         TrackerSoapRow[] trackerRows = trackerList.getDataRows();
 
-        if (trackerRows.length == 0) {
+        if (0 == trackerRows.length) {
             throw new RemoteException("No trackers available!");
         }
         for (int i = 0; i < trackerRows.length; i++) {

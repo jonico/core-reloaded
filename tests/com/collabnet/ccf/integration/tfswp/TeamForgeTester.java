@@ -435,7 +435,7 @@ public class TeamForgeTester {
         ArtifactDependencyList parentDependencyList = connection
                 .getTrackerClient().getParentDependencyList(artifactId);
         ArtifactDependencyRow[] dataRows = parentDependencyList.getDataRows();
-        if (dataRows.length > 0) {
+        if (0 < dataRows.length) {
             return dataRows[0].getOriginId();
         } else {
             return null;
@@ -457,7 +457,7 @@ public class TeamForgeTester {
      */
     public String getPlanningFolderId(final String release)
             throws RemoteException {
-        if (release == null) {
+        if (null == release) {
             return null;
         }
         PlanningFolderList planningFolderList = connection.getPlanningClient()
@@ -544,10 +544,10 @@ public class TeamForgeTester {
                 backlogItemId, title, description);
         pbi.setPlanningFolderId(getPlanningFolderId(release));
         pbi.setFlexFields(flexFields);
-        if (effort != null) {
+        if (null != effort) {
             pbi.setPoints(effort);
         }
-        if (status != null) {
+        if (null != status) {
             pbi.setStatus(status);
         }
         return updateArtifact(pbi, "updating pbi ...");
@@ -618,7 +618,7 @@ public class TeamForgeTester {
                 backlogItemNames.add(artifactRow.getTitle());
             }
             int indexOfUpdateTitle = backlogItemNames.indexOf(title);
-            if (indexOfUpdateTitle == -1) {
+            if (-1 == indexOfUpdateTitle) {
                 Thread.sleep(ccfRetryInterval);
             } else {
                 return artifacts[indexOfUpdateTitle];
@@ -763,7 +763,7 @@ public class TeamForgeTester {
                 taskNames.add(task.getTitle());
             }
             int indexOfUpdatedTitle = taskNames.indexOf(taskTitle);
-            if (indexOfUpdatedTitle == -1) {
+            if (-1 == indexOfUpdatedTitle) {
                 Thread.sleep(ccfRetryInterval);
             } else {
                 return artifacts[indexOfUpdatedTitle];
@@ -795,12 +795,12 @@ public class TeamForgeTester {
                     break;
                 }
             }
-            if (monitoredField == null) {
+            if (null == monitoredField) {
                 throw new RemoteException("Field " + fieldName
                         + " could not be found in tracker " + tracker);
             }
             TrackerFieldValueDO[] fieldValues = monitoredField.getFieldValues();
-            if (fieldValues == null) {
+            if (null == fieldValues) {
                 Thread.sleep(ccfRetryInterval);
                 continue;
             }
@@ -839,12 +839,12 @@ public class TeamForgeTester {
                     break;
                 }
             }
-            if (monitoredField == null) {
+            if (null == monitoredField) {
                 throw new RemoteException("Field " + fieldName
                         + " could not be found in tracker " + tracker);
             }
             TrackerFieldValueDO[] fieldValues = monitoredField.getFieldValues();
-            if (fieldValues == null) {
+            if (null == fieldValues) {
                 return;
             }
             for (TrackerFieldValueDO trackerFieldValue : fieldValues) {

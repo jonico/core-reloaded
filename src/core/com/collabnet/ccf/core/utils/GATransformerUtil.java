@@ -27,7 +27,7 @@ public class GATransformerUtil {
         } catch (ClassNotFoundException e) {
             proxy = new StringUtils();
         }
-        if (proxy == null) {
+        if (null == proxy) {
             proxy = new JerichoUtils();
         }
     }

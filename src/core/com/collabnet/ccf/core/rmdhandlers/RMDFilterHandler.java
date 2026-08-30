@@ -13,7 +13,7 @@ public class RMDFilterHandler extends AbstractRMDHandler implements FilterHandle
 
     public boolean containsId(String rmdID, String id) {
         boolean isIdExists = true;
-        if (rmdID == null || id == null) {
+        if (null == rmdID || null == id) {
             return true;
         }
         if (!isFilterEnabled(rmdID)) {
@@ -40,7 +40,7 @@ public class RMDFilterHandler extends AbstractRMDHandler implements FilterHandle
 
     public String getValForRMDConfig(String rmdID) {
         String val = EMPTY_STRING;
-        if (rmdID != null && isFilterEnabled(rmdID)) {
+        if (null != rmdID && isFilterEnabled(rmdID)) {
             val = this.getRmdConfigExtractor().getRMDConfigValue(rmdID,
                     FILTER_KEY);
         }

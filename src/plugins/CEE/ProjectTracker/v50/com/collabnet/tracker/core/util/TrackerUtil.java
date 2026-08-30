@@ -84,7 +84,7 @@ public class TrackerUtil {
      */
     public static String getNamespaceFromKey(String key) {
         String[] parts = key.split("}");
-        if (parts.length == 2) {
+        if (2 == parts.length) {
             return parts[0].substring(1);
         } else {
             return null;
@@ -101,12 +101,12 @@ public class TrackerUtil {
         String namespace = artifact
                 .getNamespacesForTagName(TrackerReportElement.PRIORITY
                         .getTagName());
-        if (namespace == null) {
+        if (null == namespace) {
             namespace = artifact.getNamespace();
         }
         String s = artifact.getAttributeValue(namespace,
                 TrackerReportElement.PRIORITY.getTagName());
-        if (s != null)
+        if (null != s)
             s = s.toUpperCase();
         return s == null ? "" : s;
     }
@@ -121,7 +121,7 @@ public class TrackerUtil {
         String namespace = artifact
                 .getNamespacesForTagName(TrackerReportElement.PRIORITY
                         .getTagName());
-        if (namespace == null) {
+        if (null == namespace) {
             namespace = artifact.getNamespace();
         }
         String s = artifact.getAttributeValue(namespace,
@@ -137,7 +137,7 @@ public class TrackerUtil {
      */
     public static String getTagNameFromKey(String key) {
         String[] parts = key.split("}");
-        if (parts.length == 2) {
+        if (2 == parts.length) {
             return parts[1];
         } else {
             return null;
@@ -154,12 +154,12 @@ public class TrackerUtil {
         String namespace = artifact
                 .getNamespacesForTagName(TrackerReportElement.PRIORITY
                         .getTagName());
-        if (namespace == null) {
+        if (null == namespace) {
             namespace = artifact.getNamespace();
         }
         String status = artifact.getAttributeValue(namespace,
                 TrackerReportElement.STATUS.getTagName());
-        if (status == null)
+        if (null == status)
             return false;
         if (isCompletedString(status.toLowerCase()))
             return true;
@@ -199,7 +199,7 @@ public class TrackerUtil {
     }
 
     public static final String removeInvalidXmlCharacters(String input) {
-        if (input == null) {
+        if (null == input) {
             return input;
         }
         char character;
@@ -207,10 +207,10 @@ public class TrackerUtil {
         for (int i = 0; i < input.length(); i++) {
             character = input.charAt(i);
             //see http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char for valid XML character list.
-            if ((character == 0x9) || (character == 0xA) || (character == 0xD)
-                    || ((character >= 0x20) && (character <= 0xD7FF))
-                    || ((character >= 0xE000) && (character <= 0xFFFD))
-                    || ((character >= 0x10000) && (character <= 0x10FFFF))) {
+            if ((0x9 == character) || (0xA == character) || (0xD == character)
+                    || ((0x20 <= character) && (0xD7FF >= character))
+                    || ((0xE000 <= character) && (0xFFFD >= character))
+                    || ((0x10000 <= character) && (0x10FFFF >= character))) {
                 sb.append(character);
             }
         }
@@ -233,15 +233,15 @@ public class TrackerUtil {
 
         for (String attribute : attributes) {
             String[] parts = attribute.split("=");
-            if (parts.length == 2) {
+            if (2 == parts.length) {
                 String attr = parts[0];
-                if (attr.compareTo(DISPLAY_NAME_ATTR) == 0) {
+                if (0 == attr.compareTo(DISPLAY_NAME_ATTR)) {
                     displayName = parts[1];
                 }
-                if (attr.compareTo(NAMESPACE_ATTR) == 0) {
+                if (0 == attr.compareTo(NAMESPACE_ATTR)) {
                     namespace = parts[1];
                 }
-                if (attr.compareTo(TAG_NAME_ATTR) == 0) {
+                if (0 == attr.compareTo(TAG_NAME_ATTR)) {
                     tagName = parts[1];
                 }
             }

@@ -241,7 +241,7 @@ public class SWPMetaData {
         StringBuffer value = new StringBuffer(
                 sprintDateFormat.format(startDate) + " - "
                         + sprintDateFormat.format(endDate));
-        if (sprint.getName() != null && sprint.getName().trim().length() > 0) {
+        if (null != sprint.getName() && 0 < sprint.getName().trim().length()) {
             value.append(" -- " + sprint.getName());
         }
         value.append(" (" + team.getName() + ")");
@@ -265,7 +265,7 @@ public class SWPMetaData {
         StringBuffer value = new StringBuffer(team.getName() + " "
                 + sprintDateFormat.format(startDate) + " - "
                 + sprintDateFormat.format(endDate));
-        if (sprint.getName() != null && sprint.getName().trim().length() > 0) {
+        if (null != sprint.getName() && 0 < sprint.getName().trim().length()) {
             value.append(" -- " + sprint.getName());
         }
         return value.toString();
@@ -283,7 +283,7 @@ public class SWPMetaData {
             String startDate, String endDate, String teamName) {
         StringBuffer value = new StringBuffer(teamName + " " + startDate
                 + " - " + endDate);
-        if (sprintName != null && sprintName.trim().length() > 0) {
+        if (null != sprintName && 0 < sprintName.trim().length()) {
             value.append(" -- " + sprintName);
         }
         return value.toString();
@@ -299,7 +299,7 @@ public class SWPMetaData {
     public final static String retrieveProductFromRepositoryId(
             String repositoryId) {
         int index = repositoryId.lastIndexOf(REPOSITORY_ID_SEPARATOR);
-        if (index == -1) {
+        if (-1 == index) {
             return null;
         } else {
             return repositoryId.substring(0, index);
@@ -313,7 +313,7 @@ public class SWPMetaData {
      * @return SWP entity type
      */
     public static SWPType retrieveSWPTypeFromRepositoryId(String repositoryId) {
-        if (repositoryId == null)
+        if (null == repositoryId)
             return SWPType.UNKNOWN;
         if (repositoryId.endsWith(PBI))
             return SWPType.PBI;
@@ -367,7 +367,7 @@ public class SWPMetaData {
             dateValue = returnDate;
         }
 
-        if (dateValue == null) {
+        if (null == dateValue) {
             field.setFieldValue(null);
             field.setFieldValueType(GenericArtifactField.FieldValueTypeValue.DATE);
         } else if (DateUtil.isAbsoluteDateInTimezone(dateValue,

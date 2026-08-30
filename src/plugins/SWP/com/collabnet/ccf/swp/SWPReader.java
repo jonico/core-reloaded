@@ -148,7 +148,7 @@ public class SWPReader extends AbstractReader<Connection> {
 
         boolean ignoreResyncUser = false;
 
-        if (lastSynchronizedVersion == null
+        if (null == lastSynchronizedVersion
                 || lastSynchronizedVersion.equals("0")
                 || !ignoreConnectorUserUpdates) {
             ignoreResyncUser = true;
@@ -160,7 +160,7 @@ public class SWPReader extends AbstractReader<Connection> {
         String swpProductName = SWPMetaData
                 .retrieveProductFromRepositoryId(sourceRepositoryId);
         if (swpType.equals(SWPMetaData.SWPType.UNKNOWN)
-                || swpProductName == null) {
+                || null == swpProductName) {
             String cause = "Invalid repository format: " + sourceRepositoryId;
             log.error(cause);
             throw new CCFRuntimeException(cause);
@@ -259,7 +259,7 @@ public class SWPReader extends AbstractReader<Connection> {
         try {
             majorVersion = Long.parseLong(lastSynchronizedVersion);
             // this happens if CCF terminated during initial artifact synch
-            if (majorVersion < 0) {
+            if (0 > majorVersion) {
                 majorVersion = 0;
             }
             /*
@@ -292,7 +292,7 @@ public class SWPReader extends AbstractReader<Connection> {
                 + SWPMetaData.REPOSITORY_ID_SEPARATOR + SWPMetaData.PBI;
 
         if (swpType.equals(SWPMetaData.SWPType.UNKNOWN)
-                || swpProductName == null) {
+                || null == swpProductName) {
             String cause = "Invalid repository format: " + sourceRepositoryId;
             log.error(cause);
             throw new CCFRuntimeException(cause);
@@ -327,8 +327,8 @@ public class SWPReader extends AbstractReader<Connection> {
                 } else {
                     // determine whether higher priority items are still in the
                     // queue
-                    if (getNumberOfWaitingArtifactsForAllTargetSystems(
-                            sourceSystemId, correspondingPBIRepositoryId) != 0) {
+                    if (0 != getNumberOfWaitingArtifactsForAllTargetSystems(
+                            sourceSystemId, correspondingPBIRepositoryId)) {
                         log.debug("Do not query new tasks for "
                                 + repositoryKey
                                 + " since changes of higher prioritized entity types are still in the queue ...");
@@ -336,7 +336,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         // first check out last PBI revision in queue
                         Long lastPBIRevisionInQueue = lastRevisionInQueue
                                 .get(correspondingPBIRepositoryId);
-                        if (lastPBIRevisionInQueue == null) {
+                        if (null == lastPBIRevisionInQueue) {
                             log.debug("Do not query new tasks for "
                                     + repositoryKey
                                     + " since PBI changes are not yet synched ...");
@@ -396,8 +396,8 @@ public class SWPReader extends AbstractReader<Connection> {
                     if (isTriggerMetaDataResynchronizationAfterPBIShipment()) {
                         Boolean shippedPBIsInLastCallUnboxed = shippedPBIsInLastCall
                                 .get(swpProductName);
-                        if (shippedPBIsInLastCallUnboxed != null
-                                && shippedPBIsInLastCallUnboxed == true) {
+                        if (null != shippedPBIsInLastCallUnboxed
+                                && true == shippedPBIsInLastCallUnboxed) {
                             shippedPBIsInLastCall.put(swpProductName, false);
                             // trigger theme resynch
                             triggerMetaDataResynchronization.put(
@@ -408,11 +408,11 @@ public class SWPReader extends AbstractReader<Connection> {
 
                     // determine whether higher priority items are still in the
                     // queue
-                    if (getNumberOfWaitingArtifactsForAllTargetSystems(
-                            sourceSystemId, correspondingReleaseRepositoryId) != 0
-                            || getNumberOfWaitingArtifactsForAllTargetSystems(
+                    if (0 != getNumberOfWaitingArtifactsForAllTargetSystems(
+                            sourceSystemId, correspondingReleaseRepositoryId)
+                            || 0 != getNumberOfWaitingArtifactsForAllTargetSystems(
                                     sourceSystemId,
-                                    correspondingMetaDataRepositoryId) != 0) {
+                                    correspondingMetaDataRepositoryId)) {
                         // reset entity type priority
                         log.debug("Do not query new PBIs for "
                                 + repositoryKey
@@ -421,7 +421,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         // first check out last release revision in queue
                         Long lastReleaseRevisionInQueue = lastRevisionInQueue
                                 .get(correspondingReleaseRepositoryId);
-                        if (lastReleaseRevisionInQueue == null) {
+                        if (null == lastReleaseRevisionInQueue) {
                             log.debug("Do not query new PBIs for "
                                     + repositoryKey
                                     + " since release changes are not yet synched ...");
@@ -434,9 +434,9 @@ public class SWPReader extends AbstractReader<Connection> {
 
                         Boolean triggerThemeResynchronizationUnboxed = triggerMetaDataResynchronization
                                 .get(swpProductName);
-                        if (lastMetaDataRevisionInQueue == null
-                                || triggerThemeResynchronizationUnboxed == null
-                                || triggerThemeResynchronizationUnboxed == true) {
+                        if (null == lastMetaDataRevisionInQueue
+                                || null == triggerThemeResynchronizationUnboxed
+                                || true == triggerThemeResynchronizationUnboxed) {
                             log.debug("Do not query new PBIs for "
                                     + repositoryKey
                                     + " since theme changes are not yet synched ...");
@@ -558,8 +558,8 @@ public class SWPReader extends AbstractReader<Connection> {
                 } else {
                     // determine whether higher priority items are still in the
                     // queue
-                    if (getNumberOfWaitingArtifactsForAllTargetSystems(
-                            sourceSystemId, correspondingProductRepositoryId) != 0) {
+                    if (0 != getNumberOfWaitingArtifactsForAllTargetSystems(
+                            sourceSystemId, correspondingProductRepositoryId)) {
                         log.debug("Do not query new releases for "
                                 + repositoryKey
                                 + " since changes of higher prioritized entity types are still in the queue ...");
@@ -567,7 +567,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         // first check out last product revision in queue
                         Long lastProductRevisionInQueue = lastRevisionInQueue
                                 .get(correspondingProductRepositoryId);
-                        if (lastProductRevisionInQueue == null) {
+                        if (null == lastProductRevisionInQueue) {
                             log.debug("Do not query new releases for "
                                     + repositoryKey
                                     + " since product changes are not yet synched ...");
@@ -713,7 +713,7 @@ public class SWPReader extends AbstractReader<Connection> {
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<Connection> connectionManager) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -840,7 +840,7 @@ public class SWPReader extends AbstractReader<Connection> {
     public void validate(List exceptions) {
         super.validate(exceptions);
 
-        if (getResyncUserName() == null) {
+        if (null == getResyncUserName()) {
             log.warn("resyncUserName-property has not been set, so that initial resyncs after artifact creation are not possible.");
         }
 
@@ -852,7 +852,7 @@ public class SWPReader extends AbstractReader<Connection> {
             exceptions.add(new ValidationException("username-property not set",
                     this));
         }
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }

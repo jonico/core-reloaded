@@ -260,7 +260,7 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
      *             if the record type is not supported
      */
     public Object[] process(Object record) throws ProcessingException {
-        if (record == null)
+        if (null == record)
             return null;
 
         Document document = null;
@@ -277,17 +277,17 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
                 String errorCode = XPathUtils.getAttributeValue(element,
                         GenericArtifactHelper.ERROR_CODE);
                 // pass artifacts with ignore action
-                if (artifactAction != null
+                if (null != artifactAction
                         && artifactAction
                                 .equals(GenericArtifactHelper.ARTIFACT_ACTION_IGNORE)) {
                     return new Object[] { document };
                 }
                 // do not transform artifacts to be replayed (unless specific
                 // error code is set)
-                if (transactionId != null
+                if (null != transactionId
                         && !transactionId.equals(GenericArtifact.VALUE_UNKNOWN)
                         && !transactionId.equals("forcedUpdate")) {
-                    if (errorCode == null
+                    if (null == errorCode
                             || !errorCode
                                     .equals(GenericArtifact.ERROR_REPLAYED_WITH_TRANSFORMATION)) {
                         return new Object[] { document };
@@ -308,7 +308,7 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
                 for (ScriptProcessor scriptProcessor : scriptProcessors) {
                     fileName = deriveFilename(element, scriptProcessor);
                     // do not do anything if file name == null
-                    if (fileName != null) {
+                    if (null != fileName) {
                         transform = lookupTransformer(result.getRootElement(),
                                 xsltDir + fileName);
                         result = (Document) transform(result, transform,
@@ -541,9 +541,9 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
 
         Object[] scriptResArray = scriptProcessor.process(rootElement);
         String filename = null;
-        if (null != scriptResArray && scriptResArray.length > 0) {
+        if (null != scriptResArray && 0 < scriptResArray.length) {
             Object dynamicFilename = scriptResArray[0];
-            if (dynamicFilename != null) {
+            if (null != dynamicFilename) {
                 filename = dynamicFilename.toString();
             }
         } else {
@@ -561,7 +561,7 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
      */
     private List<Transformer> loadXSLT(File xsltFile, Element element) {
         List<Transformer> transformerList = new ArrayList<Transformer>();
-        if (xsltFile == null) {
+        if (null == xsltFile) {
             String cause = "xsltFile property not set";
             log.error(cause);
             XPathUtils.addAttribute(element, GenericArtifactHelper.ERROR_CODE,
@@ -615,7 +615,7 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
         List<Transformer> transform;
         transform = xsltFileNameTransformerMap.get(fileName);
 
-        if (transform == null) {
+        if (null == transform) {
             transform = loadXSLT(new File(fileName), element);
             xsltFileNameTransformerMap.put(fileName, transform);
         }

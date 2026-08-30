@@ -76,7 +76,7 @@ public class JIRAHandler {
         issue = addIssueComment(ga, issueClient, basicCreatedIssue.getKey(),
                 issue);
 
-        if (issue.getComments() != null) {
+        if (null != issue.getComments()) {
             createdDate = getUpdatedDate(connection, issue);
         }
 
@@ -91,7 +91,7 @@ public class JIRAHandler {
          */
 
         createdDate = issue.getCreationDate();
-        if (createdDate == null) {
+        if (null == createdDate) {
             throw new CCFRuntimeException(
                     "Could not determine creation date for newly created issue "
                             + issue.getKey());
@@ -144,11 +144,11 @@ public class JIRAHandler {
 
             Date artifactLastModifiedDate = new Date(0);
 
-            if (workItemTimeStamp != null) {
+            if (null != workItemTimeStamp) {
                 artifactLastModifiedDate = workItemTimeStamp;
             }
 
-            if (artifactLastModifiedDate.compareTo(lastModifiedDate) >= 0) {
+            if (0 <= artifactLastModifiedDate.compareTo(lastModifiedDate)) {
 
                 String workItemRevisionNumber = String.valueOf(workItem
                         .getUpdateDate().getMillis());
@@ -296,7 +296,7 @@ public class JIRAHandler {
                 }
 
                 Date changedDate = comment.getUpdateDate().toDate();
-                if (lastModifiedDate.compareTo(changedDate) >= 0) {
+                if (0 <= lastModifiedDate.compareTo(changedDate)) {
                     continue;
                 }
 
@@ -393,7 +393,7 @@ public class JIRAHandler {
             IssueRestClient issueClient, String key, Issue issue) {
         List<GenericArtifactField> comments = ga
                 .getAllGenericArtifactFieldsWithSameFieldName("comments");
-        if (comments != null) {
+        if (null != comments) {
             for (ListIterator<GenericArtifactField> iterator = comments
                     .listIterator(comments.size()); iterator.hasPrevious();) {
 
@@ -420,9 +420,9 @@ public class JIRAHandler {
         gaField.setFieldValueType(FieldValueTypeValue.STRING);
         gaField.setFieldAction(FieldActionValue.REPLACE);
 
-        if (actualField != null) {
+        if (null != actualField) {
             Object fieldValue = actualField.getValue();
-            if (fieldValue != null) {
+            if (null != fieldValue) {
                 gaField.setFieldValue(fieldValue.toString());
                 return;
             }
@@ -471,7 +471,7 @@ public class JIRAHandler {
             String fieldId = field.getValue().getId();
             List<GenericArtifactField> gaFields = ga
                     .getAllGenericArtifactFieldsWithSameFieldName(fieldId);
-            if (gaFields != null && gaFields.get(0).getFieldValueHasChanged()) {
+            if (null != gaFields && gaFields.get(0).getFieldValueHasChanged()) {
                 issueInputBuilder.setFieldValue(fieldId, gaFields.get(0)
                         .getFieldValue());
             }

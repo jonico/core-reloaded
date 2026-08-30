@@ -75,7 +75,7 @@ public class Ambulance extends LifecycleComponent implements IDataProcessor {
             Document doc = createXMLDocument("UTF-8");
             Element failure = doc.addElement("Failure");
             Element failureSource = failure.addElement("Source");
-            if (source != null)
+            if (null != source)
                 failureSource.setText(source);
             Element exceptionDetail = failure.addElement("Exception");
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -91,7 +91,7 @@ public class Ambulance extends LifecycleComponent implements IDataProcessor {
                 } catch (GenericArtifactParsingException e) {
                     log.warn("The data that reached the hospital is not a Generic Artifact");
                 }
-                if (artifactFileName == null) {
+                if (null == artifactFileName) {
                     artifactFileName = "sync-info";
                 }
                 String tempFilePath = null;
@@ -108,7 +108,7 @@ public class Ambulance extends LifecycleComponent implements IDataProcessor {
                 } catch (IOException e) {
                     log.error("Could not create temporary File", e);
                 } finally {
-                    if (fos != null) {
+                    if (null != fos) {
                         try {
                             fos.close();
                         } catch (IOException e) {
@@ -152,7 +152,7 @@ public class Ambulance extends LifecycleComponent implements IDataProcessor {
     }
 
     public void stop() {
-        if (fos != null) {
+        if (null != fos) {
             try {
                 fos.close();
             } catch (IOException e) {
@@ -166,16 +166,16 @@ public class Ambulance extends LifecycleComponent implements IDataProcessor {
 
     @SuppressWarnings("unchecked")
     public void validate(List exceptions) {
-        if (hospitalFileName == null) {
+        if (null == hospitalFileName) {
             exceptions.add(new ValidationException(
                     "hospitalFileName-property not set", this));
         }
 
-        if (fos == null) {
+        if (null == fos) {
             exceptions.add(new ValidationException(
                     "Could not open hospital file " + hospitalFileName, this));
         }
-        if (artifactsDirectory == null) {
+        if (null == artifactsDirectory) {
             exceptions.add(new ValidationException(
                     "Artifacts directory is not set ", this));
         } else {

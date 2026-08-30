@@ -232,7 +232,7 @@ public class TFArtifactMetaData {
         if (fieldName.equals(TFFields.commentText.getFieldName())) {
             field = TFFields.commentText;
         }
-        if (field != null) {
+        if (null != field) {
             return field.getValueType();
         }
         return null;
@@ -242,7 +242,7 @@ public class TFArtifactMetaData {
             String fieldType) {
         FieldValueTypeValue fieldValueType = fieldValueTypeGAFieldTypeMap
                 .get(fieldType);
-        if (fieldValueType != null) {
+        if (null != fieldValueType) {
             return fieldValueType;
         } else {
             log.error("No type found for " + fieldType);
@@ -253,7 +253,7 @@ public class TFArtifactMetaData {
     public static String getTFFieldValueTypeForGAFieldType(
             FieldValueTypeValue fieldType) {
         String fieldValueType = fieldGAValueTypeFieldTypeMap.get(fieldType);
-        if (fieldValueType != null) {
+        if (null != fieldValueType) {
             return fieldValueType;
         } else {
             log.error("No TF type found for GA type " + fieldType);
@@ -275,7 +275,7 @@ public class TFArtifactMetaData {
             dateValue = returnDate;
         }
 
-        if (dateValue == null) {
+        if (null == dateValue) {
             field.setFieldValue(null);
             field.setFieldValueType(GenericArtifactField.FieldValueTypeValue.DATETIME);
         } else if (DateUtil.isAbsoluteDateInTimezone(dateValue,
@@ -304,7 +304,7 @@ public class TFArtifactMetaData {
             dateValue = returnDate;
         }
 
-        if (dateValue == null) {
+        if (null == dateValue) {
             field.setFieldValue(null);
             field.setFieldValueType(GenericArtifactField.FieldValueTypeValue.DATE);
         } else if (DateUtil.isAbsoluteDateInTimezone(dateValue,

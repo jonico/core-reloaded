@@ -187,7 +187,7 @@ public class SFEEReaderTest {
                     filter1, sortKeys1, 0, -1, false, false).getDataRows();
             assertEquals(rows.length - 1, rows1.length);
         }
-        if (rows != null) {
+        if (null != rows) {
             System.out.println("There were " + rows.length
                     + " artifacts changed");
         }

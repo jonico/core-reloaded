@@ -100,7 +100,7 @@ public class QCReaderOutputWriter extends QCConnectHelper implements IDataProces
     public Object[] process(Object data) {
 
         //String fileName;
-        if (data == null) {
+        if (null == data) {
             throw new NullRecordException(
                     "Expected Document. Null record not permitted.");
         }
@@ -145,7 +145,7 @@ public class QCReaderOutputWriter extends QCConnectHelper implements IDataProces
     public void validate(List exceptions) {
         super.validate(exceptions);
         // Capture the return exception list and validate the exceptions
-        if (getFileName() == null) {
+        if (null == getFileName()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));

@@ -177,27 +177,27 @@ public abstract class QCConnectHelper extends LifecycleComponent {
     @SuppressWarnings("unchecked")
     public void validate(List exceptions) {
         // check whether all necessary properties are set
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));
         }
-        if (getDomain() == null) {
+        if (null == getDomain()) {
             log.error("domain-property not set");
             exceptions.add(new ValidationException("domain-property not set",
                     this));
         }
-        if (getProjectName() == null) {
+        if (null == getProjectName()) {
             log.error("project-property not set");
             exceptions.add(new ValidationException("project-property not set",
                     this));
         }
-        if (getUserName() == null) {
+        if (null == getUserName()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property no set");
             exceptions.add(new ValidationException("password-property not set",
                     this));

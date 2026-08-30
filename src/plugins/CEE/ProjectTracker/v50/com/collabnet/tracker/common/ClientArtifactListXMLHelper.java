@@ -124,7 +124,7 @@ public class ClientArtifactListXMLHelper {
     }
 
     public String getQueryReference(Node pageInfo) {
-        if (pageInfo == null)
+        if (null == pageInfo)
             return null;
         Node child = pageInfo.getFirstChild();
         String name;
@@ -170,21 +170,21 @@ public class ClientArtifactListXMLHelper {
             if (attr.getLocalName().equals(COMMENT_TAG)
                     && attr.getNamespaceURI().equals(NAMESPACE)) {
                 ClientArtifactComment comment = getComment(attr);
-                if (comment != null)
+                if (null != comment)
                     clientArtifact.addComment(comment);
             } else if (attr.getLocalName().equals(ATTACHMENT_TAG)
                     && attr.getNamespaceURI().equals(NAMESPACE)) {
                 ClientArtifactAttachment attachment = getAttachment(attr);
-                if (attachment != null)
+                if (null != attachment)
                     clientArtifact.addAttachment(attachment);
             } else if (attr.getLocalName().equals(URL_TAG)
                     && attr.getNamespaceURI().equals(NAMESPACE)) {
                 ClientArtifactAttachment attachment = getURLAttachment(attr);
-                if (attachment != null)
+                if (null != attachment)
                     clientArtifact.addAttachment(attachment);
             } else {
                 List<String> values = getTextValue(attr);
-                if (values != null) {
+                if (null != values) {
                     if (values.isEmpty()) {
                         clientArtifact
                                 .addAttributeValue(attr.getNamespaceURI(),
@@ -217,7 +217,7 @@ public class ClientArtifactListXMLHelper {
         String mimeType = null;
 
         while (child != null) {
-            if (child.getNodeType() == Node.ELEMENT_NODE) {
+            if (Node.ELEMENT_NODE == child.getNodeType()) {
                 if (child.getLocalName().equals(CREATED_BY_TAG)
                         && child.getNamespaceURI().equals(NAMESPACE)) {
                     Node n = child.getFirstChild();
@@ -254,9 +254,9 @@ public class ClientArtifactListXMLHelper {
             }
             child = child.getNextSibling();
         }
-        if (createdBy != null && createdOn != null && attachmentName != null
-                && description != null && attachmentId != null
-                && attachmentLocation != null && mimeType != null)
+        if (null != createdBy && null != createdOn && null != attachmentName
+                && null != description && null != attachmentId
+                && null != attachmentLocation && null != mimeType)
             attachment = new ClientArtifactAttachment(createdBy, createdOn,
                     attachmentName, description, attachmentId, isFile,
                     attachmentLocation, mimeType);
@@ -271,7 +271,7 @@ public class ClientArtifactListXMLHelper {
         String commenter = null;
         String commentText = null;
         while (child != null) {
-            if (child.getNodeType() == Node.ELEMENT_NODE) {
+            if (Node.ELEMENT_NODE == child.getNodeType()) {
                 if (child.getLocalName().equals(ID_TAG)
                         && child.getNamespaceURI().equals(NAMESPACE)) {
                     Node n = child.getFirstChild();
@@ -288,7 +288,7 @@ public class ClientArtifactListXMLHelper {
                         && child.getNamespaceURI().equals(NAMESPACE)) {
                     Node n = child.getFirstChild();
                     // This can only occur if the comment has been edited afterwards
-                    if (n == null) {
+                    if (null == n) {
                         commentText = "";
                     } else {
                         commentText = n.getNodeValue();
@@ -297,15 +297,15 @@ public class ClientArtifactListXMLHelper {
             }
             child = child.getNextSibling();
         }
-        if (commentId != null && commentDate != null && commentText != null
-                && commenter != null)
+        if (null != commentId && null != commentDate && null != commentText
+                && null != commenter)
             comment = new ClientArtifactComment(commentId, commentDate,
                     commentText, commenter);
         return comment;
     }
 
     private String getNodeValue(Node n) {
-        if (n == null)
+        if (null == n)
             return null;
         else
             return n.getNodeValue();
@@ -319,14 +319,14 @@ public class ClientArtifactListXMLHelper {
         Node child = node.getFirstChild();
         List<String> values = new ArrayList<String>();
         StringBuffer result = new StringBuffer();
-        if (child == null) {
+        if (null == child) {
             return Collections.emptyList();
         }
 
-        if (child.getNodeType() == Node.TEXT_NODE) {
+        if (Node.TEXT_NODE == child.getNodeType()) {
             result.append(child.getNodeValue());
             values.add(result.toString());
-        } else if (child.getNodeType() == Node.ELEMENT_NODE
+        } else if (Node.ELEMENT_NODE == child.getNodeType()
                 && child.getLocalName().equals(VALUE_TAG)
                 && child.getNamespaceURI().equals(NAMESPACE)) {
 
@@ -363,7 +363,7 @@ public class ClientArtifactListXMLHelper {
         String attachmentLocation = null;
 
         while (child != null) {
-            if (child.getNodeType() == Node.ELEMENT_NODE) {
+            if (Node.ELEMENT_NODE == child.getNodeType()) {
                 if (child.getLocalName().equals(CREATED_BY_TAG)
                         && child.getNamespaceURI().equals(NAMESPACE)) {
                     Node n = child.getFirstChild();
@@ -396,9 +396,9 @@ public class ClientArtifactListXMLHelper {
             }
             child = child.getNextSibling();
         }
-        if (createdBy != null && createdOn != null && attachmentName != null
-                && description != null && attachmentId != null
-                && attachmentLocation != null)
+        if (null != createdBy && null != createdOn && null != attachmentName
+                && null != description && null != attachmentId
+                && null != attachmentLocation)
             attachment = new ClientArtifactAttachment(createdBy, createdOn,
                     attachmentName, description, attachmentId, isFile,
                     attachmentLocation, null);

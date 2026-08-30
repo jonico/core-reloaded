@@ -29,7 +29,7 @@ public class JerichoUtils implements FormatterProxy {
      * @return formatted plain text
      */
     public static String htmlToText(String html) {
-        if (html == null) {
+        if (null == html) {
             return "";
         }
         Source source = new Source(html);

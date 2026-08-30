@@ -218,9 +218,9 @@ public class GenericArtifactField {
     }
 
     public String getMaxOccursValue() {
-        if (maxOccurs == CARDINALITY_UNKNOWN) {
+        if (CARDINALITY_UNKNOWN == maxOccurs) {
             return VALUE_UNKNOWN;
-        } else if (maxOccurs == CARDINALITY_UNBOUNDED) {
+        } else if (CARDINALITY_UNBOUNDED == maxOccurs) {
             return UNBOUNDED;
         }
         return Integer.toString(maxOccurs);
@@ -231,7 +231,7 @@ public class GenericArtifactField {
     }
 
     public String getMinOccursValue() {
-        if (minOccurs == CARDINALITY_UNKNOWN) {
+        if (CARDINALITY_UNKNOWN == minOccurs) {
             return VALUE_UNKNOWN;
         }
         return Integer.toString(minOccurs);

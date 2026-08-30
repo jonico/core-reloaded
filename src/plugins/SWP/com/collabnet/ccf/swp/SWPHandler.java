@@ -124,14 +124,14 @@ public class SWPHandler {
             String resyncUser, GenericArtifact ga) throws RemoteException,
             ScrumWorksException {
         BacklogItem pbi = new BacklogItem();
-        if (active != null) {
+        if (null != active) {
             pbi.setActive((Boolean) active.getFieldValue());
         }
 
-        if (completedDate != null) {
+        if (null != completedDate) {
             GregorianCalendar completedDateFieldValue = (GregorianCalendar) completedDate
                     .getFieldValue();
-            if (completedDateFieldValue == null) {
+            if (null == completedDateFieldValue) {
                 pbi.setCompletedDate(null);
             } else {
                 Date convertedDate = null;
@@ -146,13 +146,13 @@ public class SWPHandler {
             }
         }
 
-        if (description != null) {
+        if (null != description) {
             pbi.setDescription((String) description.getFieldValue());
         }
 
-        if (estimate != null) {
+        if (null != estimate) {
             Object fieldValueObj = estimate.getFieldValue();
-            if (fieldValueObj == null || fieldValueObj.toString().length() == 0) {
+            if (null == fieldValueObj || 0 == fieldValueObj.toString().length()) {
                 pbi.setEstimate(null);
             } else {
                 int fieldValue = 0;
@@ -172,7 +172,7 @@ public class SWPHandler {
             }
         }
 
-        if (title != null) {
+        if (null != title) {
             pbi.setName((String) title.getFieldValue());
         }
 
@@ -183,14 +183,14 @@ public class SWPHandler {
         // do the update
         if (penaltyHasChanged || benefitHasChanged) {
             BusinessWeight bw = pbi.getBusinessWeight();
-            if (bw == null) {
+            if (null == bw) {
                 bw = new BusinessWeight();
                 pbi.setBusinessWeight(bw);
             }
             if (penaltyHasChanged) {
                 Object fieldValueObj = penalty.getFieldValue();
-                if (fieldValueObj == null
-                        || fieldValueObj.toString().length() == 0) {
+                if (null == fieldValueObj
+                        || 0 == fieldValueObj.toString().length()) {
                     bw.setPenalty(null);
                 } else {
                     int fieldValue = 0;
@@ -211,8 +211,8 @@ public class SWPHandler {
             }
             if (benefitHasChanged) {
                 Object fieldValueObj = benefit.getFieldValue();
-                if (fieldValueObj == null
-                        || fieldValueObj.toString().length() == 0) {
+                if (null == fieldValueObj
+                        || 0 == fieldValueObj.toString().length()) {
                     bw.setBenefit(null);
                 } else {
                     int fieldValue = 0;
@@ -237,10 +237,10 @@ public class SWPHandler {
 
         // now set the themes
         programNameCache.clear();
-        if (themes != null && !themes.isEmpty()) {
+        if (null != themes && !themes.isEmpty()) {
             Set<String> anticipatedThemeNames = new HashSet<String>();
             for (GenericArtifactField field : themes) {
-                if (field.getFieldValue() != null) {
+                if (null != field.getFieldValue()) {
                     anticipatedThemeNames.add(field.getFieldValue().toString());
                 }
             }
@@ -248,7 +248,7 @@ public class SWPHandler {
                 // retrieve all themes of the product
                 List<Theme> availableThemes = endpoint
                         .getThemesForProduct(productId);
-                if (availableThemes == null || availableThemes.size() == 0) {
+                if (null == availableThemes || 0 == availableThemes.size()) {
                     log.warn("Attempt to set themes not present in SWP.");
                     for (String theme : anticipatedThemeNames) {
                         log.warn("Missing theme: " + theme);
@@ -261,7 +261,7 @@ public class SWPHandler {
                         // compute theme names
                         String themeName = theme.getName();
                         // differentiate between product and program themes here
-                        if (theme.getProgramId() != null) {
+                        if (null != theme.getProgramId()) {
                             themeName = themeName
                                     + " ("
                                     + getProgramName(theme.getProgramId(),
@@ -289,7 +289,7 @@ public class SWPHandler {
 
         // now determine the release (parent artifact)
         String parentArtifact = ga.getDepParentTargetArtifactId();
-        if (parentArtifact == null
+        if (null == parentArtifact
                 || parentArtifact.equals(GenericArtifact.VALUE_UNKNOWN)
                 || parentArtifact.equals(GenericArtifact.VALUE_NONE)
                 || !SWPMetaData.retrieveSWPTypeFromRepositoryId(
@@ -316,9 +316,9 @@ public class SWPHandler {
         Long pbiId = pbi.getId();
 
         // now we add the comments
-        if (comments != null) {
+        if (null != comments) {
             for (GenericArtifactField comment : comments) {
-                if (comment.getFieldValue() != null) {
+                if (null != comment.getFieldValue()) {
                     String commentValue = comment.getFieldValue().toString();
                     // only update if field value is not empty because SWP
                     // does not accept empty values
@@ -336,7 +336,7 @@ public class SWPHandler {
         AggregateVersionedData changesSinceLastKnownRevision = endpoint
                 .getChangesSinceRevisionForIds(revisionNumberBeforeCreate,
                         true, pbiFilter);
-        if (changesSinceLastKnownRevision == null
+        if (null == changesSinceLastKnownRevision
                 || changesSinceLastKnownRevision.getBacklogItemChanges()
                         .isEmpty()) {
             String message = "Could not find updated version of PBI " + pbiId
@@ -362,7 +362,7 @@ public class SWPHandler {
                 ga.setTargetArtifactVersion(Long
                         .toString(processedRevisionNumber * SWP_REVISION_FACTOR));
                 Date artifactLastModifiedDate = new Date(0);
-                if (processedRevisionInfo.getTimeStamp() != null) {
+                if (null != processedRevisionInfo.getTimeStamp()) {
                     artifactLastModifiedDate = processedRevisionInfo
                             .getTimeStamp();
                 }
@@ -403,13 +403,13 @@ public class SWPHandler {
             String swpProductName, String resyncUser, GenericArtifact ga)
             throws RemoteException, ScrumWorksException {
         Task task = new Task();
-        if (description != null) {
+        if (null != description) {
             task.setDescription((String) description.getFieldValue());
         }
 
-        if (estimatedHours != null) {
+        if (null != estimatedHours) {
             Object fieldValueObj = estimatedHours.getFieldValue();
-            if (fieldValueObj == null || fieldValueObj.toString().length() == 0) {
+            if (null == fieldValueObj || 0 == fieldValueObj.toString().length()) {
                 task.setCurrentEstimate(null);
             } else {
                 int fieldValue = 0;
@@ -429,9 +429,9 @@ public class SWPHandler {
             }
         }
 
-        if (originalEstimate != null) {
+        if (null != originalEstimate) {
             Object fieldValueObj = originalEstimate.getFieldValue();
-            if (fieldValueObj == null || fieldValueObj.toString().length() == 0) {
+            if (null == fieldValueObj || 0 == fieldValueObj.toString().length()) {
                 task.setOriginalEstimate(null);
             } else {
                 int fieldValue = 0;
@@ -451,10 +451,10 @@ public class SWPHandler {
             }
         }
 
-        if (pointPerson != null) {
+        if (null != pointPerson) {
             String anticipatedPointPerson = (String) pointPerson
                     .getFieldValue();
-            if (anticipatedPointPerson != null
+            if (null != anticipatedPointPerson
                     && !anticipatedPointPerson.isEmpty()) {
                 try {
                     User user = endpoint
@@ -469,19 +469,19 @@ public class SWPHandler {
             }
         }
 
-        if (status != null) {
+        if (null != status) {
             task.setStatus((String) status.getFieldValue());
         }
 
-        if (title != null) {
+        if (null != title) {
             task.setName((String) title.getFieldValue());
         }
 
         // now set the parent PBI
         String parent = ga.getDepParentTargetArtifactId();
         String parentRepository = ga.getDepParentTargetRepositoryId();
-        if (parent == null
-                || parentRepository == null
+        if (null == parent
+                || null == parentRepository
                 || parent.equals(GenericArtifact.VALUE_NONE)
                 || !SWPMetaData.retrieveSWPTypeFromRepositoryId(
                         parentRepository).equals(SWPType.PBI)) {
@@ -506,9 +506,9 @@ public class SWPHandler {
         Long taskId = task.getId();
 
         // now we add the comments
-        if (comments != null) {
+        if (null != comments) {
             for (GenericArtifactField comment : comments) {
-                if (comment.getFieldValue() != null) {
+                if (null != comment.getFieldValue()) {
                     String commentValue = comment.getFieldValue().toString();
                     // only update if field value is not empty because SWP
                     // does not accept empty values
@@ -526,7 +526,7 @@ public class SWPHandler {
         AggregateVersionedData changesSinceLastKnownRevision = endpoint
                 .getChangesSinceRevisionForIds(revisionNumberBeforeCreate,
                         true, taskFilter);
-        if (changesSinceLastKnownRevision == null
+        if (null == changesSinceLastKnownRevision
                 || changesSinceLastKnownRevision.getTaskChanges().isEmpty()) {
             String message = "Could not find updated version of Task " + taskId
                     + " which should be at least " + revisionNumberBeforeCreate;
@@ -551,7 +551,7 @@ public class SWPHandler {
                 ga.setTargetArtifactVersion(Long
                         .toString(processedRevisionNumber * SWP_REVISION_FACTOR));
                 Date artifactLastModifiedDate = new Date(0);
-                if (processedRevisionInfo.getTimeStamp() != null) {
+                if (null != processedRevisionInfo.getTimeStamp()) {
                     artifactLastModifiedDate = processedRevisionInfo
                             .getTimeStamp();
                 }
@@ -590,8 +590,8 @@ public class SWPHandler {
 
         // we return the current revision number if themes have not been synched
         // so far or a reset should be made
-        if (resetMetaDataSynchronization == null
-                || resetMetaDataSynchronization == true) {
+        if (null == resetMetaDataSynchronization
+                || true == resetMetaDataSynchronization) {
             RevisionInfo currentRevision = endpoint.getCurrentRevisionInfo();
             int revisionNumber = currentRevision.getRevisionNumber() + 1;
             if (!(majorVersion < revisionNumber)) {
@@ -602,7 +602,7 @@ public class SWPHandler {
                     + swpProductName);
             Date xmlTimestamp = currentRevision.getTimeStamp();
             Date artifactLastModifiedDate = new Date(0);
-            if (xmlTimestamp != null) {
+            if (null != xmlTimestamp) {
                 artifactLastModifiedDate = xmlTimestamp;
             }
             artifactState.setArtifactLastModifiedDate(artifactLastModifiedDate);
@@ -627,7 +627,7 @@ public class SWPHandler {
          * whether there are still some pending shipments of the current
          * revision
          */
-        if (minorVersion % 2 == 1) {
+        if (1 == minorVersion % 2) {
             ++majorVersion;
             minorVersion = 0;
         }
@@ -667,7 +667,7 @@ public class SWPHandler {
                     + swpProductName);
             Date xmlTimestamp = currentRevision.getTimeStamp();
             Date artifactLastModifiedDate = new Date(0);
-            if (xmlTimestamp != null) {
+            if (null != xmlTimestamp) {
                 artifactLastModifiedDate = xmlTimestamp;
             }
             artifactState.setArtifactLastModifiedDate(artifactLastModifiedDate);
@@ -705,7 +705,7 @@ public class SWPHandler {
          * whether there are still some pending shipments of the current
          * revision
          */
-        if (minorVersion % 2 == 1) {
+        if (1 == minorVersion % 2) {
             ++majorVersion;
             minorVersion = 0;
         }
@@ -844,7 +844,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -858,7 +858,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, BacklogItem>> productSpecificCache = pbiCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, BacklogItem>>();
                             pbiCache.put(swpProductName, productSpecificCache);
                         }
@@ -925,7 +925,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -939,7 +939,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, BacklogItem>> productSpecificCache = pbiCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, BacklogItem>>();
                             pbiCache.put(swpProductName, productSpecificCache);
                         }
@@ -978,7 +978,7 @@ public class SWPHandler {
          * whether there are still some pending shipments of the current
          * revision
          */
-        if (minorVersion % 2 == 1) {
+        if (1 == minorVersion % 2) {
             ++majorVersion;
             minorVersion = 0;
         }
@@ -1065,7 +1065,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -1079,7 +1079,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Product>> productSpecificCache = productCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Product>>();
                             productCache.put(swpProductName,
                                     productSpecificCache);
@@ -1133,7 +1133,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -1147,7 +1147,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Product>> productSpecificCache = productCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Product>>();
                             productCache.put(swpProductName,
                                     productSpecificCache);
@@ -1191,7 +1191,7 @@ public class SWPHandler {
          * whether there are still some pending shipments of the current
          * revision
          */
-        if (minorVersion % 2 == 1) {
+        if (1 == minorVersion % 2) {
             ++majorVersion;
             minorVersion = 0;
         }
@@ -1277,7 +1277,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -1291,7 +1291,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Release>> productSpecificCache = releaseCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Release>>();
                             releaseCache.put(swpProductName,
                                     productSpecificCache);
@@ -1346,7 +1346,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -1360,7 +1360,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Release>> productSpecificCache = releaseCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Release>>();
                             releaseCache.put(swpProductName,
                                     productSpecificCache);
@@ -1402,7 +1402,7 @@ public class SWPHandler {
          * whether there are still some pending shipments of the current
          * revision
          */
-        if (minorVersion % 2 == 1) {
+        if (1 == minorVersion % 2) {
             ++majorVersion;
             minorVersion = 0;
         }
@@ -1542,7 +1542,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -1556,7 +1556,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Task>> productSpecificCache = taskCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Task>>();
                             taskCache.put(swpProductName, productSpecificCache);
                         }
@@ -1637,7 +1637,7 @@ public class SWPHandler {
                         Date xmlTimestamp = processedRevisionInfo
                                 .getTimeStamp();
                         Date artifactLastModifiedDate = new Date(0);
-                        if (xmlTimestamp != null) {
+                        if (null != xmlTimestamp) {
                             artifactLastModifiedDate = xmlTimestamp;
                         }
                         artifactState
@@ -1651,7 +1651,7 @@ public class SWPHandler {
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Task>> productSpecificCache = taskCache
                                 .get(swpProductName);
-                        if (productSpecificCache == null) {
+                        if (null == productSpecificCache) {
                             productSpecificCache = new HashMap<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Task>>();
                             taskCache.put(swpProductName, productSpecificCache);
                         }
@@ -1700,7 +1700,7 @@ public class SWPHandler {
 
         AbstractMap.SimpleEntry<Long, RevisionInfo> cachedMetaData = metaDataCache
                 .get(swpProductName);
-        if (cachedMetaData == null) {
+        if (null == cachedMetaData) {
             throw new CCFRuntimeException("Could not retrieve  " + id
                     + " from the cache.");
         }
@@ -1713,7 +1713,7 @@ public class SWPHandler {
         List<Theme> themes = endpoint.getThemesForProduct(productId);
         for (Theme theme : themes) {
             // differentiate between product and program themes here
-            if (theme.getProgramId() == null) {
+            if (null == theme.getProgramId()) {
                 addMetaDataField(ga, MetaDataFields.theme, theme.getName());
             } else {
                 // program theme
@@ -1758,7 +1758,7 @@ public class SWPHandler {
 
         ga.setSourceArtifactVersion(Long.toString(artificialVersionNumber));
         Date artifactLastModifiedDate = new Date(0);
-        if (metaDataRevision.getTimeStamp() != null) {
+        if (null != metaDataRevision.getTimeStamp()) {
             artifactLastModifiedDate = metaDataRevision.getTimeStamp();
         }
         ga.setSourceArtifactLastModifiedDate(GenericArtifactHelper.df
@@ -1784,7 +1784,7 @@ public class SWPHandler {
         // BacklogItem pbi = endpoint.getBacklogItemById(Long.valueOf(id));
         AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, BacklogItem> cachedPBI = pbiCache
                 .get(product).get(Long.valueOf(id));
-        if (cachedPBI == null) {
+        if (null == cachedPBI) {
             throw new CCFRuntimeException("Could not retrieve PBI " + id
                     + " from the cache.");
         }
@@ -1797,7 +1797,7 @@ public class SWPHandler {
 
         BacklogItem pbi = cachedPBI.getValue();
 
-        if (pbi != null) {
+        if (null != pbi) {
             addPBIField(ga, PBIFields.id, pbi.getId());
             addPBIField(ga, PBIFields.active, pbi.isActive());
             BusinessWeight bw = pbi.getBusinessWeight();
@@ -1817,12 +1817,12 @@ public class SWPHandler {
 
             // retrieve themes
             List<Theme> themes = pbi.getThemes();
-            if (themes == null || themes.size() == 0) {
+            if (null == themes || 0 == themes.size()) {
                 addPBIField(ga, PBIFields.theme, null);
             } else {
                 for (Theme theme : themes) {
                     // differentiate between product and program themes here
-                    if (theme.getProgramId() == null) {
+                    if (null == theme.getProgramId()) {
                         addPBIField(ga, PBIFields.theme, theme.getName());
                     } else {
                         // program theme
@@ -1841,7 +1841,7 @@ public class SWPHandler {
             ga.setDepParentSourceArtifactId(pbi.getReleaseId().toString());
 
             Long sprintId = pbi.getSprintId();
-            if (sprintId == null) {
+            if (null == sprintId) {
                 addPBIField(ga, PBIFields.sprintId, null);
                 addPBIField(ga, PBIFields.team, "");
                 addPBIField(ga, PBIFields.sprint, "");
@@ -1879,7 +1879,7 @@ public class SWPHandler {
                 + SWPMetaData.REPOSITORY_ID_SEPARATOR + SWPMetaData.RELEASE);
         ga.setSourceArtifactVersion(Long.toString(artificialVersionNumber));
         Date artifactLastModifiedDate = new Date(0);
-        if (pbiRevision.getTimeStamp() != null) {
+        if (null != pbiRevision.getTimeStamp()) {
             artifactLastModifiedDate = pbiRevision.getTimeStamp();
         }
         ga.setSourceArtifactLastModifiedDate(GenericArtifactHelper.df
@@ -1903,7 +1903,7 @@ public class SWPHandler {
             throws RemoteException, ScrumWorksException {
         AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Product> cachedProduct = productCache
                 .get(swpProductName).get(Long.valueOf(id));
-        if (cachedProduct == null) {
+        if (null == cachedProduct) {
             throw new CCFRuntimeException("Could not retrieve product " + id
                     + " from the cache.");
         }
@@ -1917,7 +1917,7 @@ public class SWPHandler {
 
         Product product = cachedProduct.getValue();
 
-        if (product != null) {
+        if (null != product) {
             addProductField(genericArtifact, ProductFields.id, product.getId());
             addProductField(genericArtifact, ProductFields.effortUnits,
                     product.getEffortUnits());
@@ -1935,7 +1935,7 @@ public class SWPHandler {
         genericArtifact.setSourceArtifactVersion(Long
                 .toString(artificialVersionNumber));
         Date artifactLastModifiedDate = new Date(0);
-        if (productRevision.getTimeStamp() != null) {
+        if (null != productRevision.getTimeStamp()) {
             artifactLastModifiedDate = productRevision.getTimeStamp();
         }
         genericArtifact
@@ -1965,7 +1965,7 @@ public class SWPHandler {
 
         AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Release> cachedRelease = releaseCache
                 .get(swpProductName).get(Long.valueOf(id));
-        if (cachedRelease == null) {
+        if (null == cachedRelease) {
             throw new CCFRuntimeException("Could not retrieve release " + id
                     + " from the cache.");
         }
@@ -1979,7 +1979,7 @@ public class SWPHandler {
 
         Release release = cachedRelease.getValue();
 
-        if (release != null) {
+        if (null != release) {
             addProductReleaseField(ga, ReleaseFields.id, release.getId());
             addProductReleaseField(ga, ReleaseFields.archived,
                     release.isArchived());
@@ -2001,7 +2001,7 @@ public class SWPHandler {
                     ga.getSourceSystemTimezone(), startDateField);
 
             String releaseTitle = release.getName();
-            if (programId != null) {
+            if (null != programId) {
                 releaseTitle = releaseTitle + " ("
                         + getProgramName(programId, endpoint) + ")";
             }
@@ -2018,7 +2018,7 @@ public class SWPHandler {
 
         ga.setSourceArtifactVersion(Long.toString(artificialVersionNumber));
         Date artifactLastModifiedDate = new Date(0);
-        if (releaseRevision.getTimeStamp() != null) {
+        if (null != releaseRevision.getTimeStamp()) {
             artifactLastModifiedDate = releaseRevision.getTimeStamp();
         }
         ga.setSourceArtifactLastModifiedDate(GenericArtifactHelper.df
@@ -2046,7 +2046,7 @@ public class SWPHandler {
         // final Task task = endpoint.getTaskById(taskId);
         AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Task> cachedTask = taskCache
                 .get(product).get(taskId);
-        if (cachedTask == null) {
+        if (null == cachedTask) {
             throw new CCFRuntimeException("Could not retrieve task " + id
                     + " from the cache.");
         }
@@ -2059,7 +2059,7 @@ public class SWPHandler {
 
         Task task = cachedTask.getValue();
 
-        if (task != null) {
+        if (null != task) {
             addTaskField(genericArtifact, TaskFields.id, taskId);
             addTaskField(genericArtifact, TaskFields.description,
                     task.getDescription());
@@ -2091,7 +2091,7 @@ public class SWPHandler {
         genericArtifact.setSourceArtifactVersion(Long
                 .toString(artificialVersionNumber));
         Date artifactLastModifiedDate = new Date(0);
-        if (taskRevision.getTimeStamp() != null) {
+        if (null != taskRevision.getTimeStamp()) {
             artifactLastModifiedDate = taskRevision.getTimeStamp();
         }
         genericArtifact
@@ -2131,7 +2131,7 @@ public class SWPHandler {
         Long lastSyncVersion = new Long(-1);
         int lastKnownRevision = 0;
         String lastSyncVersionStr = ga.getTargetArtifactVersion();
-        if (lastSyncVersionStr == null
+        if (null == lastSyncVersionStr
                 || lastSyncVersionStr
                         .equalsIgnoreCase(GenericArtifact.VALUE_UNKNOWN)) {
             lastSyncVersionStr = GenericArtifactHelper.ARTIFACT_VERSION_FORCE_RESYNC;
@@ -2146,7 +2146,7 @@ public class SWPHandler {
         }
         lastKnownRevision = new Long(lastSyncVersion / SWP_REVISION_FACTOR)
                 .intValue() - 1;
-        if (lastKnownRevision < 0) {
+        if (0 > lastKnownRevision) {
             lastKnownRevision = 0;
         }
 
@@ -2155,8 +2155,8 @@ public class SWPHandler {
         AggregateVersionedData changesSinceLastKnownRevision = endpoint
                 .getChangesSinceRevisionForIds(lastKnownRevision, false,
                         pbiFilter);
-        if (changesSinceLastKnownRevision == null
-                || changesSinceLastKnownRevision.getBacklogItemChanges().size() != 1) {
+        if (null == changesSinceLastKnownRevision
+                || 1 != changesSinceLastKnownRevision.getBacklogItemChanges().size()) {
             String message = "Could not find current version of PBI " + pbiId
                     + " which should be at least " + lastKnownRevision;
             // log.error(message);
@@ -2169,7 +2169,7 @@ public class SWPHandler {
 
         List<BacklogItem> pbiChanges = pbiSpecificChangesInCurrentRevision
                 .getAddedOrChangedEntities();
-        if (pbiChanges.size() != 1 || !pbiChanges.get(0).getId().equals(pbiId)) {
+        if (1 != pbiChanges.size() || !pbiChanges.get(0).getId().equals(pbiId)) {
             String message = "Could not find current version of PBI " + pbiId
                     + " which should be at least " + lastKnownRevision;
             // log.error(message);
@@ -2184,17 +2184,17 @@ public class SWPHandler {
 
         BacklogItem pbi = pbiChanges.get(0);
 
-        if (active != null && active.getFieldValueHasChanged()) {
+        if (null != active && active.getFieldValueHasChanged()) {
             pbi.setActive((Boolean) active.getFieldValue());
         }
 
-        if (completedDate != null && completedDate.getFieldValueHasChanged()) {
+        if (null != completedDate && completedDate.getFieldValueHasChanged()) {
             GregorianCalendar completedDateFieldValue = (GregorianCalendar) completedDate
                     .getFieldValue();
             // if the PBI should be reopened, we always reopen it
-            if (completedDateFieldValue == null) {
+            if (null == completedDateFieldValue) {
                 pbi.setCompletedDate(null);
-            } else if (pbi.getCompletedDate() == null) {
+            } else if (null == pbi.getCompletedDate()) {
                 // only set the new date if not already closed
                 Date convertedDate = null;
                 Date dateValue = completedDateFieldValue.getTime();
@@ -2209,13 +2209,13 @@ public class SWPHandler {
             // otherwise do nothing since PBI is already closed
         }
 
-        if (description != null && description.getFieldValueHasChanged()) {
+        if (null != description && description.getFieldValueHasChanged()) {
             pbi.setDescription((String) description.getFieldValue());
         }
 
-        if (estimate != null && estimate.getFieldValueHasChanged()) {
+        if (null != estimate && estimate.getFieldValueHasChanged()) {
             Object fieldValueObj = estimate.getFieldValue();
-            if (fieldValueObj == null || fieldValueObj.toString().length() == 0) {
+            if (null == fieldValueObj || 0 == fieldValueObj.toString().length()) {
                 pbi.setEstimate(null);
             } else {
                 int fieldValue = 0;
@@ -2235,7 +2235,7 @@ public class SWPHandler {
             }
         }
 
-        if (title != null && title.getFieldValueHasChanged()) {
+        if (null != title && title.getFieldValueHasChanged()) {
             pbi.setName((String) title.getFieldValue());
         }
 
@@ -2250,8 +2250,8 @@ public class SWPHandler {
             BusinessWeight bw = pbi.getBusinessWeight();
             if (penaltyHasChanged) {
                 Object fieldValueObj = penalty.getFieldValue();
-                if (fieldValueObj == null
-                        || fieldValueObj.toString().length() == 0) {
+                if (null == fieldValueObj
+                        || 0 == fieldValueObj.toString().length()) {
                     bw.setPenalty(null);
                 } else {
                     int fieldValue = 0;
@@ -2272,8 +2272,8 @@ public class SWPHandler {
             }
             if (benefitHasChanged) {
                 Object fieldValueObj = benefit.getFieldValue();
-                if (fieldValueObj == null
-                        || fieldValueObj.toString().length() == 0) {
+                if (null == fieldValueObj
+                        || 0 == fieldValueObj.toString().length()) {
                     bw.setBenefit(null);
                 } else {
                     int fieldValue = 0;
@@ -2300,12 +2300,12 @@ public class SWPHandler {
         // now updates the themes
         programNameCache.clear();
         List<Theme> currentlySetThemes = pbi.getThemes();
-        if (themes != null && !themes.isEmpty()) {
+        if (null != themes && !themes.isEmpty()) {
             Set<String> anticipatedThemeNames = new HashSet<String>();
             boolean nullValueSet = false;
             for (GenericArtifactField field : themes) {
                 if (field.getFieldValueHasChanged()) {
-                    if (field.getFieldValue() != null) {
+                    if (null != field.getFieldValue()) {
                         anticipatedThemeNames.add(field.getFieldValue()
                                 .toString());
                     } else {
@@ -2317,7 +2317,7 @@ public class SWPHandler {
                 // retrieve all themes of the product
                 List<Theme> availableThemes = endpoint
                         .getThemesForProduct(productId);
-                if (availableThemes == null || availableThemes.size() == 0) {
+                if (null == availableThemes || 0 == availableThemes.size()) {
                     log.warn("Attempt to set themes not present in SWP.");
                     for (String theme : anticipatedThemeNames) {
                         log.warn("Missing theme: " + theme);
@@ -2329,7 +2329,7 @@ public class SWPHandler {
                         // compute theme names
                         String themeName = theme.getName();
                         // differentiate between product and program themes here
-                        if (theme.getProgramId() != null) {
+                        if (null != theme.getProgramId()) {
                             themeName = themeName
                                     + " ("
                                     + getProgramName(theme.getProgramId(),
@@ -2343,7 +2343,7 @@ public class SWPHandler {
                         // compute theme names
                         String themeName = theme.getName();
                         // differentiate between product and program themes here
-                        if (theme.getProgramId() != null) {
+                        if (null != theme.getProgramId()) {
                             themeName = themeName
                                     + " ("
                                     + getProgramName(theme.getProgramId(),
@@ -2384,7 +2384,7 @@ public class SWPHandler {
 
         // now determine the release (parent artifact)
         String parentArtifact = ga.getDepParentTargetArtifactId();
-        if (parentArtifact == null
+        if (null == parentArtifact
                 || parentArtifact.equals(GenericArtifact.VALUE_UNKNOWN)
                 || parentArtifact.equals(GenericArtifact.VALUE_NONE)
                 || !SWPMetaData.retrieveSWPTypeFromRepositoryId(
@@ -2398,9 +2398,9 @@ public class SWPHandler {
         }
 
         // now we add the comments
-        if (comments != null) {
+        if (null != comments) {
             for (GenericArtifactField comment : comments) {
-                if (comment.getFieldValue() != null) {
+                if (null != comment.getFieldValue()) {
                     String commentValue = comment.getFieldValue().toString();
                     // only update if field value is not empty because SWP
                     // does not accept empty values
@@ -2417,7 +2417,7 @@ public class SWPHandler {
         // now we have to determine the new revision
         changesSinceLastKnownRevision = endpoint.getChangesSinceRevisionForIds(
                 currentRevision - 1, true, pbiFilter);
-        if (changesSinceLastKnownRevision == null
+        if (null == changesSinceLastKnownRevision
                 || changesSinceLastKnownRevision.getBacklogItemChanges()
                         .isEmpty()) {
             String message = "Could not find updated version of PBI " + pbiId
@@ -2444,7 +2444,7 @@ public class SWPHandler {
                 ga.setTargetArtifactVersion(Long
                         .toString(processedRevisionNumber * SWP_REVISION_FACTOR));
                 Date artifactLastModifiedDate = new Date(0);
-                if (processedRevisionInfo.getTimeStamp() != null) {
+                if (null != processedRevisionInfo.getTimeStamp()) {
                     artifactLastModifiedDate = processedRevisionInfo
                             .getTimeStamp();
                 }
@@ -2491,7 +2491,7 @@ public class SWPHandler {
         Long lastSyncVersion = new Long(-1);
         int lastKnownRevision = 0;
         String lastSyncVersionStr = ga.getTargetArtifactVersion();
-        if (lastSyncVersionStr == null
+        if (null == lastSyncVersionStr
                 || lastSyncVersionStr
                         .equalsIgnoreCase(GenericArtifact.VALUE_UNKNOWN)) {
             lastSyncVersionStr = GenericArtifactHelper.ARTIFACT_VERSION_FORCE_RESYNC;
@@ -2506,7 +2506,7 @@ public class SWPHandler {
         }
         lastKnownRevision = new Long(lastSyncVersion / SWP_REVISION_FACTOR)
                 .intValue() - 1;
-        if (lastKnownRevision < 0) {
+        if (0 > lastKnownRevision) {
             lastKnownRevision = 0;
         }
 
@@ -2515,8 +2515,8 @@ public class SWPHandler {
         AggregateVersionedData changesSinceLastKnownRevision = endpoint
                 .getChangesSinceRevisionForIds(lastKnownRevision, false,
                         taskFilter);
-        if (changesSinceLastKnownRevision == null
-                || changesSinceLastKnownRevision.getTaskChanges().size() != 1) {
+        if (null == changesSinceLastKnownRevision
+                || 1 != changesSinceLastKnownRevision.getTaskChanges().size()) {
             String message = "Could not find current version of Task " + taskId
                     + " which should be at least " + lastKnownRevision;
             // log.error(message);
@@ -2529,7 +2529,7 @@ public class SWPHandler {
 
         List<Task> taskChanges = taskSpecificChangesInCurrentRevision
                 .getAddedOrChangedEntities();
-        if (taskChanges.size() != 1
+        if (1 != taskChanges.size()
                 || !taskChanges.get(0).getId().equals(taskId)) {
             String message = "Could not find current version of Task " + taskId
                     + " which should be at least " + lastKnownRevision;
@@ -2543,13 +2543,13 @@ public class SWPHandler {
             return null;
         }
         Task task = taskChanges.get(0);
-        if (description != null && description.getFieldValueHasChanged()) {
+        if (null != description && description.getFieldValueHasChanged()) {
             task.setDescription((String) description.getFieldValue());
         }
 
-        if (estimatedHours != null && estimatedHours.getFieldValueHasChanged()) {
+        if (null != estimatedHours && estimatedHours.getFieldValueHasChanged()) {
             Object fieldValueObj = estimatedHours.getFieldValue();
-            if (fieldValueObj == null || fieldValueObj.toString().length() == 0) {
+            if (null == fieldValueObj || 0 == fieldValueObj.toString().length()) {
                 task.setCurrentEstimate(null);
             } else {
                 int fieldValue = 0;
@@ -2567,16 +2567,16 @@ public class SWPHandler {
                 }
                 // we only set the estimated hours to zero if the previous value
                 // was not null
-                if (task.getCurrentEstimate() != null || fieldValue != 0) {
+                if (null != task.getCurrentEstimate() || 0 != fieldValue) {
                     task.setCurrentEstimate(fieldValue);
                 }
             }
         }
 
-        if (originalEstimate != null
+        if (null != originalEstimate
                 && originalEstimate.getFieldValueHasChanged()) {
             Object fieldValueObj = originalEstimate.getFieldValue();
-            if (fieldValueObj == null || fieldValueObj.toString().length() == 0) {
+            if (null == fieldValueObj || 0 == fieldValueObj.toString().length()) {
                 task.setOriginalEstimate(null);
             } else {
                 int fieldValue = 0;
@@ -2594,16 +2594,16 @@ public class SWPHandler {
                 }
                 // we only set the original estimate to zero if the previous
                 // value was not null
-                if (task.getOriginalEstimate() != null || fieldValue != 0) {
+                if (null != task.getOriginalEstimate() || 0 != fieldValue) {
                     task.setOriginalEstimate(fieldValue);
                 }
             }
         }
 
-        if (pointPerson != null && pointPerson.getFieldValueHasChanged()) {
+        if (null != pointPerson && pointPerson.getFieldValueHasChanged()) {
             String anticipatedPointPerson = (String) pointPerson
                     .getFieldValue();
-            if (anticipatedPointPerson != null
+            if (null != anticipatedPointPerson
                     && !anticipatedPointPerson.isEmpty()) {
                 try {
                     User user = endpoint
@@ -2620,19 +2620,19 @@ public class SWPHandler {
             }
         }
 
-        if (status != null && status.getFieldValueHasChanged()) {
+        if (null != status && status.getFieldValueHasChanged()) {
             task.setStatus((String) status.getFieldValue());
         }
 
-        if (title != null && title.getFieldValueHasChanged()) {
+        if (null != title && title.getFieldValueHasChanged()) {
             task.setName((String) title.getFieldValue());
         }
 
         // decide whether we have to move the task to another PBI
         String parent = ga.getDepParentTargetArtifactId();
         String parentRepository = ga.getDepParentTargetRepositoryId();
-        if (parent == null
-                || parentRepository == null
+        if (null == parent
+                || null == parentRepository
                 || parent.equals(GenericArtifact.VALUE_NONE)
                 || !SWPMetaData.retrieveSWPTypeFromRepositoryId(
                         parentRepository).equals(SWPType.PBI)) {
@@ -2656,9 +2656,9 @@ public class SWPHandler {
         }
 
         // now we add the comments
-        if (comments != null) {
+        if (null != comments) {
             for (GenericArtifactField comment : comments) {
-                if (comment.getFieldValue() != null) {
+                if (null != comment.getFieldValue()) {
                     String commentValue = comment.getFieldValue().toString();
                     // only update if field value is not empty because SWP
                     // does not accept empty values
@@ -2675,7 +2675,7 @@ public class SWPHandler {
         // now we have to determine the new revision number
         changesSinceLastKnownRevision = endpoint.getChangesSinceRevisionForIds(
                 currentRevision - 1, true, taskFilter);
-        if (changesSinceLastKnownRevision == null
+        if (null == changesSinceLastKnownRevision
                 || changesSinceLastKnownRevision.getTaskChanges().isEmpty()) {
             String message = "Could not find updated version of Task " + taskId
                     + " which should be at least " + currentRevision;
@@ -2701,7 +2701,7 @@ public class SWPHandler {
                 ga.setTargetArtifactVersion(Long
                         .toString(processedRevisionNumber * SWP_REVISION_FACTOR));
                 Date artifactLastModifiedDate = new Date(0);
-                if (processedRevisionInfo.getTimeStamp() != null) {
+                if (null != processedRevisionInfo.getTimeStamp()) {
                     artifactLastModifiedDate = processedRevisionInfo
                             .getTimeStamp();
                 }
@@ -2830,12 +2830,12 @@ public class SWPHandler {
     private Long getProductId(String productName, ScrumWorksAPIService endpoint)
             throws ScrumWorksException {
         Long productId = productIdCache.get(productName);
-        if (productId == null) {
+        if (null == productId) {
             // now figure out whether the product name contains the product id
             // or not
             int indexLeftBracket = productName.lastIndexOf("(");
             int indexRightBracket = productName.lastIndexOf(")");
-            if (indexLeftBracket == -1 || indexRightBracket == -1) {
+            if (-1 == indexLeftBracket || -1 == indexRightBracket) {
                 Product product = endpoint.getProductByName(productName);
                 productId = product.getId();
             } else {
@@ -2859,7 +2859,7 @@ public class SWPHandler {
     private String getProgramName(Long programId, ScrumWorksAPIService endpoint)
             throws ScrumWorksException {
         String programName = programNameCache.get(programId);
-        if (programName == null) {
+        if (null == programName) {
             Program program = endpoint.getProgramById(programId);
             programName = program.getName();
             programNameCache.put(programId, programName);
