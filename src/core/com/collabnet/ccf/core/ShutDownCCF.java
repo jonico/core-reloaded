@@ -64,7 +64,7 @@ public class ShutDownCCF extends Thread {
             } else {
                 alreadyExited = true;
                 // After 10 seconds, we will kill the VM even if shutdown hooks are still in process
-                new ShutDownCCF(exitCode, new Long(10000)).start();
+                new ShutDownCCF(exitCode, Long.valueOf(10000)).start();
                 new ShutDownCCF(exitCode).start();
             }
         }

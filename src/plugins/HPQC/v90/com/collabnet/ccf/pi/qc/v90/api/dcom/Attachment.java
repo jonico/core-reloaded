@@ -14,13 +14,17 @@ package com.collabnet.ccf.pi.qc.v90.api.dcom;
 import org.apache.log4j.Logger;
 
 import com.collabnet.ccf.pi.qc.v90.api.IAttachment;
+
 import com.jacob.activeX.ActiveXComponent;
+
+import java.io.Serial;
 import com.jacob.com.Dispatch;
 
 public class Attachment extends ActiveXComponent implements IAttachment {
     /**
-	 *
-	 */
+     *
+     */
+    @Serial
     private static final long serialVersionUID = 1L;
     public static Logger      logger           = Logger.getLogger(Attachment.class);
 

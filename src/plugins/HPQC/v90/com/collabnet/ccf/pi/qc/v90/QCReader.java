@@ -864,8 +864,7 @@ public class QCReader extends AbstractReader<IConnection> {
             if (connectionManager.isEnableRetryAfterNetworkTimeout()) {
                 return true;
             }
-        } else if (rootCause instanceof com.jacob.com.ComFailException) {
-            com.jacob.com.ComFailException comEx = (com.jacob.com.ComFailException) rootCause;
+        } else if (rootCause instanceof com.jacob.com.ComFailException comEx) {
             String message = comEx.getMessage();
             boolean connectionErrorOccured = false;
             if (message.contains("Server is not available")) {

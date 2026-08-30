@@ -225,7 +225,7 @@ public class TrackerWebServicesClient {
         List<ClientArtifactComment> comments = artifact.getComments();
         if (comments != null && comments.size() > 0) {
             List<ClientArtifact> responseArtifacts = helper.getAllArtifacts();
-            ClientArtifact responseArtifact = responseArtifacts.get(0);
+            ClientArtifact responseArtifact = responseArtifacts.getFirst();
             String createdArtifactId = responseArtifact.getAttributeValue(
                     ProjectTrackerReader.TRACKER_NAMESPACE, "id");
             artifact.addAttributeValue(ProjectTrackerReader.TRACKER_NAMESPACE,
@@ -365,7 +365,7 @@ public class TrackerWebServicesClient {
                 } else {
                     // TODO: consider the namespace of the attributes?
                     // attributeNode.setNodeValue(values.get(0));
-                    String value = values.get(0);
+                    String value = values.getFirst();
                     value = TrackerUtil.removeInvalidXmlCharacters(value);
                     if (value == null)
                         value = "";

@@ -121,8 +121,8 @@ public class QCHandler {
         String fieldName = isDefect ? "BG_VTS" : "RQ_VTS";
         List<GenericArtifactField> genArtifactFields = artifact
                 .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
-        if (genArtifactFields != null && genArtifactFields.get(0) != null) {
-            genArtifactFields.get(0).setFieldValue(lastModifiedDate);
+        if (genArtifactFields != null && genArtifactFields.getFirst() != null) {
+            genArtifactFields.getFirst().setFieldValue(lastModifiedDate);
         }
         String lastModifiedDateStr = DateUtil.format(lastModifiedDate);
         artifact.setSourceArtifactLastModifiedDate(lastModifiedDateStr);
@@ -659,7 +659,7 @@ public class QCHandler {
             GenericArtifact individualGenericArtifact, String fieldName) {
 
         Integer intFieldValue = (Integer) individualGenericArtifact
-                .getAllGenericArtifactFieldsWithSameFieldName(fieldName).get(0)
+                .getAllGenericArtifactFieldsWithSameFieldName(fieldName).getFirst()
                 .getFieldValue();
         String fieldValue = Integer.toString(intFieldValue.intValue());
         return fieldValue;

@@ -3,17 +3,16 @@
  */
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-
-import org.junit.Test;
 
 import com.collabnet.teamforge.api.FieldValues;
 import com.collabnet.teamforge.api.tracker.ArtifactDO;
 import com.danube.scrumworks.api2.client.BacklogItem;
 import com.danube.scrumworks.api2.client.Task;
+import org.junit.jupiter.api.Test;
 
 /**
  * Creates a task item in TeamForge and moves it between PBIs (parent artifacts)
@@ -50,7 +49,7 @@ public class TestTeamForgeMoveTaskInScrumWorks extends TFSWPIntegrationTest {
                 1);
 
         assertEquals(1, pbisSWP.size());
-        BacklogItem firstSWPPBI = pbisSWP.get(0);
+        BacklogItem firstSWPPBI = pbisSWP.getFirst();
 
         // now that we can be sure that PBI has been created, update task again to trigger resynch
         getTeamForgeTester().updateTask(taskTF.getId(), title, description,
@@ -74,8 +73,8 @@ public class TestTeamForgeMoveTaskInScrumWorks extends TFSWPIntegrationTest {
         BacklogItem secondSWPPBI = pbisSWP.get(1);
 
         // figure out the second SWP PBI
-        if (!pbisSWP.get(0).getId().equals(firstSWPPBI.getId())) {
-            secondSWPPBI = pbisSWP.get(0);
+        if (!pbisSWP.getFirst().getId().equals(firstSWPPBI.getId())) {
+            secondSWPPBI = pbisSWP.getFirst();
         }
         assertEquals("SecondPBI", secondSWPPBI.getName());
 
@@ -105,7 +104,7 @@ public class TestTeamForgeMoveTaskInScrumWorks extends TFSWPIntegrationTest {
         tasksSWP = getSWPTester().getSWPEndpoint().getTasks(
                 secondSWPPBI.getId());
         assertEquals(1, tasksSWP.size());
-        assertEquals(taskSWP.getId(), tasksSWP.get(0).getId());
+        assertEquals(taskSWP.getId(), tasksSWP.getFirst().getId());
     }
 
 }

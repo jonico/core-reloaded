@@ -2,10 +2,9 @@ package com.collabnet.ccf.integration.tfswp;
 
 import java.rmi.RemoteException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import com.danube.scrumworks.api2.client.Product;
 import com.danube.scrumworks.api2.client.ScrumWorksException;
 import com.danube.scrumworks.api2.client.Theme;
@@ -20,12 +19,12 @@ import com.danube.scrumworks.api2.client.Theme;
 public class TestScrumWorksCreateandDeleteThemeInTeamForge extends TFSWPIntegrationTest {
     private Theme theme = null;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws ScrumWorksException, RemoteException {
         if (theme != null) {
             getSWPTester().getSWPEndpoint().deleteTheme(theme.getId());

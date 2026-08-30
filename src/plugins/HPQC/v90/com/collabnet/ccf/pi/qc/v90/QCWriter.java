@@ -193,7 +193,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
 
                 genericArtifact
                         .getAllGenericArtifactFieldsWithSameFieldName(
-                                allFields.get(cnt).getFieldName()).get(0)
+                                allFields.get(cnt).getFieldName()).getFirst()
                         .setFieldValue(concatenatedString.toString());
             }
             allFieldNames.add(allFields.get(cnt).getFieldName());
@@ -319,7 +319,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                                 connection, targetArtifactIdAfterCreation);
                         genericArtifact
                                 .setTargetArtifactVersion(targetAutimeAndTxnId
-                                        .get(0));
+                                        .getFirst());
                         genericArtifact
                                 .setTargetArtifactLastModifiedDate(DateUtil.format(DateUtil
                                         .parseQCDate(targetAutimeAndTxnId
@@ -359,7 +359,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                                 connection, targetArtifactIdAfterCreation);
                         genericArtifact
                                 .setTargetArtifactVersion(targetAutimeAndTxnId
-                                        .get(0));
+                                        .getFirst());
                         genericArtifact
                                 .setTargetArtifactLastModifiedDate(DateUtil.format(DateUtil
                                         .parseQCDate(targetAutimeAndTxnId
@@ -490,7 +490,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                 targetAutimeAndTxnId = getAuTimeAndTxnIdForAttachment(
                         connection, attachmentId);
                 genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId
-                        .get(0));
+                        .getFirst());
                 genericArtifact.setTargetArtifactLastModifiedDate(DateUtil
                         .format(DateUtil.parseQCDate(targetAutimeAndTxnId
                                 .get(1))));
@@ -512,7 +512,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                 targetAutimeAndTxnId = getAuTimeAndTxnIdForAttachment(
                         connection, attachmentId);
                 genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId
-                        .get(0));
+                        .getFirst());
                 genericArtifact.setTargetArtifactLastModifiedDate(DateUtil
                         .format(DateUtil.parseQCDate(targetAutimeAndTxnId
                                 .get(1))));
@@ -554,7 +554,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                     .format(DateUtil.parseQCDate(targetAutimeAndTxnIdParent
                             .get(1))));
             parentArtifact.setTargetArtifactVersion(targetAutimeAndTxnIdParent
-                    .get(0));
+                    .getFirst());
             parentArtifact.setTargetRepositoryId(genericArtifact
                     .getTargetRepositoryId());
             parentArtifact.setTargetRepositoryKind(genericArtifact
@@ -647,7 +647,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                         connection, parentArtifactId);
             }
             genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId
-                    .get(0));
+                    .getFirst());
             genericArtifact.setTargetArtifactLastModifiedDate(DateUtil
                     .format(DateUtil.parseQCDate(targetAutimeAndTxnId.get(1))));
 
@@ -684,7 +684,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                     .format(DateUtil.parseQCDate(targetAutimeAndTxnIdParent
                             .get(1))));
             parentArtifact.setTargetArtifactVersion(targetAutimeAndTxnIdParent
-                    .get(0));
+                    .getFirst());
             parentArtifact.setTargetRepositoryId(genericArtifact
                     .getTargetRepositoryId());
             parentArtifact.setTargetRepositoryKind(genericArtifact
@@ -908,8 +908,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
             if (connectionManager.isEnableRetryAfterNetworkTimeout()) {
                 return true;
             }
-        } else if (rootCause instanceof com.jacob.com.ComFailException) {
-            com.jacob.com.ComFailException comEx = (com.jacob.com.ComFailException) rootCause;
+        } else if (rootCause instanceof com.jacob.com.ComFailException comEx) {
             String message = comEx.getMessage();
             boolean connectionErrorOccured = false;
             if (message.contains("Server is not available")) {
@@ -1280,7 +1279,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
         List<String> targetAutimeAndTxnIdBeforeUpdate = getAuTimeAndTxnIdForDefect(
                 connection, targetArtifactId);
         String targetTransactionIdBeforeUpdate = targetAutimeAndTxnIdBeforeUpdate
-                .get(0);
+                .getFirst();
         int targetTransactionIdBeforeUpdateInt = getTargetTransactionIdBeforeUpdate(targetTransactionIdBeforeUpdate);
         // now do conflict resolution
         if (!AbstractWriter.handleConflicts(targetTransactionIdBeforeUpdateInt,
@@ -1310,7 +1309,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
         // FIXME This is not atomic
         List<String> targetAutimeAndTxnId = getAuTimeAndTxnIdForDefect(
                 connection, targetArtifactId);
-        genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId.get(0));
+        genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId.getFirst());
         genericArtifact.setTargetArtifactLastModifiedDate(DateUtil
                 .format(DateUtil.parseQCDate(targetAutimeAndTxnId.get(1))));
     }
@@ -1333,7 +1332,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
         List<String> targetAutimeAndTxnIdBeforeUpdate = getAuTimeAndTxnIdForRequirement(
                 connection, targetArtifactId);
         String targetTransactionIdBeforeUpdate = targetAutimeAndTxnIdBeforeUpdate
-                .get(0);
+                .getFirst();
         int targetTransactionIdBeforeUpdateInt = getTargetTransactionIdBeforeUpdate(targetTransactionIdBeforeUpdate);
         // now do conflict resolution
         if (!AbstractWriter.handleConflicts(targetTransactionIdBeforeUpdateInt,
@@ -1371,7 +1370,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
         // FIXME This is not atomic
         List<String> targetAutimeAndTxnId = getAuTimeAndTxnIdForRequirement(
                 connection, targetArtifactId);
-        genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId.get(0));
+        genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId.getFirst());
         genericArtifact.setTargetArtifactLastModifiedDate(DateUtil
                 .format(DateUtil.parseQCDate(targetAutimeAndTxnId.get(1))));
     }
@@ -1475,7 +1474,7 @@ public class QCWriter extends AbstractWriter<IConnection> implements IDataProces
                         .getAllGenericArtifactFieldsWithSameFieldName(fieldName) != null)
             fieldValue = (String) individualGenericArtifact
                     .getAllGenericArtifactFieldsWithSameFieldName(fieldName)
-                    .get(0).getFieldValue();
+                    .getFirst().getFieldValue();
 
         return fieldValue;
     }

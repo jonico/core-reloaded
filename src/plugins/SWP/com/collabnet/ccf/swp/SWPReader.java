@@ -371,8 +371,7 @@ public class SWPReader extends AbstractReader<Connection> {
                                 getUsername(), isIgnoreConnectorUserUpdates());
                         if (!pbiStates.isEmpty()) {
                             // determine lastPBIInProduct revision
-                            Long lastPBIRevisionInProduct = pbiStates.get(
-                                    pbiStates.size() - 1).getArtifactVersion();
+                            Long lastPBIRevisionInProduct = pbiStates.getLast().getArtifactVersion();
                             if (lastPBIRevisionInQueue < lastPBIRevisionInProduct) {
                                 log.debug("Do not query new tasks for "
                                         + repositoryKey
@@ -478,7 +477,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         if (!releaseStates.isEmpty()) {
                             // determine lastReleaseInProduct revision
                             Long lastReleaseRevisionInProduct = releaseStates
-                                    .get(releaseStates.size() - 1)
+                                    .getLast()
                                     .getArtifactVersion();
                             if (lastReleaseRevisionInQueue < lastReleaseRevisionInProduct) {
                                 log.debug("Do not query new PBIs for "
@@ -507,7 +506,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         if (!metaDataStates.isEmpty()) {
                             // determine lastMeataDataInProduct revision
                             Long lastMetaDataRevisionInProduct = metaDataStates
-                                    .get(metaDataStates.size() - 1)
+                                    .getLast()
                                     .getArtifactVersion();
                             if (lastMetaDataRevisionInQueue < lastMetaDataRevisionInProduct) {
                                 log.debug("Do not query new PBIs for "
@@ -522,7 +521,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         }
                         // update last revision in queue
                         lastRevisionInQueue.put(correspondingPBIRepositoryId,
-                                artifactStates.get(artifactStates.size() - 1)
+                                artifactStates.getLast()
                                         .getArtifactVersion());
                         // indicate that PBIs have been shipped in this call
                         shippedPBIsInLastCall.put(swpProductName, true);
@@ -543,7 +542,7 @@ public class SWPReader extends AbstractReader<Connection> {
                 // update last revision in queue
                 if (!artifactStates.isEmpty()) {
                     lastRevisionInQueue.put(correspondingProductRepositoryId,
-                            artifactStates.get(artifactStates.size() - 1)
+                            artifactStates.getLast()
                                     .getArtifactVersion());
                 } else {
                     lastRevisionInQueue.put(correspondingProductRepositoryId,
@@ -610,7 +609,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         if (!productStates.isEmpty()) {
                             // determine lastProductInProduct revision
                             Long lastProductRevisionInProduct = productStates
-                                    .get(productStates.size() - 1)
+                                    .getLast()
                                     .getArtifactVersion();
                             if (lastProductRevisionInQueue < lastProductRevisionInProduct) {
                                 log.debug("Do not query new releases for "
@@ -626,7 +625,7 @@ public class SWPReader extends AbstractReader<Connection> {
                         // update last revision in queue
                         lastRevisionInQueue.put(
                                 correspondingReleaseRepositoryId,
-                                artifactStates.get(artifactStates.size() - 1)
+                                artifactStates.getLast()
                                         .getArtifactVersion());
                     }
                 }
@@ -646,7 +645,7 @@ public class SWPReader extends AbstractReader<Connection> {
                 // update last revision in queue
                 if (!artifactStates.isEmpty()) {
                     lastRevisionInQueue.put(correspondingMetaDataRepositoryId,
-                            artifactStates.get(artifactStates.size() - 1)
+                            artifactStates.getLast()
                                     .getArtifactVersion());
                 } else {
                     lastRevisionInQueue.put(correspondingMetaDataRepositoryId,

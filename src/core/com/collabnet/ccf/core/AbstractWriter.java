@@ -77,8 +77,8 @@ public abstract class AbstractWriter<T> extends Component implements IDataProces
 
     public Object[] process(Object data) {
         Document gaDocument = null;
-        if (data instanceof Document) {
-            gaDocument = (Document) data;
+        if (data instanceof Document document) {
+            gaDocument = document;
         } else {
             return null;
         }
@@ -245,10 +245,10 @@ public abstract class AbstractWriter<T> extends Component implements IDataProces
                                 gaDocument);
                 if (!connectionException) {
                     retry = false;
-                    if (e instanceof CCFRuntimeException) {
-                        throw (CCFRuntimeException) e;
-                    } else if (e instanceof RuntimeException) {
-                        throw (RuntimeException) e;
+                    if (e instanceof CCFRuntimeException exception1) {
+                        throw exception1;
+                    } else if (e instanceof RuntimeException exception) {
+                        throw exception;
                     } else {
                         throw new CCFRuntimeException("An exception occured", e);
                     }

@@ -3,15 +3,16 @@
  */
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-
-import org.junit.Test;
 
 import com.danube.scrumworks.api2.client.BacklogItem;
 import com.danube.scrumworks.api2.client.Comment;
 import com.danube.scrumworks.api2.client.Task;
+import org.junit.jupiter.api.Test;
 
 /**
  * Creates a task item in TeamForge and verifies the task item in ScrumWorks
@@ -47,7 +48,7 @@ public class TestTeamForgeCreateAndUpdateTaskInScrumWorks extends TFSWPIntegrati
         List<BacklogItem> pbis = getSWPTester().waitForBacklogItemsToAppear(1);
 
         assertEquals(1, pbis.size());
-        BacklogItem pbi = pbis.get(0);
+        BacklogItem pbi = pbis.getFirst();
 
         // now that we can be sure that PBI has been created, update task again to trigger resynch
         getTeamForgeTester().updateTask(taskId, title, description, status,

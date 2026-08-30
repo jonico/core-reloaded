@@ -6,10 +6,8 @@ package com.collabnet.ccf.integration.tfswp;
 import java.io.FileInputStream;
 import java.rmi.RemoteException;
 import java.util.Properties;
-
-import org.junit.After;
-import org.junit.Before;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import com.danube.scrumworks.api2.client.ScrumWorksException;
 
 /**
@@ -66,7 +64,7 @@ public class TFSWPIntegrationTest {
      * 
      * @throws java.lang.Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         Properties prop = new Properties();
         prop.load(new FileInputStream(PROPERTY_FILE));
@@ -93,7 +91,7 @@ public class TFSWPIntegrationTest {
      *             if there is an error from ScrumWorks
      * @throws RemoteException
      */
-    @After
+    @AfterEach
     public void tearDown() throws ScrumWorksException, RemoteException {
         teamForgeTester.deleteAllTasksInTF();
         swpTester.deleteAllTasksInSWP();

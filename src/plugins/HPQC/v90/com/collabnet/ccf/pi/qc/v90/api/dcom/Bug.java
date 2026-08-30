@@ -12,6 +12,7 @@
 package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
 import java.io.File;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,8 +36,9 @@ import com.jacob.com.Variant;
 
 public class Bug extends ActiveXComponent implements IBug {
     /**
-	 *
-	 */
+     *
+     */
+    @Serial
     private static final long                              serialVersionUID           = 1L;
     public static Logger                                   logger                     = Logger.getLogger(Bug.class);
     public static final ConcurrentHashMap<String, Integer> attachmentRetryCount       = new ConcurrentHashMap<String, Integer>();

@@ -1,12 +1,13 @@
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.teamforge.api.tracker.ArtifactRow;
+
 import com.danube.scrumworks.api2.client.BacklogItem;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests that a task created in ScrumWorks is correctly synchronized in
@@ -20,7 +21,7 @@ public class TestScrumWorksCreateAndDeleteTaskInTeamForge extends TFSWPIntegrati
     private final String release = SWPTester.RELEASE_1;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         final String pbiTitle = "pbi";
 

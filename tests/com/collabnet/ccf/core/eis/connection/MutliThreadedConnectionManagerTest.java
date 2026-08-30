@@ -11,6 +11,8 @@
 
 package com.collabnet.ccf.core.eis.connection;
 
+import org.junit.jupiter.api.Assertions;
+
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +27,9 @@ import org.jmock.core.Constraint;
 import org.jmock.core.Invocation;
 import org.jmock.core.Stub;
 import org.jmock.core.stub.CustomStub;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author madhusuthanan
@@ -70,6 +75,7 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMultipleGetConnectionWithMultiThreads() {
         Mock context = new Mock(ConnectionFactory.class);
         final String systemId = "sid";
@@ -97,14 +103,14 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
                     }
                     returnValue += i++;
                 } else if (name.contains("isAlive")) {
-                    String connection = (String) params.get(0);
+                    String connection = (String) params.getFirst();
                     if (connections.contains(connection)) {
                         return true;
                     } else {
                         return false;
                     }
                 } else if (name.contains("closeConnection")) {
-                    String connection = (String) params.get(0);
+                    String connection = (String) params.getFirst();
                     Object closedConnection = connections.remove(connection);
                     if (closedConnection == null) {
                         throw new ConnectionException(
@@ -158,7 +164,7 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
                                                     + jTmp, credentialInfo
                                                     + jTmp);
                             if (connection == null) {
-                                fail("Connection is null for " + iTmp + " "
+                                Assertions.fail("Connection is null for " + iTmp + " "
                                         + jTmp);
                             }
                             long randomLong2 = random.nextInt(20) * 1000;
@@ -169,7 +175,7 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
                             }
                             manager.releaseConnection(connection);
                         } catch (MaxConnectionsReachedException e) {
-                            fail("Max connections reached at "
+                            Assertions.fail("Max connections reached at "
                                     + (iTmp + 1)
                                     + " although the max connections configured is "
                                     + maxConnections);
@@ -202,18 +208,18 @@ public class MutliThreadedConnectionManagerTest extends MockObjectTestCase {
         threads = null;
     }
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @BeforeEach
+    public void setUp() throws Exception {
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @AfterEach
+    public void tearDown() throws Exception {
     }
 
     private void handleException(final Throwable t) {
         synchronized (testResult) {
-            if (t instanceof AssertionFailedError) {
-                testResult.addFailure(this, (AssertionFailedError) t);
+            if (t instanceof AssertionFailedError error) {
+                testResult.addFailure(this, error);
             } else {
                 testResult.addError(this, t);
             }

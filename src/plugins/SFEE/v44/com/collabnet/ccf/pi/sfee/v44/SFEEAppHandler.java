@@ -188,7 +188,7 @@ public class SFEEAppHandler {
         List<TrackerFieldSoapDO> fieldsList = fieldsMap.get(fieldName);
         if (fieldsList != null) {
             if (fieldsList.size() == 1) {
-                return fieldsList.get(0);
+                return fieldsList.getFirst();
             } else if (fieldsList.size() > 1) {
 
                 // FIXME What is a configurable field in this context?

@@ -67,8 +67,7 @@ public class Ambulance extends LifecycleComponent implements IDataProcessor {
 
     public Object[] process(Object data) {
         log.warn("Artifact reached ambulance");
-        if (data instanceof MessageException) {
-            MessageException exception = (MessageException) data;
+        if (data instanceof MessageException exception) {
             Object dataObj = exception.getData();
             String source = exception.getOriginatingModule();
             Exception rootCause = exception.getException();
@@ -83,8 +82,7 @@ public class Ambulance extends LifecycleComponent implements IDataProcessor {
             rootCause.printStackTrace(st);
             exceptionDetail.setText(new String(bos.toByteArray()));
             Element dataElement = failure.addElement("Data");
-            if (dataObj instanceof Document) {
-                Document dataDoc = (Document) dataObj;
+            if (dataObj instanceof Document dataDoc) {
                 String artifactFileName = null;
                 try {
                     artifactFileName = CCFUtils.getTempFileName(dataDoc);

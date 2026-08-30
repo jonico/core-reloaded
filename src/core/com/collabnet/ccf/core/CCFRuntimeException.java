@@ -11,6 +11,8 @@
 
 package com.collabnet.ccf.core;
 
+import java.io.Serial;
+
 /**
  * This exception is intended for the CCF components to throw when there is an
  * application exception and it should be propogated to the hospital.
@@ -20,6 +22,7 @@ package com.collabnet.ccf.core;
  */
 public class CCFRuntimeException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 3190879430557600332L;
 
     /**

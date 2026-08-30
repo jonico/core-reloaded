@@ -3,15 +3,14 @@
  */
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
-import org.junit.Test;
-
 import com.danube.scrumworks.api2.client.BacklogItem;
 import com.danube.scrumworks.api2.client.Task;
+import org.junit.jupiter.api.Test;
 
 /**
  * Creates a task item in TeamForge and do not wait until PBI has been
@@ -50,7 +49,7 @@ public class TestTeamForgeCreateTaskInScrumWorksWithReplay extends TFSWPIntegrat
         List<BacklogItem> pbis = getSWPTester().waitForBacklogItemsToAppear(1);
 
         assertEquals(1, pbis.size());
-        BacklogItem pbi = pbis.get(0);
+        BacklogItem pbi = pbis.getFirst();
 
         // now we wait until CCF replay comes into play
         // This is not optimal because it can happen that no artifact got quarantined at all

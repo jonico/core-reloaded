@@ -12,13 +12,17 @@
 package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
 import com.collabnet.ccf.pi.qc.v90.api.IField;
+
 import com.jacob.activeX.ActiveXComponent;
+
+import java.io.Serial;
 import com.jacob.com.Dispatch;
 
 public class Field extends ActiveXComponent implements IField {
     /**
-	 * 
-	 */
+     * 
+     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public Field(Dispatch arg0) {

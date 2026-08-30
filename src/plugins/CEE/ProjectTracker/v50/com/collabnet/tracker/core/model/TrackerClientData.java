@@ -11,6 +11,7 @@
 
 package com.collabnet.tracker.core.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,8 +29,9 @@ import java.util.Map;
 public class TrackerClientData implements Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
+    @Serial
     private static final long                serialVersionUID = 1L;
     private Map<String, TrackerArtifactType> trackerArtifactTypes;
 

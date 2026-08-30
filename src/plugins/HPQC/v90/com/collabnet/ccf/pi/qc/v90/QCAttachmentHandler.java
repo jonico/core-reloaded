@@ -475,7 +475,7 @@ public class QCAttachmentHandler {
             File qcAttachmentFile = null;
             String contentType = (String) genericArtifact
                     .getAllGenericArtifactFieldsWithSameFieldName(
-                            AttachmentMetaData.ATTACHMENT_TYPE).get(0)
+                            AttachmentMetaData.ATTACHMENT_TYPE).getFirst()
                     .getFieldValue().toString();
             List<GenericArtifactField> allFields = genericArtifact
                     .getAllGenericArtifactFields();
@@ -746,7 +746,7 @@ public class QCAttachmentHandler {
         if (transactionIdAndAttachOperation == null)
             return modifiedAttachmentArtifacts;
         String thisTransactionId = (String) transactionIdAndAttachOperation
-                .get(0);
+                .getFirst();
         Map<String, Map<String, String>> attachmentNames = (Map<String, Map<String, String>>) transactionIdAndAttachOperation
                 .get(1);
         Map<String, Map<String, String>> deletedAttachmentNames = (Map<String, Map<String, String>>) transactionIdAndAttachOperation
@@ -867,7 +867,7 @@ public class QCAttachmentHandler {
                 attachmentIdAndType = QCGAHelper.getFromTable(qcc, entityId,
                         attachmentName);
                 if (attachmentIdAndType != null) {
-                    String attachmentId = attachmentIdAndType.get(0); // CR_REF_ID
+                    String attachmentId = attachmentIdAndType.getFirst(); // CR_REF_ID
                     String attachmentType = attachmentIdAndType.get(1); // CR_REF_TYPE
                     String attachmentDescription = attachmentIdAndType.get(2); // CR_DESCRIPTION
 

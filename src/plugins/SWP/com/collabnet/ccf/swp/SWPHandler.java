@@ -156,8 +156,7 @@ public class SWPHandler {
                 pbi.setEstimate(null);
             } else {
                 int fieldValue = 0;
-                if (fieldValueObj instanceof String) {
-                    String fieldValueString = (String) fieldValueObj;
+                if (fieldValueObj instanceof String fieldValueString) {
                     try {
                         fieldValue = Integer.parseInt(fieldValueString);
                     } catch (NumberFormatException e) {
@@ -165,8 +164,8 @@ public class SWPHandler {
                                 "Could not parse value of field estimate: "
                                         + e.getMessage(), e);
                     }
-                } else if (fieldValueObj instanceof Integer) {
-                    fieldValue = ((Integer) fieldValueObj).intValue();
+                } else if (fieldValueObj instanceof Integer integer) {
+                    fieldValue = integer.intValue();
                 }
                 pbi.setEstimate(fieldValue);
             }
@@ -194,8 +193,7 @@ public class SWPHandler {
                     bw.setPenalty(null);
                 } else {
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -203,10 +201,10 @@ public class SWPHandler {
                                     "Could not parse value of field penalty: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer1) {
+                        fieldValue = integer1.intValue();
                     }
-                    bw.setPenalty(new Long(fieldValue));
+                    bw.setPenalty(Long.valueOf(fieldValue));
                 }
             }
             if (benefitHasChanged) {
@@ -216,8 +214,7 @@ public class SWPHandler {
                     bw.setBenefit(null);
                 } else {
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -225,10 +222,10 @@ public class SWPHandler {
                                     "Could not parse value of field benefit: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer2) {
+                        fieldValue = integer2.intValue();
                     }
-                    bw.setBenefit(new Long(fieldValue));
+                    bw.setBenefit(Long.valueOf(fieldValue));
                 }
             }
         }
@@ -297,7 +294,7 @@ public class SWPHandler {
                         SWPMetaData.SWPType.RELEASE)) {
             // parent id is no release, we assign the first release in the list
             Release release = endpoint.getReleasesForProduct(
-                    getProductId(swpProductName, endpoint)).get(0);
+                    getProductId(swpProductName, endpoint)).getFirst();
             log.warn(parentArtifact
                     + " of parent repository "
                     + ga.getDepParentTargetRepositoryId()
@@ -305,7 +302,7 @@ public class SWPHandler {
                     + release.getName());
             pbi.setReleaseId(release.getId());
         } else {
-            pbi.setReleaseId(new Long(parentArtifact));
+            pbi.setReleaseId(Long.valueOf(parentArtifact));
         }
 
         // now we have to determine revision number of the newly created
@@ -413,8 +410,7 @@ public class SWPHandler {
                 task.setCurrentEstimate(null);
             } else {
                 int fieldValue = 0;
-                if (fieldValueObj instanceof String) {
-                    String fieldValueString = (String) fieldValueObj;
+                if (fieldValueObj instanceof String fieldValueString) {
                     try {
                         fieldValue = Integer.parseInt(fieldValueString);
                     } catch (NumberFormatException e) {
@@ -422,8 +418,8 @@ public class SWPHandler {
                                 "Could not parse value of field estimatedHours: "
                                         + e.getMessage(), e);
                     }
-                } else if (fieldValueObj instanceof Integer) {
-                    fieldValue = ((Integer) fieldValueObj).intValue();
+                } else if (fieldValueObj instanceof Integer integer) {
+                    fieldValue = integer.intValue();
                 }
                 task.setCurrentEstimate(fieldValue);
             }
@@ -435,8 +431,7 @@ public class SWPHandler {
                 task.setOriginalEstimate(null);
             } else {
                 int fieldValue = 0;
-                if (fieldValueObj instanceof String) {
-                    String fieldValueString = (String) fieldValueObj;
+                if (fieldValueObj instanceof String fieldValueString) {
                     try {
                         fieldValue = Integer.parseInt(fieldValueString);
                     } catch (NumberFormatException e) {
@@ -444,8 +439,8 @@ public class SWPHandler {
                                 "Could not parse value of field originalEstimate: "
                                         + e.getMessage(), e);
                     }
-                } else if (fieldValueObj instanceof Integer) {
-                    fieldValue = ((Integer) fieldValueObj).intValue();
+                } else if (fieldValueObj instanceof Integer integer1) {
+                    fieldValue = integer1.intValue();
                 }
                 task.setOriginalEstimate(fieldValue);
             }
@@ -495,7 +490,7 @@ public class SWPHandler {
             ga.setErrorCode(GenericArtifact.ERROR_INVALID_PARENT_ARTIFACT);
             throw new CCFRuntimeException(error);
         } else {
-            task.setBacklogItemId(new Long(parent));
+            task.setBacklogItemId(Long.valueOf(parent));
         }
 
         // now we have to determine revision number of the newly created
@@ -636,7 +631,7 @@ public class SWPHandler {
 
         // now do the query, passed revision number is not included in the
         // result set
-        int queryVersion = new Long(majorVersion == 0 ? 0 : majorVersion - 1)
+        int queryVersion = Long.valueOf(majorVersion == 0 ? 0 : majorVersion - 1)
                 .intValue();
         FilterChangesByType filter = new FilterChangesByType();
         filter.setIncludeThemes(true);
@@ -714,7 +709,7 @@ public class SWPHandler {
 
         // now do the query, passed revision number is not included in the
         // result set
-        int queryVersion = new Long(majorVersion == 0 ? 0 : majorVersion - 1)
+        int queryVersion = Long.valueOf(majorVersion == 0 ? 0 : majorVersion - 1)
                 .intValue();
 
         boolean firstPBIQuery = (queryVersion == 0);
@@ -854,7 +849,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, BacklogItem>> productSpecificCache = pbiCache
                                 .get(swpProductName);
@@ -935,7 +930,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, BacklogItem>> productSpecificCache = pbiCache
                                 .get(swpProductName);
@@ -987,7 +982,7 @@ public class SWPHandler {
 
         // now do the query, passed revision number is not included in the
         // result set
-        int queryVersion = new Long(majorVersion == 0 ? 0 : majorVersion - 1)
+        int queryVersion = Long.valueOf(majorVersion == 0 ? 0 : majorVersion - 1)
                 .intValue();
 
         boolean firstProductQuery = (queryVersion == 0);
@@ -1075,7 +1070,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Product>> productSpecificCache = productCache
                                 .get(swpProductName);
@@ -1143,7 +1138,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Product>> productSpecificCache = productCache
                                 .get(swpProductName);
@@ -1200,7 +1195,7 @@ public class SWPHandler {
 
         // now do the query, passed revision number is not included in the
         // result set
-        int queryVersion = new Long(majorVersion == 0 ? 0 : majorVersion - 1)
+        int queryVersion = Long.valueOf(majorVersion == 0 ? 0 : majorVersion - 1)
                 .intValue();
 
         boolean firstReleaseQuery = (queryVersion == 0);
@@ -1287,7 +1282,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Release>> productSpecificCache = releaseCache
                                 .get(swpProductName);
@@ -1356,7 +1351,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Release>> productSpecificCache = releaseCache
                                 .get(swpProductName);
@@ -1411,7 +1406,7 @@ public class SWPHandler {
 
         // now do the query, passed revision number is not included in the
         // result set
-        int queryVersion = new Long(majorVersion == 0 ? 0 : majorVersion - 1)
+        int queryVersion = Long.valueOf(majorVersion == 0 ? 0 : majorVersion - 1)
                 .intValue();
 
         boolean firstTaskQuery = (queryVersion == 0);
@@ -1552,7 +1547,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Task>> productSpecificCache = taskCache
                                 .get(swpProductName);
@@ -1647,7 +1642,7 @@ public class SWPHandler {
                                 + (lastItemInTransaction ? 1 : 0);
                         artifactState
                                 .setArtifactVersion(artificialRevisionNumber);
-                        artifactStates.add(0, artifactState);
+                        artifactStates.addFirst(artifactState);
                         // now update the cache
                         Map<Long, AbstractMap.SimpleEntry<AbstractMap.SimpleEntry<Long, RevisionInfo>, Task>> productSpecificCache = taskCache
                                 .get(swpProductName);
@@ -2127,8 +2122,8 @@ public class SWPHandler {
             String connectorUser, GenericArtifact ga)
             throws NumberFormatException, RemoteException, ScrumWorksException {
         // first figure out whether we have to update or not
-        Long pbiId = new Long(ga.getTargetArtifactId());
-        Long lastSyncVersion = new Long(-1);
+        Long pbiId = Long.valueOf(ga.getTargetArtifactId());
+        Long lastSyncVersion = Long.valueOf(-1);
         int lastKnownRevision = 0;
         String lastSyncVersionStr = ga.getTargetArtifactVersion();
         if (lastSyncVersionStr == null
@@ -2144,7 +2139,7 @@ public class SWPHandler {
             // log.error(message, e);
             throw new CCFRuntimeException(message, e);
         }
-        lastKnownRevision = new Long(lastSyncVersion / SWP_REVISION_FACTOR)
+        lastKnownRevision = Long.valueOf(lastSyncVersion / SWP_REVISION_FACTOR)
                 .intValue() - 1;
         if (lastKnownRevision < 0) {
             lastKnownRevision = 0;
@@ -2163,13 +2158,13 @@ public class SWPHandler {
             throw new CCFRuntimeException(message);
         }
         BacklogItemChanges pbiSpecificChangesInCurrentRevision = changesSinceLastKnownRevision
-                .getBacklogItemChanges().get(0);
+                .getBacklogItemChanges().getFirst();
         int currentRevision = pbiSpecificChangesInCurrentRevision
                 .getRevisionInfo().getRevisionNumber();
 
         List<BacklogItem> pbiChanges = pbiSpecificChangesInCurrentRevision
                 .getAddedOrChangedEntities();
-        if (pbiChanges.size() != 1 || !pbiChanges.get(0).getId().equals(pbiId)) {
+        if (pbiChanges.size() != 1 || !pbiChanges.getFirst().getId().equals(pbiId)) {
             String message = "Could not find current version of PBI " + pbiId
                     + " which should be at least " + lastKnownRevision;
             // log.error(message);
@@ -2182,7 +2177,7 @@ public class SWPHandler {
             return null;
         }
 
-        BacklogItem pbi = pbiChanges.get(0);
+        BacklogItem pbi = pbiChanges.getFirst();
 
         if (active != null && active.getFieldValueHasChanged()) {
             pbi.setActive((Boolean) active.getFieldValue());
@@ -2219,8 +2214,7 @@ public class SWPHandler {
                 pbi.setEstimate(null);
             } else {
                 int fieldValue = 0;
-                if (fieldValueObj instanceof String) {
-                    String fieldValueString = (String) fieldValueObj;
+                if (fieldValueObj instanceof String fieldValueString) {
                     try {
                         fieldValue = Integer.parseInt(fieldValueString);
                     } catch (NumberFormatException e) {
@@ -2228,8 +2222,8 @@ public class SWPHandler {
                                 "Could not parse value of field estimate: "
                                         + e.getMessage(), e);
                     }
-                } else if (fieldValueObj instanceof Integer) {
-                    fieldValue = ((Integer) fieldValueObj).intValue();
+                } else if (fieldValueObj instanceof Integer integer) {
+                    fieldValue = integer.intValue();
                 }
                 pbi.setEstimate(fieldValue);
             }
@@ -2255,8 +2249,7 @@ public class SWPHandler {
                     bw.setPenalty(null);
                 } else {
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -2264,10 +2257,10 @@ public class SWPHandler {
                                     "Could not parse value of field penalty: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer1) {
+                        fieldValue = integer1.intValue();
                     }
-                    bw.setPenalty(new Long(fieldValue));
+                    bw.setPenalty(Long.valueOf(fieldValue));
                 }
             }
             if (benefitHasChanged) {
@@ -2277,8 +2270,7 @@ public class SWPHandler {
                     bw.setBenefit(null);
                 } else {
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -2286,10 +2278,10 @@ public class SWPHandler {
                                     "Could not parse value of field benefit: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer2) {
+                        fieldValue = integer2.intValue();
                     }
-                    bw.setBenefit(new Long(fieldValue));
+                    bw.setBenefit(Long.valueOf(fieldValue));
                 }
             }
             pbi.setBusinessWeight(bw);
@@ -2394,7 +2386,7 @@ public class SWPHandler {
                     + " of repository "
                     + " is no valid release, so we do not change the associated release.");
         } else {
-            pbi.setReleaseId(new Long(parentArtifact));
+            pbi.setReleaseId(Long.valueOf(parentArtifact));
         }
 
         // now we add the comments
@@ -2487,8 +2479,8 @@ public class SWPHandler {
             throws NumberFormatException, RemoteException, ScrumWorksException {
 
         // first figure out whether we have to update or not
-        Long taskId = new Long(ga.getTargetArtifactId());
-        Long lastSyncVersion = new Long(-1);
+        Long taskId = Long.valueOf(ga.getTargetArtifactId());
+        Long lastSyncVersion = Long.valueOf(-1);
         int lastKnownRevision = 0;
         String lastSyncVersionStr = ga.getTargetArtifactVersion();
         if (lastSyncVersionStr == null
@@ -2504,7 +2496,7 @@ public class SWPHandler {
             // log.error(message, e);
             throw new CCFRuntimeException(message, e);
         }
-        lastKnownRevision = new Long(lastSyncVersion / SWP_REVISION_FACTOR)
+        lastKnownRevision = Long.valueOf(lastSyncVersion / SWP_REVISION_FACTOR)
                 .intValue() - 1;
         if (lastKnownRevision < 0) {
             lastKnownRevision = 0;
@@ -2523,14 +2515,14 @@ public class SWPHandler {
             throw new CCFRuntimeException(message);
         }
         TaskChanges taskSpecificChangesInCurrentRevision = changesSinceLastKnownRevision
-                .getTaskChanges().get(0);
+                .getTaskChanges().getFirst();
         int currentRevision = taskSpecificChangesInCurrentRevision
                 .getRevisionInfo().getRevisionNumber();
 
         List<Task> taskChanges = taskSpecificChangesInCurrentRevision
                 .getAddedOrChangedEntities();
         if (taskChanges.size() != 1
-                || !taskChanges.get(0).getId().equals(taskId)) {
+                || !taskChanges.getFirst().getId().equals(taskId)) {
             String message = "Could not find current version of Task " + taskId
                     + " which should be at least " + lastKnownRevision;
             // log.error(message);
@@ -2542,7 +2534,7 @@ public class SWPHandler {
                 * SWP_REVISION_FACTOR, ga)) {
             return null;
         }
-        Task task = taskChanges.get(0);
+        Task task = taskChanges.getFirst();
         if (description != null && description.getFieldValueHasChanged()) {
             task.setDescription((String) description.getFieldValue());
         }
@@ -2553,8 +2545,7 @@ public class SWPHandler {
                 task.setCurrentEstimate(null);
             } else {
                 int fieldValue = 0;
-                if (fieldValueObj instanceof String) {
-                    String fieldValueString = (String) fieldValueObj;
+                if (fieldValueObj instanceof String fieldValueString) {
                     try {
                         fieldValue = Integer.parseInt(fieldValueString);
                     } catch (NumberFormatException e) {
@@ -2562,8 +2553,8 @@ public class SWPHandler {
                                 "Could not parse value of field estimatedHours: "
                                         + e.getMessage(), e);
                     }
-                } else if (fieldValueObj instanceof Integer) {
-                    fieldValue = ((Integer) fieldValueObj).intValue();
+                } else if (fieldValueObj instanceof Integer integer) {
+                    fieldValue = integer.intValue();
                 }
                 // we only set the estimated hours to zero if the previous value
                 // was not null
@@ -2580,8 +2571,7 @@ public class SWPHandler {
                 task.setOriginalEstimate(null);
             } else {
                 int fieldValue = 0;
-                if (fieldValueObj instanceof String) {
-                    String fieldValueString = (String) fieldValueObj;
+                if (fieldValueObj instanceof String fieldValueString) {
                     try {
                         fieldValue = Integer.parseInt(fieldValueString);
                     } catch (NumberFormatException e) {
@@ -2589,8 +2579,8 @@ public class SWPHandler {
                                 "Could not parse value of field originalEstimate: "
                                         + e.getMessage(), e);
                     }
-                } else if (fieldValueObj instanceof Integer) {
-                    fieldValue = ((Integer) fieldValueObj).intValue();
+                } else if (fieldValueObj instanceof Integer integer1) {
+                    fieldValue = integer1.intValue();
                 }
                 // we only set the original estimate to zero if the previous
                 // value was not null
@@ -2649,7 +2639,7 @@ public class SWPHandler {
         } else {
             // compare current and anticipated parent id to decide whether to
             // move or not
-            Long parentId = new Long(parent);
+            Long parentId = Long.valueOf(parent);
             if (!task.getBacklogItemId().equals(parentId)) {
                 task.setBacklogItemId(parentId);
             }

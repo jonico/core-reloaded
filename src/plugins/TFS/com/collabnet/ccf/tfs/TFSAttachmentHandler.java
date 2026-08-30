@@ -54,7 +54,7 @@ public class TFSAttachmentHandler {
         while (retryCall) {
             retryCall = false;
 
-            int size = new Long(attachment.getFileSize()).intValue();
+            int size = Long.valueOf(attachment.getFileSize()).intValue();
 
             File file = new File(String.valueOf(attachment.getFileID()));
             attachment.downloadTo(file);
@@ -398,11 +398,11 @@ public class TFSAttachmentHandler {
             log.warn("No attachments match with the name " + attachmentName);
         } else {
             if (attachmentList.size() == 1) {
-                returnedAttachent = attachmentList.get(0);
+                returnedAttachent = attachmentList.getFirst();
             } else {
                 for (int i = attachmentList.size() - 1; i > -1; --i) {
 
-                    Attachment attachment = attachmentList.get(0);
+                    Attachment attachment = attachmentList.getFirst();
 
                     if (attachment.getFileName().equals(attachmentName)) {
                         returnedAttachent = attachment;

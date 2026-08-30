@@ -87,15 +87,15 @@ public class GenericArtifactHelper {
     public static final String                                                 DEP_CHILD_SOURCE_ARTIFACT_ID           = "depChildSourceArtifactId";
     public static final String                                                 DEP_CHILD_SOURCE_REPOSITORY_ID         = "depChildSourceRepositoryId";
     public static final String                                                 DEP_CHILD_SOURCE_REPOSITORY_KIND       = "depChildSourceRepositoryKind";
-    public static final String                                                 DEP_CHILD_TARGET_ARTIFACT_ID           = "depChildTargetArtifactId";                                                                                                     ;
-    public static final String                                                 DEP_CHILD_TARGET_REPOSITORY_ID         = "depChildTargetRepositoryId";                                                                                                   ;
-    public static final String                                                 DEP_CHILD_TARGET_REPOSITORY_KIND       = "depChildTargetRepositoryKind";                                                                                                 ;
+    public static final String                                                 DEP_CHILD_TARGET_ARTIFACT_ID           = "depChildTargetArtifactId";
+    public static final String                                                 DEP_CHILD_TARGET_REPOSITORY_ID         = "depChildTargetRepositoryId";
+    public static final String                                                 DEP_CHILD_TARGET_REPOSITORY_KIND       = "depChildTargetRepositoryKind";
     public static final String                                                 DEP_PARENT_SOURCE_ARTIFACT_ID          = "depParentSourceArtifactId";
     public static final String                                                 DEP_PARENT_SOURCE_REPOSITORY_ID        = "depParentSourceRepositoryId";
     public static final String                                                 DEP_PARENT_SOURCE_REPOSITORY_KIND      = "depParentSourceRepositoryKind";
-    public static final String                                                 DEP_PARENT_TARGET_ARTIFACT_ID          = "depParentTargetArtifactId";                                                                                                    ;
-    public static final String                                                 DEP_PARENT_TARGET_REPOSITORY_ID        = "depParentTargetRepositoryId";                                                                                                  ;
-    public static final String                                                 DEP_PARENT_TARGET_REPOSITORY_KIND      = "depParentTargetRepositoryKind";                                                                                                ;
+    public static final String                                                 DEP_PARENT_TARGET_ARTIFACT_ID          = "depParentTargetArtifactId";
+    public static final String                                                 DEP_PARENT_TARGET_REPOSITORY_ID        = "depParentTargetRepositoryId";
+    public static final String                                                 DEP_PARENT_TARGET_REPOSITORY_KIND      = "depParentTargetRepositoryKind";
     public static final String                                                 SOURCE_ARTIFACT_ID                     = "sourceArtifactId";
     public static final String                                                 SOURCE_REPOSITORY_ID                   = "sourceRepositoryId";
     public static final String                                                 SOURCE_REPOSITORY_KIND                 = "sourceRepositoryKind";
@@ -732,11 +732,10 @@ public class GenericArtifactHelper {
         GenericArtifactField gaField = getMandatoryGAField(fieldName, ga);
         if (gaField != null) {
             Object fieldValueObj = gaField.getFieldValue();
-            if (fieldValueObj instanceof String) {
-                String fieldValueString = (String) fieldValueObj;
+            if (fieldValueObj instanceof String fieldValueString) {
                 fieldValue = Boolean.parseBoolean(fieldValueString);
-            } else if (fieldValueObj instanceof Boolean) {
-                fieldValue = (Boolean) fieldValueObj;
+            } else if (fieldValueObj instanceof Boolean boolean1) {
+                fieldValue = boolean1;
             }
         }
         return fieldValue;
@@ -748,16 +747,15 @@ public class GenericArtifactHelper {
         GenericArtifactField gaField = getMandatoryGAField(fieldName, ga);
         if (gaField != null) {
             Object fieldValueObj = gaField.getFieldValue();
-            if (fieldValueObj instanceof String) {
-                String fieldValueString = (String) fieldValueObj;
+            if (fieldValueObj instanceof String fieldValueString) {
                 fieldValue = DateUtil.parse(fieldValueString);
                 if (fieldValue == null) {
                     throw new CCFRuntimeException(
                             "Date parsing error occured for mandatory field "
                                     + fieldName);
                 }
-            } else if (fieldValueObj instanceof Date) {
-                fieldValue = (Date) fieldValueObj;
+            } else if (fieldValueObj instanceof Date date) {
+                fieldValue = date;
             }
         }
         return fieldValue;
@@ -771,7 +769,7 @@ public class GenericArtifactHelper {
         if (gaFields == null || gaFields.size() == 0) {
             return null;
         } else if (gaFields.size() == 1) {
-            GenericArtifactField field = gaFields.get(0);
+            GenericArtifactField field = gaFields.getFirst();
             return field;
         } else {
             throw new CCFRuntimeException(
@@ -787,7 +785,7 @@ public class GenericArtifactHelper {
         if (gaFields == null || gaFields.size() == 0) {
             return null;
         } else if (gaFields.size() == 1) {
-            GenericArtifactField field = gaFields.get(0);
+            GenericArtifactField field = gaFields.getFirst();
             return field;
         } else {
             throw new CCFRuntimeException(
@@ -803,11 +801,10 @@ public class GenericArtifactHelper {
             GenericArtifactField gaField = getMandatoryGAField(fieldName, ga);
             if (gaField != null) {
                 Object fieldValueObj = gaField.getFieldValue();
-                if (fieldValueObj instanceof String) {
-                    String fieldValueString = (String) fieldValueObj;
+                if (fieldValueObj instanceof String fieldValueString) {
                     fieldValue = Integer.parseInt(fieldValueString);
-                } else if (fieldValueObj instanceof Integer) {
-                    fieldValue = ((Integer) fieldValueObj).intValue();
+                } else if (fieldValueObj instanceof Integer integer) {
+                    fieldValue = integer.intValue();
                 }
             }
             return fieldValue;
@@ -830,7 +827,7 @@ public class GenericArtifactHelper {
         if (gaFields == null || gaFields.size() == 0) {
             return null;
         } else if (gaFields.size() == 1) {
-            GenericArtifactField field = gaFields.get(0);
+            GenericArtifactField field = gaFields.getFirst();
             return field;
         } else {
             throw new CCFRuntimeException(
@@ -962,7 +959,7 @@ public class GenericArtifactHelper {
                     break;
                 }
                 case DOUBLE: {
-                    genericArtifactField.setFieldValue(new Double(value));
+                    genericArtifactField.setFieldValue(Double.valueOf(value));
                     break;
                 }
                 case HTMLSTRING: {
@@ -1203,19 +1200,19 @@ public class GenericArtifactHelper {
             addAttribute(field, FIELD_VALUE_IS_NULL, FIELD_VALUE_IS_NULL_TRUE);
         } else {
             addAttribute(field, FIELD_VALUE_IS_NULL, FIELD_VALUE_IS_NULL_FALSE);
-            if (fieldValue instanceof Date)
+            if (fieldValue instanceof Date date)
                 synchronized (df) {
-                    setValue(field, df.format((Date) fieldValue), false);
+                    setValue(field, df.format(date), false);
                 }
-            else if (fieldValue instanceof Calendar)
+            else if (fieldValue instanceof Calendar calendar1)
                 synchronized (df) {
                     setValue(field,
-                            df.format(((Calendar) fieldValue).getTime()), false);
+                            df.format(calendar1.getTime()), false);
                 }
-            else if (fieldValue instanceof XMLGregorianCalendar)
+            else if (fieldValue instanceof XMLGregorianCalendar calendar)
                 synchronized (df) {
                     setValue(field,
-                            df.format(((XMLGregorianCalendar) fieldValue)
+                            df.format(calendar
                                     .toGregorianCalendar().getTime()), false);
                 }
             else

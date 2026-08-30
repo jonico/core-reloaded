@@ -11,13 +11,16 @@
 
 package com.collabnet.ccf.core.utils;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.text.ParseException;
 import java.util.Date;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class DateUtilsTest extends TestCase {
+public class DateUtilsTest {
 
+    @Test
     public void testConvertDate() throws ParseException {
         Date now = new Date();
         System.out.println(now);

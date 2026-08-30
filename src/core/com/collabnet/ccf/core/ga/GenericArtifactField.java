@@ -62,15 +62,11 @@ public class GenericArtifactField {
     /**
      * Constant value for field type "integrationData"
      */
-    public static final String  VALUE_FIELD_TYPE_INTEGRATION_DATA = "integrationData";          ;
-
-    /**
+    public static final String  VALUE_FIELD_TYPE_INTEGRATION_DATA = "integrationData";          /**
      * This is the constant attribute values should set to if the value is not
      * (yet) known or the whole functionality is not supported
      */
-    public static final String  VALUE_UNKNOWN                     = "unknown";                  ;
-
-    /**
+    public static final String  VALUE_UNKNOWN                     = "unknown";                  /**
      * This attribute contains the name of the field.
      */
     private String              fieldName                         = VALUE_UNKNOWN;

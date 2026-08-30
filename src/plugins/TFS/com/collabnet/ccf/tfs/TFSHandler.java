@@ -88,7 +88,7 @@ public class TFSHandler {
                             .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
 
                     if (gaFields != null) {
-                        Object fieldValue = gaFields.get(0).getFieldValue();
+                        Object fieldValue = gaFields.getFirst().getFieldValue();
 
                         if (fieldDef.getReferenceName().equals(
                                 CoreFieldReferenceNames.STATE)) {
@@ -509,12 +509,12 @@ public class TFSHandler {
                             .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
 
                     if (gaFields != null
-                            && gaFields.get(0).getFieldValueHasChanged()) {
+                            && gaFields.getFirst().getFieldValueHasChanged()) {
 
                         boolean shouldBeOverwritten = true;
 
                         // If there more than 1, it's a multi select field
-                        Object fieldValue = gaFields.get(0).getFieldValue();
+                        Object fieldValue = gaFields.getFirst().getFieldValue();
 
                         // FIXME More complicated data types (like TreePath)
 

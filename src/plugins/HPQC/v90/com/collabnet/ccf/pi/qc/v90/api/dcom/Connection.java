@@ -17,7 +17,10 @@ import com.collabnet.ccf.pi.qc.v90.api.IConnection;
 import com.collabnet.ccf.pi.qc.v90.api.IHistory;
 import com.collabnet.ccf.pi.qc.v90.api.IRecordSet;
 import com.collabnet.ccf.pi.qc.v90.api.IRequirementsFactory;
+
 import com.jacob.activeX.ActiveXComponent;
+
+import java.io.Serial;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
@@ -30,8 +33,9 @@ public class Connection extends ActiveXComponent implements IConnection {
     private String               minorVersion;
 
     /**
-	 *
-	 */
+     *
+     */
+    @Serial
     private static final long    serialVersionUID    = 1L;
     boolean                      loggedIn            = false;
 

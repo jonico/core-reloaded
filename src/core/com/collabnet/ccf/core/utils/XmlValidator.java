@@ -131,10 +131,10 @@ public class XmlValidator extends Component implements IDataProcessor {
      */
     public Object[] process(Object data) {
         String parsedData;
-        if (data instanceof Document) {
-            parsedData = ((Document) data).asXML();
-        } else if (data instanceof String) {
-            parsedData = (String) data;
+        if (data instanceof Document document) {
+            parsedData = document.asXML();
+        } else if (data instanceof String string) {
+            parsedData = string;
         } else {
             throw new RuntimeException(
                     "data is not an XML string or a dom4j document");

@@ -1,0 +1,77 @@
+# OpenRewrite recipes used for the Java 8 -> Java 25 migration of CCF Core.
+#
+# Two deliberate departures from the stock composites:
+#
+# 1. NOT org.openrewrite.java.migrate.UpgradeToJava25. That composite bundles
+#    org.openrewrite.java.migrate.io.ReplaceSystemOutWithIOPrint, which rewrites every
+#    System.out call site. OpenRewrite cannot subtract a sub-recipe, so the composite is
+#    rebuilt here from the parts that are wanted.
+#
+# 2. NOT org.openrewrite.java.migrate.UpgradeToJava21 either, for the same reason: its
+#    if/else-if-to-switch family produced both uncompilable and behaviour-changing output on
+#    this codebase. Specifically, IfElseIfConstructToSwitch turned
+#        if (o instanceof Date) ... else if (o instanceof Calendar) ... else <fallback>
+#    into a pattern switch whose trailing `else` became `case null ->`, which is not the
+#    same thing at all (the fallback ran for *any* other type, not for null), and emitted
+#    `case X -> synchronized (df) { ... }`, which is not valid Java. 9 sites were affected.
+#    UpgradeToJava21 is therefore expanded below with the six switch-rewriting sub-recipes
+#    dropped. Everything else it does is kept.
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.collabnet.ccf.UpgradeToJava21WithoutSwitchRewrites
+displayName: Migrate to Java 21, minus the if/else-if-to-switch recipes
+description: >-
+  org.openrewrite.java.migrate.UpgradeToJava21 with lang.IfElseIfConstructToSwitch,
+  lang.NullCheckAsSwitchCase, lang.SwitchCaseAssignmentsToSwitchExpression,
+  lang.SwitchCaseReturnsToSwitchExpression, lang.SwitchExpressionYieldToArrow and
+  SwitchPatternMatching removed. Those six produce invalid or behaviour-changing code on
+  this codebase; see the comment at the top of this file.
+recipeList:
+  - org.openrewrite.java.migrate.UpgradeToJava17
+  - org.openrewrite.java.migrate.UpgradeBuildToJava21
+  - org.openrewrite.staticanalysis.RemoveExtraSemicolons
+  - org.openrewrite.java.migrate.lang.ThreadStopUnsupported
+  - org.openrewrite.java.migrate.net.URLConstructorToURICreate
+  - org.openrewrite.java.migrate.util.SequencedCollection
+  - org.openrewrite.java.migrate.util.UseLocaleOf
+  - org.openrewrite.staticanalysis.ReplaceDeprecatedRuntimeExecMethods
+  - org.openrewrite.java.migrate.UpgradePluginsForJava21
+  - org.openrewrite.java.migrate.DeleteDeprecatedFinalize
+  - org.openrewrite.java.migrate.RemovedSubjectMethods
+  - org.openrewrite.java.migrate.RemoveIllegalSemicolons
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.collabnet.ccf.core.MigrateToJava25
+displayName: CCF Core - Java 8 to Java 25 and JUnit 5
+description: Mechanical stack migration of CCF Core.
+recipeList:
+  - com.collabnet.ccf.UpgradeToJava21WithoutSwitchRewrites
+  - org.openrewrite.java.migrate.UpgradeBuildToJava25
+  - org.openrewrite.java.migrate.UpgradePluginsForJava25
+  - org.openrewrite.java.migrate.MigrateZipErrorToZipException
+  - org.openrewrite.java.testing.junit5.JUnit4to5Migration
+
+# ---------------------------------------------------------------------------------------
+# Why no jakarta.* recipe is listed for this module
+#
+# All 83 javax.* import lines in src/ and tests/ fall into two groups, and neither can be
+# moved to jakarta.*:
+#
+#   Still javax in the JDK, nothing to migrate (63 lines):
+#     javax.xml.transform (28), javax.xml.parsers (6), javax.xml.namespace (6),
+#     javax.xml.datatype (4), javax.xml.XMLConstants (1)  - JAXP
+#     javax.net.ssl (6), javax.security.auth (3)           - JSSE/JAAS
+#
+#   Shared with vendored proprietary SOAP bytecode (20 lines):
+#     javax.activation.DataHandler / DataSource / FileDataSource / MimetypesFileTypeMap (15)
+#     javax.mail.internet, javax.mail.util.ByteArrayDataSource (3)
+#     javax.xml.rpc.ServiceException (7, from axis-jaxrpc 1.4)
+#     javax.xml.ws.Service / BindingProvider (4)
+#   These appear in call signatures against ccf.vendored:{sf-soap44-sdk, sf-soap50-sdk,
+#   sf-soap60-sdk, tfapi, cee-5.0, scrumworks-soap} and axis 1.4. Those jars exist only as
+#   javax-namespace bytecode, were never published anywhere, and cannot be rebuilt, so
+#   changing our side of the signature to jakarta.* would not compile. JAX-RPC in
+#   particular has no Jakarta successor at all.
+#
+# The JEP 320 removals are handled instead by pinning the *API* at the Jakarta EE 8 (2.3.x)
+# coordinates, which keep the javax.* package names - see the dependency comment in pom.xml.

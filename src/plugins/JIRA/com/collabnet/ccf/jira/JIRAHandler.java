@@ -471,8 +471,8 @@ public class JIRAHandler {
             String fieldId = field.getValue().getId();
             List<GenericArtifactField> gaFields = ga
                     .getAllGenericArtifactFieldsWithSameFieldName(fieldId);
-            if (gaFields != null && gaFields.get(0).getFieldValueHasChanged()) {
-                issueInputBuilder.setFieldValue(fieldId, gaFields.get(0)
+            if (gaFields != null && gaFields.getFirst().getFieldValueHasChanged()) {
+                issueInputBuilder.setFieldValue(fieldId, gaFields.getFirst()
                         .getFieldValue());
             }
         }

@@ -396,8 +396,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                     + sourceSystemId + "-" + "???" + "-" + targetSystemId
                     + " are not mapped.");
         } else if (resultSet.length == 1) {
-            if (resultSet[0] instanceof OrderedHashMap) {
-                OrderedHashMap result = (OrderedHashMap) resultSet[0];
+            if (resultSet[0] instanceof OrderedHashMap result) {
                 if (result.size() == 5) {
                     results = new Object[5];
                     results[0] = result.get(0);
@@ -562,8 +561,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
                     + sourceSystemId + "-" + targetRepositoryId + "-"
                     + targetSystemId + " are not mapped.");
         } else if (resultSet.length == 1) {
-            if (resultSet[0] instanceof OrderedHashMap) {
-                OrderedHashMap result = (OrderedHashMap) resultSet[0];
+            if (resultSet[0] instanceof OrderedHashMap result) {
                 if (result.size() == 4) {
                     results = new Object[4];
                     results[0] = result.get(0);
@@ -1230,8 +1228,7 @@ public class EntityService extends LifecycleComponent implements IDataProcessor 
         }
 
         for (Object resultObject : resultSet) {
-            if (resultObject instanceof OrderedHashMap) {
-                OrderedHashMap result = (OrderedHashMap) resultObject;
+            if (resultObject instanceof OrderedHashMap result) {
                 if (result.size() == 3) {
                     Date sourceArtifactLastModifiedDateFromTable;
                     String hospitalId = result.get(0).toString();

@@ -201,7 +201,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             ClientArtifactListXMLHelper currentArtifactHelper = twsclient
                     .getArtifactById(artifactId);
             ClientArtifact currentArtifact = currentArtifactHelper
-                    .getAllArtifacts().get(0);
+                    .getAllArtifacts().getFirst();
             String modifiedOn = currentArtifact.getAttributeValue(
                     ProjectTrackerReader.TRACKER_NAMESPACE,
                     ProjectTrackerReader.MODIFIED_ON_FIELD);
@@ -677,7 +677,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
 
             List<ClientArtifact> artifacts = artifactHelper.getAllArtifacts();
             if (artifacts.size() == 1) {
-                ClientArtifact artifact = artifacts.get(0);
+                ClientArtifact artifact = artifacts.getFirst();
                 String targetArtifactId = "{" + targetArtifactTypeNamespace
                         + "}" + targetArtifactTypeTagName + ":"
                         + artifact.getArtifactID();
@@ -741,7 +741,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             ClientArtifactListXMLHelper currentArtifactHelper = twsclient
                     .getArtifactById(artifactId);
             ClientArtifact currentArtifact = currentArtifactHelper
-                    .getAllArtifacts().get(0);
+                    .getAllArtifacts().getFirst();
             String retrievedArtifactId = currentArtifact.getArtifactID();
             if (!artifactId.equals(retrievedArtifactId)) {
                 log.warn("Artifact seems to have moved, old id: " + artifactId
@@ -842,7 +842,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             attachmentId = twsclient.postAttachment(artifactId,
                     attachmentDescription, dataSource);
             currentArtifactHelper = twsclient.getArtifactById(artifactId);
-            currentArtifact = currentArtifactHelper.getAllArtifacts().get(0);
+            currentArtifact = currentArtifactHelper.getAllArtifacts().getFirst();
             String modifiedOn = currentArtifact.getAttributeValue(
                     ProjectTrackerReader.TRACKER_NAMESPACE,
                     ProjectTrackerReader.MODIFIED_ON_FIELD);
@@ -1267,7 +1267,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             ClientArtifactListXMLHelper currentArtifactHelper = twsclient
                     .getArtifactById(artifactId);
             ClientArtifact currentArtifact = currentArtifactHelper
-                    .getAllArtifacts().get(0);
+                    .getAllArtifacts().getFirst();
             String retrievedArtifactId = currentArtifact.getArtifactID();
             if (!artifactId.equals(retrievedArtifactId)) {
                 log.warn("Artifact seems to have moved, old id: " + artifactId
@@ -1383,7 +1383,7 @@ public class ProjectTrackerWriter extends AbstractWriter<TrackerWebServicesClien
             if (artifacts.size() == 1) {
                 // FIXME This is not atomic too, what happened if the artifact
                 // has been changed again
-                ClientArtifact artifact = artifacts.get(0);
+                ClientArtifact artifact = artifacts.getFirst();
                 ga.setTargetArtifactId("{" + targetArtifactTypeNameSpace + "}"
                         + targetArtifactTypeTagName + ":"
                         + artifact.getArtifactID());

@@ -11,8 +11,11 @@
 
 package com.collabnet.ccf.pi.qc.v90.api;
 
+import java.io.Serial;
+
 public class AttachmentUploadStillInProgressException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 2803697888249300494L;
 
     public AttachmentUploadStillInProgressException(String message) {

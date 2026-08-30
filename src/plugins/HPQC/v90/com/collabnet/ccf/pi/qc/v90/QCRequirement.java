@@ -14,6 +14,7 @@
  */
 package com.collabnet.ccf.pi.qc.v90;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,8 +40,9 @@ import com.jacob.com.Dispatch;
  */
 public class QCRequirement extends Requirement implements IQCRequirement {
     /**
-	 *
-	 */
+     *
+     */
+    @Serial
     private static final long serialVersionUID             = 1L;
     private GenericArtifact   genericArtifact;
     List<byte[]>              attachmentData;
@@ -243,7 +245,7 @@ public class QCRequirement extends Requirement implements IQCRequirement {
                         size = fieldValues.size();
                     }
                     if (size >= 1)
-                        thisField.setFieldValue(fieldValues.get(0));
+                        thisField.setFieldValue(fieldValues.getFirst());
                     for (int sizeCnt = 1; sizeCnt < size; sizeCnt++) {
                         GenericArtifactField field;
                         field = genericArtifact
@@ -296,7 +298,7 @@ public class QCRequirement extends Requirement implements IQCRequirement {
         }
         genericArtifact
                 .getAllGenericArtifactFieldsWithSameFieldName(
-                        QCConfigHelper.QC_RQ_DEV_COMMENTS).get(0)
+                        QCConfigHelper.QC_RQ_DEV_COMMENTS).getFirst()
                 .setFieldValue(deltaComment);
 
         // add last modified user as a mappable field

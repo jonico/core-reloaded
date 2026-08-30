@@ -14,6 +14,7 @@
  */
 package com.collabnet.ccf.pi.qc.v90;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,8 +41,9 @@ import com.jacob.com.Dispatch;
  */
 public class QCDefect extends Bug implements IQCDefect {
     /**
-	 *
-	 */
+     *
+     */
+    @Serial
     private static final long serialVersionUID             = 1L;
     private GenericArtifact   genericArtifact;
     List<byte[]>              attachmentData;
@@ -292,7 +294,7 @@ public class QCDefect extends Bug implements IQCDefect {
                         size = fieldValues.size();
                     }
                     if (size >= 1)
-                        thisField.setFieldValue(fieldValues.get(0));
+                        thisField.setFieldValue(fieldValues.getFirst());
                     for (int sizeCnt = 1; sizeCnt < size; sizeCnt++) {
                         GenericArtifactField field;
                         field = genericArtifact
@@ -344,7 +346,7 @@ public class QCDefect extends Bug implements IQCDefect {
         }
         genericArtifact
                 .getAllGenericArtifactFieldsWithSameFieldName(
-                        QCConfigHelper.QC_BG_DEV_COMMENTS).get(0)
+                        QCConfigHelper.QC_BG_DEV_COMMENTS).getFirst()
                 .setFieldValue(deltaComment);
 
         // add last modified user as a mappable field

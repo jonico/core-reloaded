@@ -30,8 +30,7 @@ public class XPathFilter implements IDataProcessor {
     }
 
     public Object[] process(Object data) {
-        if (data instanceof Document) {
-            Document document = (Document) data;
+        if (data instanceof Document document) {
             Node node = document.selectSingleNode(xPath);
             if (node != null) {
                 return new Object[] { data };

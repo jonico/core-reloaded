@@ -178,10 +178,10 @@ public class XsltProcessor extends Component implements IDataProcessor {
         Document document = null;
         Element element = null;
 
-        if (record instanceof Document) {
+        if (record instanceof Document document1) {
             Transformer transform = null;
             try {
-                document = (Document) record;
+                document = document1;
                 element = document.getRootElement();
                 try {
                     String artifactAction = XPathUtils.getAttributeValue(
@@ -220,7 +220,7 @@ public class XsltProcessor extends Component implements IDataProcessor {
                         GenericArtifact.ERROR_GENERIC_ARTIFACT_PARSING);
                 throw new CCFRuntimeException(cause, e);
             }
-            return transform((Document) record, transform, element);
+            return transform(document1, transform, element);
         }
 
         // if we get this far then we cannot process the record

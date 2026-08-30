@@ -11,7 +11,10 @@
 
 package com.collabnet.ccf.core.eis.connection;
 
+import java.io.Serial;
+
 public class ConnectionException extends Exception {
+    @Serial
     private static final long serialVersionUID = 5388373597075150891L;
 
     public ConnectionException(String cause) {

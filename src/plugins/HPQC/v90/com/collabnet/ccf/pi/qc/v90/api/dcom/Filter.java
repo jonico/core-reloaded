@@ -13,14 +13,18 @@ package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
 import com.collabnet.ccf.pi.qc.v90.api.IFactoryList;
 import com.collabnet.ccf.pi.qc.v90.api.IFilter;
+
 import com.jacob.activeX.ActiveXComponent;
+
+import java.io.Serial;
 import com.jacob.com.Dispatch;
 
 public class Filter extends ActiveXComponent implements IFilter {
 
     /**
-	 * 
-	 */
+     * 
+     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public Filter(ActiveXComponent factory) {

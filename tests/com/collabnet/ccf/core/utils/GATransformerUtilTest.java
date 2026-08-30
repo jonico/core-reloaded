@@ -11,14 +11,17 @@
 
 package com.collabnet.ccf.core.utils;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.io.InputStream;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class GATransformerUtilTest extends TestCase {
+public class GATransformerUtilTest {
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testStripHTML() throws IOException {
         Class thisClass = this.getClass();
         ClassLoader loader = thisClass.getClassLoader();

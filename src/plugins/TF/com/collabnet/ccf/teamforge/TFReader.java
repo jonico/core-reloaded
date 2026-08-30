@@ -764,8 +764,8 @@ public class TFReader extends AbstractReader<Connection> {
         } else if (cause instanceof ConnectionException
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
             return true;
-        } else if (cause instanceof AxisFault) {
-            QName faultCode = ((AxisFault) cause).getFaultCode();
+        } else if (cause instanceof AxisFault fault) {
+            QName faultCode = fault.getFaultCode();
             if (faultCode.getLocalPart().equals("InvalidSessionFault")
                     && connectionManager.isEnableReloginAfterSessionTimeout()) {
                 return true;

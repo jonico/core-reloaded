@@ -818,8 +818,8 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
      */
     public Object[] process(Object data) {
         Document syncInfoIn = null;
-        if (data instanceof Document) {
-            syncInfoIn = (Document) data;
+        if (data instanceof Document document) {
+            syncInfoIn = document;
         } else {
             return null;
         }
@@ -859,13 +859,13 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
         if (!repositoryRecordsInRepositorySynchronizationWaitingList
                 .contains(repositoryKey)) {
             log.debug(repositoryKey + " is not on the waiting list. Adding....");
-            repositorySynchronizationWaitingList.add(0, record);
+            repositorySynchronizationWaitingList.addFirst(record);
             repositoryRecordsInRepositorySynchronizationWaitingList
                     .add(repositoryKey);
         }
         RepositoryRecord currentRecord = null;
         while (!repositorySynchronizationWaitingList.isEmpty()) {
-            currentRecord = repositorySynchronizationWaitingList.get(0);
+            currentRecord = repositorySynchronizationWaitingList.getFirst();
             log.debug("Processing the current repository "
                     + currentRecord.getRepositoryId() + " record");
             // immediately move record to tail so that exceptions do not prevent
@@ -895,7 +895,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                 log.debug("There are " + artifactsToBeShippedList.size()
                         + " artifacts to be shipped.");
                 GenericArtifact genericArtifact = artifactsToBeShippedList
-                        .remove(0);
+                        .removeFirst();
                 // if(artifactsToBeShippedList.isEmpty()){
                 // repositorySynchronizationWaitingList.remove(currentRecord);
                 // repositorySynchronizationWaitingList.add(currentRecord);
@@ -972,10 +972,10 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                             log.debug("Temporarily removing "
                                     + "from waiting list since an exception occured.");
                             removeFromWaitingList(currentRecord);
-                            if (e instanceof CCFRuntimeException) {
-                                throw (CCFRuntimeException) e;
-                            } else if (e instanceof RuntimeException) {
-                                throw (RuntimeException) e;
+                            if (e instanceof CCFRuntimeException exception1) {
+                                throw exception1;
+                            } else if (e instanceof RuntimeException exception) {
+                                throw exception;
                             } else {
                                 throw new CCFRuntimeException(
                                         "An exception occured", e);
@@ -1037,7 +1037,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                     && !isShutDownConnector()) {
                 log.debug("There are " + artifactsToBeReadList.size()
                         + " artifacts to be read.");
-                ArtifactState artifactState = artifactsToBeReadList.remove(0);
+                ArtifactState artifactState = artifactsToBeReadList.removeFirst();
                 if (rmdForceHandler
                         .isForceEnabled(repositoryMappingDirectionID)
                         && artifactsToBeReadList.isEmpty()) {
@@ -1162,10 +1162,10 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                                 retry = false;
                                 log.error("Error retrieving artifact "
                                         + artifactState.getArtifactId());
-                                if (e instanceof CCFRuntimeException) {
-                                    throw (CCFRuntimeException) e;
-                                } else if (e instanceof RuntimeException) {
-                                    throw (RuntimeException) e;
+                                if (e instanceof CCFRuntimeException exception3) {
+                                    throw exception3;
+                                } else if (e instanceof RuntimeException exception2) {
+                                    throw exception2;
                                 } else {
                                     throw new CCFRuntimeException(
                                             "An exception occured ", e);
@@ -1229,7 +1229,7 @@ public abstract class AbstractReader<T> extends Component implements IDataProces
                     return new Object[] {};
 
                 GenericArtifact genericArtifact = artifactsToBeShippedList
-                        .remove(0);
+                        .removeFirst();
                 try {
                     String conflictResolution = this
                             .getConflictResolutionPriority(syncInfo);

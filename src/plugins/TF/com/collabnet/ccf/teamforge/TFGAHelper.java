@@ -54,11 +54,11 @@ public class TFGAHelper {
             Throwable t = null;
             try {
                 if ("Double".equalsIgnoreCase(type))
-                    result = new Double(value);
+                    result = Double.valueOf(value);
                 else if ("Integer".equalsIgnoreCase(type))
-                    result = new Integer(value);
+                    result = Integer.valueOf(value);
                 else if ("Long".equalsIgnoreCase(type))
-                    result = new Long(value);
+                    result = Long.valueOf(value);
                 else if ("DateTime".equalsIgnoreCase(type)) {
                     synchronized (df) {
                         result = df.parse(value);
@@ -119,7 +119,7 @@ public class TFGAHelper {
         List<GenericArtifactField> fields = ga
                 .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
         if (fields != null && fields.size() == 1) {
-            GenericArtifactField field = fields.get(0);
+            GenericArtifactField field = fields.getFirst();
             return field.getFieldValue();
         }
         return null;
@@ -136,7 +136,7 @@ public class TFGAHelper {
                             + " does not exist in Generic Artifact. Cannot update field");
         }
         if (gaFolderIDs != null && gaFolderIDs.size() == 1) {
-            GenericArtifactField field = gaFolderIDs.get(0);
+            GenericArtifactField field = gaFolderIDs.getFirst();
             field.setFieldValue(fieldValue);
         }
     }

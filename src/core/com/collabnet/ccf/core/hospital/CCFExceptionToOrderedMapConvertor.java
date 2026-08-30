@@ -114,37 +114,38 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
      * angle brackets. Example:"It looks as if at <TIMESTAMP> a problem with
      * <ERROR_CODE> has occurred. Stacktrace: <STACKTRACE>"
      */
-    private String              logMessageTemplate             = "Artifact reached hospital. Characteristics: \n"
-                                                                       + "SOURCE_SYSTEM_ID: <SOURCE_SYSTEM_ID>\n"
-                                                                       + "SOURCE_REPOSITORY_ID: <SOURCE_REPOSITORY_ID>\n"
-                                                                       + "SOURCE_ARTIFACT_ID: <SOURCE_ARTIFACT_ID>\n"
-                                                                       + "TARGET_SYSTEM_ID: <TARGET_SYSTEM_ID>\n"
-                                                                       + "ERROR_CODE: <ERROR_CODE>\n"
-                                                                       + "TARGET_REPOSITORY_ID: <TARGET_REPOSITORY_ID>\n"
-                                                                       + "TARGET_ARTIFACT_ID: <TARGET_ARTIFACT_ID>\n"
-                                                                       + "TIMESTAMP: <TIMESTAMP>\n"
-                                                                       + "EXCEPTION_CLASS_NAME: <EXCEPTION_CLASS_NAME>\n"
-                                                                       + "EXCEPTION_MESSAGE: <EXCEPTION_MESSAGE>\n"
-                                                                       + "CAUSE_EXCEPTION_CLASS_NAME: <CAUSE_EXCEPTION_CLASS_NAME>\n"
-                                                                       + "CAUSE_EXCEPTION_MESSAGE: <CAUSE_EXCEPTION_MESSAGE>\n"
-                                                                       + "STACK_TRACE: <STACK_TRACE>\n"
-                                                                       + "ADAPTOR_NAME: <ADAPTOR_NAME>\n"
-                                                                       + "ORIGINATING_COMPONENT: <ORIGINATING_COMPONENT>\n"
-                                                                       + "DATA_TYPE: <DATA_TYPE>\n"
-                                                                       + "DATA: <DATA>\n"
-                                                                       + "THREAD_NAME: <THREAD_NAME>\n"
-                                                                       + "FIXED: <FIXED>\n"
-                                                                       + "REPROCESSED: <REPROCESSED>\n"
-                                                                       + "SOURCE_SYSTEM_KIND: <SOURCE_SYSTEM_KIND>\n"
-                                                                       + "SOURCE_REPOSITORY_KIND: <SOURCE_REPOSITORY_KIND>\n"
-                                                                       + "TARGET_SYSTEM_KIND: <TARGET_SYSTEM_KIND>\n"
-                                                                       + "TARGET_REPOSITORY_KIND: <TARGET_REPOSITORY_KIND>\n"
-                                                                       + "SOURCE_LAST_MODIFICATION_TIME: <SOURCE_LAST_MODIFICATION_TIME>\n"
-                                                                       + "TARGET_LAST_MODIFICATION_TIME: <TARGET_LAST_MODIFICATION_TIME>\n"
-                                                                       + "SOURCE_ARTIFACT_VERSION: <SOURCE_ARTIFACT_VERSION>\n"
-                                                                       + "TARGET_ARTIFACT_VERSION: <TARGET_ARTIFACT_VERSION>\n"
-                                                                       + "ARTIFACT_TYPE: <ARTIFACT_TYPE>\n"
-                                                                       + "GENERIC_ARTIFACT: <GENERIC_ARTIFACT>";
+    private String              logMessageTemplate             = """
+                                                                       Artifact reached hospital. Characteristics:\s
+                                                                       SOURCE_SYSTEM_ID: <SOURCE_SYSTEM_ID>
+                                                                       SOURCE_REPOSITORY_ID: <SOURCE_REPOSITORY_ID>
+                                                                       SOURCE_ARTIFACT_ID: <SOURCE_ARTIFACT_ID>
+                                                                       TARGET_SYSTEM_ID: <TARGET_SYSTEM_ID>
+                                                                       ERROR_CODE: <ERROR_CODE>
+                                                                       TARGET_REPOSITORY_ID: <TARGET_REPOSITORY_ID>
+                                                                       TARGET_ARTIFACT_ID: <TARGET_ARTIFACT_ID>
+                                                                       TIMESTAMP: <TIMESTAMP>
+                                                                       EXCEPTION_CLASS_NAME: <EXCEPTION_CLASS_NAME>
+                                                                       EXCEPTION_MESSAGE: <EXCEPTION_MESSAGE>
+                                                                       CAUSE_EXCEPTION_CLASS_NAME: <CAUSE_EXCEPTION_CLASS_NAME>
+                                                                       CAUSE_EXCEPTION_MESSAGE: <CAUSE_EXCEPTION_MESSAGE>
+                                                                       STACK_TRACE: <STACK_TRACE>
+                                                                       ADAPTOR_NAME: <ADAPTOR_NAME>
+                                                                       ORIGINATING_COMPONENT: <ORIGINATING_COMPONENT>
+                                                                       DATA_TYPE: <DATA_TYPE>
+                                                                       DATA: <DATA>
+                                                                       THREAD_NAME: <THREAD_NAME>
+                                                                       FIXED: <FIXED>
+                                                                       REPROCESSED: <REPROCESSED>
+                                                                       SOURCE_SYSTEM_KIND: <SOURCE_SYSTEM_KIND>
+                                                                       SOURCE_REPOSITORY_KIND: <SOURCE_REPOSITORY_KIND>
+                                                                       TARGET_SYSTEM_KIND: <TARGET_SYSTEM_KIND>
+                                                                       TARGET_REPOSITORY_KIND: <TARGET_REPOSITORY_KIND>
+                                                                       SOURCE_LAST_MODIFICATION_TIME: <SOURCE_LAST_MODIFICATION_TIME>
+                                                                       TARGET_LAST_MODIFICATION_TIME: <TARGET_LAST_MODIFICATION_TIME>
+                                                                       SOURCE_ARTIFACT_VERSION: <SOURCE_ARTIFACT_VERSION>
+                                                                       TARGET_ARTIFACT_VERSION: <TARGET_ARTIFACT_VERSION>
+                                                                       ARTIFACT_TYPE: <ARTIFACT_TYPE>
+                                                                       GENERIC_ARTIFACT: <GENERIC_ARTIFACT>""";
 
     /**
      * Gets the message template used to construct the warning message issued
@@ -275,8 +276,8 @@ public class CCFExceptionToOrderedMapConvertor extends ExceptionToOrderedMapConv
             map.put(dataTypeColName, dataType);
             Element element = null;
             Document dataDoc = null;
-            if (data instanceof Document) {
-                dataDoc = (Document) data;
+            if (data instanceof Document document) {
+                dataDoc = document;
                 element = dataDoc.getRootElement();
             }
             if (element != null) {

@@ -11,6 +11,7 @@
 
 package com.collabnet.tracker.common.httpClient;
 
+import java.io.Serial;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -41,6 +42,7 @@ import com.collabnet.tracker.core.TrackerWebServicesClient;
  */
 public class TrackerHttpSender extends CommonsHTTPSender {
 
+    @Serial
     private static final long  serialVersionUID      = 1L;
 
     public static final String CONTENT_ENCODING_GZIP = "gzip";
@@ -139,8 +141,7 @@ public class TrackerHttpSender extends CommonsHTTPSender {
                     .address();
             client.getHostConfiguration().setProxy(
                     getDomain(address.getHostName()), address.getPort());
-            if (proxySettings instanceof AuthenticatedProxy) {
-                AuthenticatedProxy authProxy = (AuthenticatedProxy) proxySettings;
+            if (proxySettings instanceof AuthenticatedProxy authProxy) {
                 Credentials credentials = getCredentials(
                         authProxy.getUserName(), authProxy.getPassword(),
                         address.getAddress());

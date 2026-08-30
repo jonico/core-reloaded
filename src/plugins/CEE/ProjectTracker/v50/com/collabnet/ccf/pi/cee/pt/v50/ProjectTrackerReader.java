@@ -718,7 +718,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                 throw new CCFRuntimeException("There is no artifact with id "
                         + artifactIdentifier);
             } else if (artifacts.size() == 1) {
-                artifact = artifacts.get(0);
+                artifact = artifacts.getFirst();
                 String retrievedArtifactId = artifact.getArtifactID();
                 if (!artifactIdentifier.equals(retrievedArtifactId)) {
                     log.debug("Artifact seems to have moved, old id: "
@@ -1128,8 +1128,8 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
             return ga;
 
         } catch (Exception e) {
-            if (e instanceof CCFRuntimeException) {
-                throw (CCFRuntimeException) e;
+            if (e instanceof CCFRuntimeException exception) {
+                throw exception;
             }
             String message = "Exception while getting the artifact data";
             log.error(message, e);

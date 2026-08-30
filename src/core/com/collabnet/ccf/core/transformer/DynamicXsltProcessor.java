@@ -266,8 +266,8 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
         Document document = null;
         Element element = null;
 
-        if (record instanceof Document) {
-            document = (Document) record;
+        if (record instanceof Document document1) {
+            document = document1;
             element = document.getRootElement();
             try {
                 String artifactAction = XPathUtils.getAttributeValue(element,

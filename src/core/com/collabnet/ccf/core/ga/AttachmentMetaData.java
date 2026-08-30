@@ -57,9 +57,9 @@ public class AttachmentMetaData {
             ATTACHMENT_VALUE_HAS_CHANGED, ATTACHMENT_VALUE_IS_NULL,
             ATTACHMENT_DESCRIPTION                            };
 
-    public static final String    TEXT_PLAIN                   = "text/plain";                ;
+    public static final String    TEXT_PLAIN                   = "text/plain";
 
-    public static final String    TEXT_HTML                    = "text/html";                 ;
+    public static final String    TEXT_HTML                    = "text/html";
 
     public static String getAttachmentDescription() {
         return ATTACHMENT_DESCRIPTION;
@@ -91,7 +91,7 @@ public class AttachmentMetaData {
 
     public static String getAttachmentValueHasChanged() {
         return ATTACHMENT_VALUE_HAS_CHANGED;
-    };
+    }
 
     public static String getAttachmentValueIsNull() {
         return ATTACHMENT_VALUE_IS_NULL;

@@ -11,6 +11,8 @@
 
 package com.collabnet.ccf.core.eis.connection;
 
+import java.io.Serial;
+
 /**
  * This exception class represents the maximum allowed connection configuration
  * for a Connection Pool is reached.
@@ -21,8 +23,9 @@ package com.collabnet.ccf.core.eis.connection;
 public class MaxConnectionsReachedException extends Exception {
 
     /**
-	 * 
-	 */
+     * 
+     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public MaxConnectionsReachedException(String arg0) {

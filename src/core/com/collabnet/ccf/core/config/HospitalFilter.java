@@ -42,8 +42,8 @@ public class HospitalFilter extends ScriptProcessor implements IDataProcessor {
     public Object[] process(Object input) {
         Object[] scriptResult = super.process(input);
         Object result = getLastResult();
-        if (result != null && result instanceof Boolean
-                && ((Boolean) result).booleanValue()) {
+        if (result != null && result instanceof Boolean boolean1
+                && boolean1.booleanValue()) {
             return scriptResult;
         } else {
             throw new CCFRuntimeException(getExceptionMessage());

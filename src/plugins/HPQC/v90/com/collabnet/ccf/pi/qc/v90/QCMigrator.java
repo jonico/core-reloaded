@@ -166,7 +166,7 @@ public class QCMigrator extends QCWriter {
         // FIXME This is not atomic
         List<String> targetAutimeAndTxnId = getAuTimeAndTxnIdForDefect(
                 connection, targetArtifactId);
-        genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId.get(0));
+        genericArtifact.setTargetArtifactVersion(targetAutimeAndTxnId.getFirst());
         genericArtifact.setTargetArtifactLastModifiedDate(DateUtil
                 .format(DateUtil.parseQCDate(targetAutimeAndTxnId.get(1))));
     }

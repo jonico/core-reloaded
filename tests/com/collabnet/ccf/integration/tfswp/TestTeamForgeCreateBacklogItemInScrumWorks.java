@@ -3,17 +3,16 @@
  */
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Test;
-
 import com.collabnet.teamforge.api.FieldValues;
 import com.danube.scrumworks.api2.client.BacklogItem;
+import org.junit.jupiter.api.Test;
 
 /**
  * Creates a backlog item in TeamForge and verifies the backlog item in
@@ -62,7 +61,7 @@ public class TestTeamForgeCreateBacklogItemInScrumWorks extends TFSWPIntegration
         List<BacklogItem> pbis = getSWPTester().waitForBacklogItemsToAppear(1);
 
         assertEquals(1, pbis.size());
-        BacklogItem pbi = pbis.get(0);
+        BacklogItem pbi = pbis.getFirst();
         assertEquals(title, pbi.getName());
         assertEquals(description, pbi.getDescription());
         assertEquals(benefit, pbi.getBusinessWeight().getBenefit().toString());

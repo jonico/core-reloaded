@@ -590,11 +590,10 @@ public class TFTrackerHandler {
                         && autosumming.getFieldValueHasChanged()) {
                     Object fieldValueObj = autosumming.getFieldValue();
                     Boolean fieldValue = false;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         fieldValue = Boolean.parseBoolean(fieldValueString);
-                    } else if (fieldValueObj instanceof Boolean) {
-                        fieldValue = (Boolean) fieldValueObj;
+                    } else if (fieldValueObj instanceof Boolean boolean1) {
+                        fieldValue = boolean1;
                     }
                     autoSummingTurnedOn = fieldValue;
                     artifactData.setAutosumming(fieldValue);
@@ -640,8 +639,7 @@ public class TFTrackerHandler {
                 if (priority != null && priority.getFieldValueHasChanged()) {
                     Object fieldValueObj = priority.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -649,8 +647,8 @@ public class TFTrackerHandler {
                                     "Could not parse value of mandatory field priority: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer) {
+                        fieldValue = integer.intValue();
                     }
                     artifactData.setPriority(fieldValue);
                 }
@@ -659,8 +657,7 @@ public class TFTrackerHandler {
                         && estimatedEfforts.getFieldValueHasChanged()) {
                     Object fieldValueObj = estimatedEfforts.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -668,8 +665,8 @@ public class TFTrackerHandler {
                                     "Could not parse value of mandatory field estimatedEffort: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer1) {
+                        fieldValue = integer1.intValue();
                     }
                     artifactData.setEstimatedEffort(fieldValue);
                 }
@@ -678,8 +675,7 @@ public class TFTrackerHandler {
                         && actualEfforts.getFieldValueHasChanged()) {
                     Object fieldValueObj = actualEfforts.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -687,8 +683,8 @@ public class TFTrackerHandler {
                                     "Could not parse value of mandatory field actualEffort: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer2) {
+                        fieldValue = integer2.intValue();
                     }
                     artifactData.setActualEffort(fieldValue);
                 }
@@ -697,8 +693,7 @@ public class TFTrackerHandler {
                         && remainingEfforts.getFieldValueHasChanged()) {
                     Object fieldValueObj = remainingEfforts.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -706,8 +701,8 @@ public class TFTrackerHandler {
                                     "Could not parse value of mandatory field remainingEffort: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer3) {
+                        fieldValue = integer3.intValue();
                     }
                     artifactData.setRemainingEffort(fieldValue);
                 }
@@ -732,11 +727,10 @@ public class TFTrackerHandler {
                 if (closeDate != null && closeDate.getFieldValueHasChanged()) {
                     Object fieldValueObj = closeDate.getFieldValue();
                     Date fieldValue = null;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         fieldValue = DateUtil.parse(fieldValueString);
-                    } else if (fieldValueObj instanceof Date) {
-                        fieldValue = (Date) fieldValueObj;
+                    } else if (fieldValueObj instanceof Date date) {
+                        fieldValue = date;
                     }
                     artifactData.setCloseDate(fieldValue);
                 }
@@ -769,8 +763,7 @@ public class TFTrackerHandler {
                         && storyPoints.getFieldValueHasChanged()) {
                     Object fieldValueObj = storyPoints.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -778,8 +771,8 @@ public class TFTrackerHandler {
                                     "Could not parse value of mandatory field points: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer4) {
+                        fieldValue = integer4.intValue();
                     }
                     artifactData.setPoints(fieldValue);
                 }

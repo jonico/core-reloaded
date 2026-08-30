@@ -11,6 +11,7 @@
 
 package com.collabnet.tracker.core.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import com.collabnet.tracker.core.util.TrackerUtil;
@@ -24,8 +25,9 @@ import com.collabnet.tracker.core.util.TrackerUtil;
 public class TrackerAttribute implements Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
+    @Serial
     private static final long serialVersionUID = 1L;
     private String            namespace;
     private String            tagName;

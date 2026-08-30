@@ -683,8 +683,8 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
         } else if (cause instanceof ConnectionException
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
             return true;
-        } else if (cause instanceof AxisFault) {
-            QName faultCode = ((AxisFault) cause).getFaultCode();
+        } else if (cause instanceof AxisFault fault) {
+            QName faultCode = fault.getFaultCode();
             if (faultCode.getLocalPart().equals("InvalidSessionFault")
                     && connectionManager.isEnableReloginAfterSessionTimeout()) {
                 return true;
@@ -1853,8 +1853,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                         && capacityField.getFieldValueHasChanged()) {
                     Object fieldValueObj = capacityField.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -1862,8 +1861,8 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                                     "Could not parse value of mandatory field capacity: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer) {
+                        fieldValue = integer.intValue();
                     }
                     planningFolder.setCapacity(fieldValue);
 
@@ -1873,8 +1872,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                         && pointsCapacityField.getFieldValueHasChanged()) {
                     Object fieldValueObj = pointsCapacityField.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -1882,8 +1880,8 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                                     "Could not parse value of mandatory field points capacity: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer1) {
+                        fieldValue = integer1.intValue();
                     }
                     planningFolder.setPointsCapacity(fieldValue);
 

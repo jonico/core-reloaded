@@ -223,12 +223,12 @@ public class ArtifactMetaData {
             String sourceSystemTimezone, GenericArtifactField field) {
         Date dateValue = null;
 
-        if (value instanceof GregorianCalendar) {
-            dateValue = ((GregorianCalendar) value).getTime();
-        } else if (value instanceof Date) {
-            dateValue = (Date) value;
-        } else if (value instanceof String) {
-            long dataValue = Long.parseLong((String) value) * 1000;
+        if (value instanceof GregorianCalendar calendar) {
+            dateValue = calendar.getTime();
+        } else if (value instanceof Date date) {
+            dateValue = date;
+        } else if (value instanceof String string) {
+            long dataValue = Long.parseLong(string) * 1000;
             Date returnDate = new Date(dataValue);
             dateValue = returnDate;
         }

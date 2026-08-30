@@ -602,8 +602,7 @@ public class SFEETrackerHandler {
                 if (priority != null && priority.getFieldValueHasChanged()) {
                     Object fieldValueObj = priority.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -611,8 +610,8 @@ public class SFEETrackerHandler {
                                     "Could not parse value of mandatory field priority: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer) {
+                        fieldValue = integer.intValue();
                     }
                     artifactData.setPriority(fieldValue);
                 }
@@ -621,8 +620,7 @@ public class SFEETrackerHandler {
                         && estimatedHours.getFieldValueHasChanged()) {
                     Object fieldValueObj = estimatedHours.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -630,8 +628,8 @@ public class SFEETrackerHandler {
                                     "Could not parse value of mandatory field estimatedHours: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer1) {
+                        fieldValue = integer1.intValue();
                     }
                     artifactData.setEstimatedHours(fieldValue);
                 }
@@ -640,8 +638,7 @@ public class SFEETrackerHandler {
                         && actualHours.getFieldValueHasChanged()) {
                     Object fieldValueObj = actualHours.getFieldValue();
                     int fieldValue = 0;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         try {
                             fieldValue = Integer.parseInt(fieldValueString);
                         } catch (NumberFormatException e) {
@@ -649,8 +646,8 @@ public class SFEETrackerHandler {
                                     "Could not parse value of mandatory field actualHours: "
                                             + e.getMessage(), e);
                         }
-                    } else if (fieldValueObj instanceof Integer) {
-                        fieldValue = ((Integer) fieldValueObj).intValue();
+                    } else if (fieldValueObj instanceof Integer integer2) {
+                        fieldValue = integer2.intValue();
                     }
                     artifactData.setActualHours(fieldValue);
                 }
@@ -669,11 +666,10 @@ public class SFEETrackerHandler {
                 if (closeDate != null && closeDate.getFieldValueHasChanged()) {
                     Object fieldValueObj = closeDate.getFieldValue();
                     Date fieldValue = null;
-                    if (fieldValueObj instanceof String) {
-                        String fieldValueString = (String) fieldValueObj;
+                    if (fieldValueObj instanceof String fieldValueString) {
                         fieldValue = DateUtil.parse(fieldValueString);
-                    } else if (fieldValueObj instanceof Date) {
-                        fieldValue = (Date) fieldValueObj;
+                    } else if (fieldValueObj instanceof Date date) {
+                        fieldValue = date;
                     }
                     artifactData.setCloseDate(fieldValue);
                 }

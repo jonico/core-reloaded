@@ -81,7 +81,7 @@ public class QCReaderOutputVerificator extends QCConnectHelper implements IDataP
 
             List<List<Document>> retObj = (List<List<Document>>) s.readObject();
             List<Document> retrievedDocumentList = (List<Document>) retObj
-                    .get(0);
+                    .getFirst();
             if (incomingDocumentList
                     .equals((List<Document>) retrievedDocumentList))
                 return success.toArray();

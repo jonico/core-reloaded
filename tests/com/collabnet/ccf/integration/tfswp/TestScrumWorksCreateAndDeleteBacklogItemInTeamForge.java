@@ -1,15 +1,14 @@
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-
-import org.junit.Test;
 
 import com.collabnet.ccf.swp.SWPMetaData;
 import com.collabnet.teamforge.api.tracker.ArtifactRow;
 import com.danube.scrumworks.api2.client.BacklogItem;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests that a backlog item created in ScrumWorks is correctly synched in

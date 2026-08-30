@@ -11,10 +11,15 @@
 
 package com.collabnet.ccf.core.eis.connection;
 
+import org.junit.jupiter.api.Assertions;
+
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 import org.jmock.core.Constraint;
 import org.jmock.core.matcher.InvokeCountMatcher;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author madhusuthanan
@@ -22,15 +27,18 @@ import org.jmock.core.matcher.InvokeCountMatcher;
  */
 public class ConnectionManagerTest extends MockObjectTestCase {
 
+    @BeforeEach
     public void setUp() {
 
     }
 
+    @AfterEach
     public void tearDown() {
 
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testGetConnection() throws MaxConnectionsReachedException,
             ConnectionException {
         Mock context = new Mock(ConnectionFactory.class);
@@ -67,6 +75,7 @@ public class ConnectionManagerTest extends MockObjectTestCase {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMultipleGetConnectionWithMaxConnectionsReached()
             throws ConnectionException {
         Mock context = new Mock(ConnectionFactory.class);
@@ -106,12 +115,13 @@ public class ConnectionManagerTest extends MockObjectTestCase {
                 maxConnectionsExceptionOccured = true;
             }
         }
-        assertTrue(
-                "Max connections not reached. The max connections configured is "
-                        + maxConnections, maxConnectionsExceptionOccured);
+        Assertions.assertTrue(
+                maxConnectionsExceptionOccured, "Max connections not reached. The max connections configured is "
+                        + maxConnections);
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMultipleGetConnectionWithoutMaxConnectionsReached()
             throws ConnectionException {
 
@@ -148,7 +158,7 @@ public class ConnectionManagerTest extends MockObjectTestCase {
                                 systemKind, repositoryId, repositoryKind,
                                 connectionInfo, credentialInfo);
             } catch (MaxConnectionsReachedException e) {
-                fail("Max connections reached at " + (i + 1)
+                Assertions.fail("Max connections reached at " + (i + 1)
                         + " although the max connections configured is "
                         + maxConnections);
             }

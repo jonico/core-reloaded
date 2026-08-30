@@ -12,6 +12,7 @@
 package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
 import java.io.File;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,8 +38,9 @@ import com.jacob.com.Variant;
 
 public class Requirement extends ActiveXComponent implements IRequirement {
     /**
-	 *
-	 */
+     *
+     */
+    @Serial
     private static final long                              serialVersionUID     = 1L;
     public static Logger                                   logger               = Logger.getLogger(Requirement.class);
     public final static ConcurrentHashMap<String, Integer> attachmentRetryCount = new ConcurrentHashMap<String, Integer>();
@@ -292,8 +294,7 @@ public class Requirement extends ActiveXComponent implements IRequirement {
         Variant result = null;
         try {
             result = getProperty("VC");
-        } catch (Exception e) {
-            ; // do nothing
+        } catch (Exception e) { // do nothing
         }
         if (result == null || result.getvt() != Variant.VariantDispatch) {
             return null;

@@ -72,10 +72,7 @@ public class GenericArtifactMultiLineParser extends Component implements IDataPr
 
         Document dom4JXmlDocument;
 
-        if (record instanceof String) {
-            // trackerWorkflowXmlDocument=createDOMFromString("<?xml
-            // version='1.0' encoding='UTF-8'?>\n"+(String) record);
-            String xmlDocumentLine = (String) record;
+        if (record instanceof String xmlDocumentLine) {
             // check whether XML document was terminated by top-level element so
             // that we can finally parse it
             if (xmlDocumentLine.matches(".*</artifact>")) {
@@ -91,8 +88,8 @@ public class GenericArtifactMultiLineParser extends Component implements IDataPr
             }
         }
 
-        else if (record instanceof Document)
-            dom4JXmlDocument = (Document) record;
+        else if (record instanceof Document document)
+            dom4JXmlDocument = document;
 
         // if we get this far then we cannot process the record
         else

@@ -169,7 +169,7 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
 
     public Object[] process(Object data) {
         // I will expect a Generic Artifact object
-        if (data instanceof Document) {
+        if (data instanceof Document document) {
 
             String depParentSourceArtifactId = null;
             String depParentSourceRepositoryId = null;
@@ -179,7 +179,7 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
             String depParentTargetRepositoryKind = null;
 
             try {
-                Element element = XPathUtils.getRootElement((Document) data);
+                Element element = XPathUtils.getRootElement(document);
 
                 /*
                  * CCF 2.x needs an id for the repository mapping and for the
@@ -662,8 +662,8 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
         if (resultSet == null || resultSet.length == 0) {
             result = null;
         } else if (resultSet.length == 1) {
-            if (resultSet[0] instanceof OrderedHashMap) {
-                result = (OrderedHashMap) resultSet[0];
+            if (resultSet[0] instanceof OrderedHashMap map) {
+                result = map;
                 if (result.size() > 0) {
                     return result;
                 } else {

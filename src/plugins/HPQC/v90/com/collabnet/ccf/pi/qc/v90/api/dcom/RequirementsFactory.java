@@ -11,6 +11,7 @@
 
 package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
+import java.io.Serial;
 import java.util.List;
 
 import com.collabnet.ccf.pi.qc.v90.api.IField;
@@ -23,8 +24,9 @@ import com.jacob.com.Variant;
 
 public class RequirementsFactory extends ActiveXComponent implements IRequirementsFactory {
     /**
-	 * 
-	 */
+     * 
+     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public RequirementsFactory(Dispatch arg0) {

@@ -50,9 +50,7 @@ public class GenericArtifact {
      */
     public enum ArtifactModeValue {
         CHANGEDFIELDSONLY, COMPLETE, UNKNOWN
-    };
-
-    /**
+    }/**
      * 
      * Possible values for the artifact mode, "changedFieldsOnly" and "complete"
      * 
@@ -60,9 +58,7 @@ public class GenericArtifact {
      */
     public enum ArtifactTypeValue {
         PLAINARTIFACT, DEPENDENCY, ATTACHMENT, UNKNOWN
-    };
-
-    /**
+    }/**
      * 
      * Possible values for the includesFieldMetaData, "true" and "false"
      * 
@@ -70,15 +66,11 @@ public class GenericArtifact {
      */
     public enum IncludesFieldMetaDataValue {
         TRUE, FALSE
-    };
-
-    /**
+    }/**
      * This is a hash map that indexes all contained field elements according to
      * their name
      */
-    private HashMap<String, List<GenericArtifactField>>                  fieldNameHashMap                                                    = new HashMap<String, List<GenericArtifactField>>();                  ;
-
-    /**
+    private HashMap<String, List<GenericArtifactField>>                  fieldNameHashMap                                                    = new HashMap<String, List<GenericArtifactField>>();                  /**
      * This is a hash map that indexes all contained field elements according to
      * their field type
      */
