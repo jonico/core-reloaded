@@ -41,11 +41,11 @@ public class TestScrumWorksCreateUpdateAndDeleteReleaseInTeamForge extends TFSWP
 
     @AfterEach
     public void tearDown() throws ScrumWorksException, RemoteException {
-        if (swpRelease != null) {
+        if (null != swpRelease) {
             getSWPTester().getSWPEndpoint().deleteEmptyRelease(
                     swpRelease.getId());
         }
-        if (tfRelease != null) {
+        if (null != tfRelease) {
             getTeamForgeTester().getConnection().getPlanningClient()
                     .deletePlanningFolder(tfRelease.getId());
         }

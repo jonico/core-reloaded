@@ -443,27 +443,27 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
 
     @SuppressWarnings("unchecked")
     public void validate(List exceptions) {
-        if (getSynchronizationStatusDatabaseUpdater() == null) {
+        if (null == getSynchronizationStatusDatabaseUpdater()) {
             log.error("synchronizationStatusDatabaseUpdater-property not set");
             exceptions.add(new ValidationException(
                     "synchronizationStatusDatabaseUpdater-property not set",
                     this));
         }
 
-        if (getIdentityMappingDatabaseReader() == null) {
+        if (null == getIdentityMappingDatabaseReader()) {
             log.error("identityMappingDatabaseReader-property not set");
             exceptions.add(new ValidationException(
                     "identityMappingDatabaseReader-property not set", this));
         }
 
-        if (getSynchronizationStatusDatabaseUpdater() == null) {
+        if (null == getSynchronizationStatusDatabaseUpdater()) {
             log.error("synchronizationStatusDatabaseUpdater-property not set");
             exceptions.add(new ValidationException(
                     "synchronizationStatusDatabaseUpdater-property not set",
                     this));
         }
 
-        if (getIdentityMappingDatabaseUpdater() == null) {
+        if (null == getIdentityMappingDatabaseUpdater()) {
             log.error("getIdentityMappingDatabaseUpdater-property not set");
             exceptions
                     .add(new ValidationException(
@@ -471,7 +471,7 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
                             this));
         }
 
-        if (getIdentityMappingDatabaseInserter() == null) {
+        if (null == getIdentityMappingDatabaseInserter()) {
             log.error("getIdentityMappingDatabaseInserter-property not set");
             exceptions
                     .add(new ValidationException(
@@ -479,7 +479,7 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
                             this));
         }
 
-        if (sourceSystemIsTeamForge == null) {
+        if (null == sourceSystemIsTeamForge) {
             log.error("sourceSystemIsTeamForge-property not set");
             exceptions.add(new ValidationException(
                     "sourceSystemIsTeamForge-property not set", this));
@@ -587,10 +587,10 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
                 targetSystemId, targetRepositoryId, artifactType,
                 repositoryMappingId);
         String targetArtifactIdFromTable = null;
-        if (identityMappingTableRow != null) {
+        if (null != identityMappingTableRow) {
             targetArtifactIdFromTable = (String) identityMappingTableRow.get(0);
         }
-        if (targetArtifactIdFromTable == null) {
+        if (null == targetArtifactIdFromTable) {
             this.createIdentityMapping(sourceArtifactId, targetArtifactId,
                     sourceTime, targetTime, sourceArtifactVersion,
                     targetArtifactVersion, artifactType,
@@ -602,7 +602,7 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
                     depChildTargetRepositoryId, depChildTargetRepositoryKind,
                     repositoryMappingId);
         } else {
-            if (identityMappingTableRow.size() > 3) {
+            if (3 < identityMappingTableRow.size()) {
                 //Timestamp sourceLastModificationTimeFromTable = (Timestamp) identityMappingTableRow.get(1);
                 long sourceArtifactVersionFromTable = parseVersionNumber(identityMappingTableRow
                         .get(2));
@@ -659,12 +659,12 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
                 inputParameters, 1000);
         //identityMappingDatabaseReader.disconnect();
 
-        if (resultSet == null || resultSet.length == 0) {
+        if (null == resultSet || 0 == resultSet.length) {
             result = null;
-        } else if (resultSet.length == 1) {
+        } else if (1 == resultSet.length) {
             if (resultSet[0] instanceof OrderedHashMap) {
                 result = (OrderedHashMap) resultSet[0];
-                if (result.size() > 0) {
+                if (0 < result.size()) {
                     return result;
                 } else {
                     String cause = "Seems as if the SQL statement for identityMappingDatabase reader does not return values.";
@@ -712,7 +712,7 @@ public class MappingDBUpdater2 extends LifecycleComponent implements IDataProces
      *         string representation cannot be parsed.
      */
     private long parseVersionNumber(Object input) {
-        if (input == null)
+        if (null == input)
             return -2;
         try {
             return Long.parseLong(input.toString());

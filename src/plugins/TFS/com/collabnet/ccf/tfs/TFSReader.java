@@ -282,7 +282,7 @@ public class TFSReader extends AbstractReader<TFSConnection> {
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<TFSConnection> connectionManager) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -358,7 +358,7 @@ public class TFSReader extends AbstractReader<TFSConnection> {
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }

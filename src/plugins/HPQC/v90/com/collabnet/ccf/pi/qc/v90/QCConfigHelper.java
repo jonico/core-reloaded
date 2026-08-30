@@ -59,19 +59,19 @@ public class QCConfigHelper {
             m_childIdCol = childIdCol;
             m_childDisplayCol = childDisplayCol;
 
-            if (m_parentTable == null)
+            if (null == m_parentTable)
                 throw new IllegalArgumentException(
                         "Parent table name for joined field can't be null");
-            if (m_parentCol == null)
+            if (null == m_parentCol)
                 throw new IllegalArgumentException(
                         "Parent column name for joined field can't be null");
-            if (m_childTable == null)
+            if (null == m_childTable)
                 throw new IllegalArgumentException(
                         "Child table name of joined field can't be null");
-            if (m_childIdCol == null)
+            if (null == m_childIdCol)
                 throw new IllegalArgumentException(
                         "ID column of joined field can't be null");
-            if (m_childDisplayCol == null)
+            if (null == m_childDisplayCol)
                 throw new IllegalArgumentException(
                         "Display column of joined field can't be null");
         }
@@ -170,7 +170,7 @@ public class QCConfigHelper {
                 res.add(columnName);
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -195,7 +195,7 @@ public class QCConfigHelper {
 
                 // we only transport fields that have been configured by the user
                 String fieldDisplayName = rs.getFieldValueAsString(sfUserLabel);
-                if (fieldDisplayName == null) {
+                if (null == fieldDisplayName) {
                     continue;
                 }
 
@@ -213,8 +213,8 @@ public class QCConfigHelper {
                     String isMultiValue = rs
                             .getFieldValueAsString(sfIsMultiValue);
 
-                    if (columnType.equals("char") && editStyle != null
-                            && isMultiValue != null
+                    if (columnType.equals("char") && null != editStyle
+                            && null != isMultiValue
                             && !StringUtils.isEmpty(isMultiValue)
                             && isMultiValue.equals("Y")) {
                         if (editStyle.equals("ListCombo")
@@ -239,7 +239,7 @@ public class QCConfigHelper {
 
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -270,7 +270,7 @@ public class QCConfigHelper {
                 // we only transport fields that have been configured by the
                 // user
                 String fieldDisplayName = rs.getFieldValueAsString(sfUserLabel);
-                if (fieldDisplayName == null) {
+                if (null == fieldDisplayName) {
                     continue;
                 }
 
@@ -290,7 +290,7 @@ public class QCConfigHelper {
                     String isMultiValue = rs
                             .getFieldValueAsString(sfIsMultiValue);
 
-                    if (columnType.equals("char") && editStyle != null
+                    if (columnType.equals("char") && null != editStyle
                             && "Y".equals(isMultiValue)) {
                         if (editStyle.equals("ListCombo")
                                 || editStyle.equals("TreeCombo")) {
@@ -325,7 +325,7 @@ public class QCConfigHelper {
                 }
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
@@ -339,17 +339,17 @@ public class QCConfigHelper {
 
         // TODO: Convert the datatype, editStyle pair to a valid GA type
         if (dataType.equals("char")
-                && (editStyle == null || (editStyle != null && editStyle
+                && (null == editStyle || (null != editStyle && editStyle
                         .equals(""))))
             return GenericArtifactField.FieldValueTypeValue.STRING;
         if (dataType.equals("char")
-                && (editStyle != null && editStyle.equals("UserCombo")))
+                && (null != editStyle && editStyle.equals("UserCombo")))
             return GenericArtifactField.FieldValueTypeValue.USER;
         if (dataType.equals("char")
-                && (editStyle != null && editStyle.equals("DateCombo")))
+                && (null != editStyle && editStyle.equals("DateCombo")))
             return GenericArtifactField.FieldValueTypeValue.DATE;
         if (dataType.equals("char")
-                && (editStyle != null && editStyle.equals("ListCombo"))) {
+                && (null != editStyle && editStyle.equals("ListCombo"))) {
             //if(isMultiValue.equals("N"))
             return GenericArtifactField.FieldValueTypeValue.STRING;
             //if(isMultiValue.equals("Y")) // MULTI_SELECT_LIST
@@ -358,14 +358,14 @@ public class QCConfigHelper {
         if (dataType.equals("memo"))
             return GenericArtifactField.FieldValueTypeValue.HTMLSTRING;
         if (dataType.equals("char")
-                && (editStyle != null && editStyle.equals("TreeCombo"))) {
+                && (null != editStyle && editStyle.equals("TreeCombo"))) {
             //if(isMultiValue.equals("N"))
             return GenericArtifactField.FieldValueTypeValue.STRING;
             //if(isMultiValue.equals("Y")) // MULTI_SELECT_LIST
             //	return GenericArtifactField.FieldValueTypeValue.STRING;
         }
         if (dataType.equals("char")
-                && (editStyle != null && editStyle.equals("ReqTreeCombo"))) {
+                && (null != editStyle && editStyle.equals("ReqTreeCombo"))) {
             //if(isMultiValue.equals("N"))
             return GenericArtifactField.FieldValueTypeValue.STRING;
             //if(isMultiValue.equals("Y")) // MULTI_SELECT_LIST
@@ -375,9 +375,9 @@ public class QCConfigHelper {
         if (dataType.equals("number"))
             return GenericArtifactField.FieldValueTypeValue.INTEGER;
         if (dataType.equals("DATE")
-                && (editStyle != null && editStyle.equals("DateCombo")))
+                && (null != editStyle && editStyle.equals("DateCombo")))
             return GenericArtifactField.FieldValueTypeValue.DATE;
-        if (dataType.equals("DATE") && editStyle == null)
+        if (dataType.equals("DATE") && null == editStyle)
             return GenericArtifactField.FieldValueTypeValue.DATE;
         if (dataType.equals("time"))
             return GenericArtifactField.FieldValueTypeValue.DATETIME;
@@ -410,7 +410,7 @@ public class QCConfigHelper {
                 + " FROM SYSTEM_FIELD WHERE (SF_TABLE_NAME='BUG' OR SF_TABLE_NAME='REQ') AND SF_REFERENCE_TABLE IS NOT NULL";
 
         ArrayList<JoinedField> joinedFields = s_JoinedFields;
-        if (s_JoinedFields == null) {
+        if (null == s_JoinedFields) {
             // we're changing a static member: make sure only 1 thread at a
             // time
             joinedFields = new ArrayList<JoinedField>();
@@ -441,7 +441,7 @@ public class QCConfigHelper {
                 }
                 s_JoinedFields = joinedFields;
             } finally {
-                if (rs != null) {
+                if (null != rs) {
                     rs.safeRelease();
                 }
             }
@@ -473,7 +473,7 @@ public class QCConfigHelper {
         IRecordSet rs = null;
         try {
             JoinedField f = getJoinedField(qcc, parentTable, fieldName);
-            if (f == null) {
+            if (null == f) {
                 throw new IllegalArgumentException("Not a joined field: \""
                         + String.valueOf(parentTable) + "\".\""
                         + String.valueOf(fieldName) + "\"");
@@ -483,14 +483,14 @@ public class QCConfigHelper {
                     + f.childTable();
             rs = qcc.executeSQL(sql);
             //String id = rs.getFieldValueAsString(f.childIdCol());
-            if (rs != null) {
+            if (null != rs) {
                 int count = rs.getRecordCount();
                 for (int i = 0; i < count; ++i, rs.next()) {
                     result.add(rs.getFieldValueAsString(f.childDisplayCol()));
                 }
             }
         } finally {
-            if (rs != null)
+            if (null != rs)
                 rs.safeRelease();
         }
         return result;
@@ -612,11 +612,11 @@ public class QCConfigHelper {
     static boolean isJoinedField(IConnection qcc, String tableName,
             String fieldName) {
         if ("9".equals(qcc.getMajorVersion())
-                && Integer.parseInt(qcc.getMinorVersion()) <= HIGHEST_KNOWN_QC_9_0_BUILD_NUMBER) {
+                && HIGHEST_KNOWN_QC_9_0_BUILD_NUMBER >= Integer.parseInt(qcc.getMinorVersion())) {
             return false;
         }
         boolean isRField = false;
-        if (fieldName != null && tableName != null) {
+        if (null != fieldName && null != tableName) {
             JoinedField jf = getJoinedField(qcc, tableName, fieldName);
             isRField = jf != null;
         }
@@ -648,11 +648,11 @@ public class QCConfigHelper {
             String parentCol, String displayValue) {
         String parentTable = isDefect ? "BUG" : "REQ";
         String id = null;
-        if (displayValue != null) {
+        if (null != displayValue) {
             IRecordSet rs = null;
             try {
                 JoinedField f = getJoinedField(qcc, parentTable, parentCol);
-                if (f == null) {
+                if (null == f) {
                     throw new IllegalArgumentException("Not a joined field: \""
                             + String.valueOf(parentTable) + "\".\""
                             + String.valueOf(parentCol) + "\"");
@@ -664,12 +664,12 @@ public class QCConfigHelper {
                 rs = qcc.executeSQL(sql);
                 id = rs.getFieldValueAsString(f.childIdCol());
             } finally {
-                if (rs != null)
+                if (null != rs)
                     rs.safeRelease();
             }
         }
 
-        if (id == null) {
+        if (null == id) {
             String msg = new StringBuilder(
                     "Invalid value for Quality Center field ")
                     .append(parentTable).append(".").append(parentCol)

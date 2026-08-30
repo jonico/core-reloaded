@@ -45,11 +45,11 @@ public class TFGAHelper {
 
     public static final Object asTypedValue(String value, String type)
             throws RecordFormatException {
-        if (value == null)
+        if (null == value)
             return null;
         // TODO Find out what types are possible as well
         Object result = value;
-        if (type != null) {// Need to apply it.
+        if (null != type) {// Need to apply it.
             String exceptionMessage = null;
             Throwable t = null;
             try {
@@ -92,7 +92,7 @@ public class TFGAHelper {
                         + ". Exception: " + nfe.getMessage();
                 t = nfe;
             }
-            if (exceptionMessage != null) {
+            if (null != exceptionMessage) {
                 throw new RecordFormatException(exceptionMessage, t);
             }
         }
@@ -118,7 +118,7 @@ public class TFGAHelper {
     public static Object getSingleValue(GenericArtifact ga, String fieldName) {
         List<GenericArtifactField> fields = ga
                 .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
-        if (fields != null && fields.size() == 1) {
+        if (null != fields && 1 == fields.size()) {
             GenericArtifactField field = fields.get(0);
             return field.getFieldValue();
         }
@@ -129,13 +129,13 @@ public class TFGAHelper {
             String fieldValue) {
         List<GenericArtifactField> gaFolderIDs = ga
                 .getAllGenericArtifactFieldsWithSameFieldName(fieldName);
-        if (gaFolderIDs == null) {
+        if (null == gaFolderIDs) {
             throw new CCFRuntimeException(
                     "Field "
                             + fieldName
                             + " does not exist in Generic Artifact. Cannot update field");
         }
-        if (gaFolderIDs != null && gaFolderIDs.size() == 1) {
+        if (null != gaFolderIDs && 1 == gaFolderIDs.size()) {
             GenericArtifactField field = gaFolderIDs.get(0);
             field.setFieldValue(fieldValue);
         }
@@ -148,13 +148,13 @@ public class TFGAHelper {
                 .getAllGenericArtifactFieldsWithSameFieldTypeAndFieldName(
                         GenericArtifactField.VALUE_FIELD_TYPE_MANDATORY_FIELD,
                         fieldName);
-        if (gaFolderIDs != null) {
+        if (null != gaFolderIDs) {
             for (GenericArtifactField field : gaFolderIDs) {
                 field.setFieldValue(fieldValue);
                 fieldUpdated = true;
             }
         }
-        if (gaFolderIDs == null || (!fieldUpdated)) {
+        if (null == gaFolderIDs || (!fieldUpdated)) {
             throw new CCFRuntimeException(
                     "Field "
                             + fieldName

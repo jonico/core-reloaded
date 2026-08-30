@@ -132,7 +132,7 @@ public abstract class AbstractWriter<T> extends Component implements IDataProces
 
     @SuppressWarnings("unchecked")
     public void validate(List exceptions) {
-        if (getConnectionManager() == null) {
+        if (null == getConnectionManager()) {
             log.error("connectionManager property is not set");
             exceptions.add(new ValidationException(
                     "connectionManager property is not set", this));
@@ -254,7 +254,7 @@ public abstract class AbstractWriter<T> extends Component implements IDataProces
                     }
                 } else {
                     retry = true;
-                    if (numberOfTries == 1) {
+                    if (1 == numberOfTries) {
                         // first try, long error message
                         log.warn(
                                 "Network related problem occurred while connecting to external system. Try operation again",
@@ -293,9 +293,9 @@ public abstract class AbstractWriter<T> extends Component implements IDataProces
             ++numberOfTries;
         } while (retry);
 
-        if (returnValue != null) {
+        if (null != returnValue) {
             return returnValue;
-        } else if (gaDocument == null) {
+        } else if (null == gaDocument) {
             returnValue = new Object[] {};
         } else {
             returnValue = new Object[] { gaDocument };
@@ -329,7 +329,7 @@ public abstract class AbstractWriter<T> extends Component implements IDataProces
         long lastSyncVersion = -1;
         String targetArtifactId = gaDocument.getTargetArtifactId();
         String lastSyncVersionStr = gaDocument.getTargetArtifactVersion();
-        if (lastSyncVersionStr == null
+        if (null == lastSyncVersionStr
                 || lastSyncVersionStr
                         .equalsIgnoreCase(GenericArtifact.VALUE_UNKNOWN)) {
             lastSyncVersionStr = GenericArtifactHelper.ARTIFACT_VERSION_FORCE_RESYNC;

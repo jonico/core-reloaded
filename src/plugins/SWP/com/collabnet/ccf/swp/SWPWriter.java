@@ -66,7 +66,7 @@ public class SWPWriter extends AbstractWriter<Connection> implements IDataProces
         try {
             if ((!ga.getArtifactAction().equals(
                     GenericArtifact.ArtifactActionValue.CREATE))
-                    || getResyncUserName() == null) {
+                    || null == getResyncUserName()) {
                 connection = connect(targetSystemId, targetSystemKind,
                         targetRepositoryId, targetRepositoryKind, serverUrl,
                         getUserName() + SWPConnectionFactory.PARAM_DELIMITER
@@ -116,7 +116,7 @@ public class SWPWriter extends AbstractWriter<Connection> implements IDataProces
         String swpProductName = SWPMetaData
                 .retrieveProductFromRepositoryId(targetRepositoryId);
         if (swpType.equals(SWPMetaData.SWPType.UNKNOWN)
-                || swpProductName == null) {
+                || null == swpProductName) {
             String cause = "Invalid repository format: " + targetRepositoryId;
             log.error(cause);
             throw new CCFRuntimeException(cause);
@@ -126,14 +126,14 @@ public class SWPWriter extends AbstractWriter<Connection> implements IDataProces
         try {
             if (swpType.equals(SWPType.TASK)) {
                 Task result = createTask(ga, swpProductName, connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Created task " + result.getId() + " of PBI "
                             + result.getBacklogItemId() + " with data from "
                             + ga.getSourceArtifactId());
                 }
             } else if (swpType.equals(SWPType.PBI)) {
                 BacklogItem result = createPBI(ga, swpProductName, connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Created PBI " + result.getKey()
                             + " with data from " + ga.getSourceArtifactId());
                 }
@@ -247,7 +247,7 @@ public class SWPWriter extends AbstractWriter<Connection> implements IDataProces
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<Connection> connectionManager, Document ga) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -353,7 +353,7 @@ public class SWPWriter extends AbstractWriter<Connection> implements IDataProces
         String swpProductName = SWPMetaData
                 .retrieveProductFromRepositoryId(targetRepositoryId);
         if (swpType.equals(SWPMetaData.SWPType.UNKNOWN)
-                || swpProductName == null) {
+                || null == swpProductName) {
             String cause = "Invalid repository format: " + targetRepositoryId;
             log.error(cause);
             throw new CCFRuntimeException(cause);
@@ -363,14 +363,14 @@ public class SWPWriter extends AbstractWriter<Connection> implements IDataProces
         try {
             if (swpType.equals(SWPType.TASK)) {
                 Task result = updateTask(ga, swpProductName, connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Updated task " + result.getId() + " of PBI "
                             + result.getBacklogItemId() + " with data from "
                             + ga.getSourceArtifactId());
                 }
             } else if (swpType.equals(SWPType.PBI)) {
                 BacklogItem result = updatePBI(ga, swpProductName, connection);
-                if (result != null) {
+                if (null != result) {
                     log.info("Updated PBI " + result.getKey()
                             + " with data from " + ga.getSourceArtifactId());
                 }
@@ -415,23 +415,23 @@ public class SWPWriter extends AbstractWriter<Connection> implements IDataProces
     public void validate(List exceptions) {
         super.validate(exceptions);
 
-        if (getResyncUserName() == null) {
+        if (null == getResyncUserName()) {
             log.warn("resyncUserName-property has not been set, so that initial resyncs after artifact creation are not possible.");
         }
 
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property not set");
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
 
-        if (getUserName() == null) {
+        if (null == getUserName()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
 
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));

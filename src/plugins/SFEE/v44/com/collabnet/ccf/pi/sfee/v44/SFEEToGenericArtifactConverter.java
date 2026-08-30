@@ -52,7 +52,7 @@ public class SFEEToGenericArtifactConverter {
             HashMap<String, List<TrackerFieldSoapDO>> fieldsMap,
             Date lastReadDate, boolean includeFieldMetaData,
             String sourceSystemTimezone) {
-        if (dataObject != null) {
+        if (null != dataObject) {
             ArtifactSoapDO artifactRow = dataObject;
             GenericArtifact genericArtifact = new GenericArtifact();
             genericArtifact
@@ -248,30 +248,30 @@ public class SFEEToGenericArtifactConverter {
         field.setFieldAction(GenericArtifactField.FieldActionValue.REPLACE);
         field.setFieldValueType(fieldValueType);
         field.setFieldValueHasChanged(true);
-        if (value != null) {
+        if (null != value) {
             field.setFieldValue(value);
         }
         if (includeFieldMetaData) {
             field.setAlternativeFieldName(sfField.getDisplayName());
             //TODO How do we determine if a field value can be null or not?
             //			field.setNullValueSupported(nullValueSupported);
-            if (sfField.getFieldType() == ArtifactMetaData.FIELD_TYPE.SYSTEM_DEFINED) {
+            if (ArtifactMetaData.FIELD_TYPE.SYSTEM_DEFINED == sfField.getFieldType()) {
                 if (sfField.isRequired()) {
                     field.setMinOccurs(1);
                 } else {
                     field.setMinOccurs(0);
                 }
                 field.setMaxOccurs(1);
-            } else if (sfField.getFieldType() == ArtifactMetaData.FIELD_TYPE.CONFIGURABLE) {
+            } else if (ArtifactMetaData.FIELD_TYPE.CONFIGURABLE == sfField.getFieldType()) {
                 TrackerFieldSoapDO fieldSoapDO = SFEEAppHandler
                         .getTrackerFieldSoapDOForFlexField(fieldsMap, fieldName);
-                if (fieldSoapDO == null) {
+                if (null == fieldSoapDO) {
                     fieldSoapDO = SFEEAppHandler
                             .getTrackerFieldSoapDOForFlexField(fieldsMap,
                                     sfField.getAlternateName());
                 }
                 boolean required = false;
-                if (fieldSoapDO != null) {
+                if (null != fieldSoapDO) {
                     required = fieldSoapDO.getRequired();
                 }
                 if (required) {

@@ -61,8 +61,8 @@ public class SslProtocolSocketFactory implements SecureProtocolSocketFactory {
 
     private SslProtocolSocketFactory() {
         KeyManager[] keymanagers = null;
-        if (System.getProperty(KEY_STORE) != null
-                && System.getProperty(KEY_STORE_PASSWORD) != null) {
+        if (null != System.getProperty(KEY_STORE)
+                && null != System.getProperty(KEY_STORE_PASSWORD)) {
             try {
                 String type = System.getProperty(KEY_STORE_TYPE,
                         KeyStore.getDefaultType());
@@ -114,12 +114,12 @@ public class SslProtocolSocketFactory implements SecureProtocolSocketFactory {
     public Socket createSocket(String remoteHost, int remotePort,
             InetAddress clientHost, int clientPort, HttpConnectionParams params)
             throws IOException, UnknownHostException, ConnectTimeoutException {
-        if (params == null) {
+        if (null == params) {
             throw new IllegalArgumentException("Parameters may not be null");
         }
 
         int timeout = params.getConnectionTimeout();
-        if (timeout == 0) {
+        if (0 == timeout) {
             return getSocketFactory().createSocket(remoteHost, remotePort,
                     clientHost, clientPort);
         } else {
@@ -135,7 +135,7 @@ public class SslProtocolSocketFactory implements SecureProtocolSocketFactory {
      * @since 2.3
      */
     public SSLSocketFactory getSocketFactory() throws IOException {
-        if (socketFactory == null) {
+        if (null == socketFactory) {
             throw new IOException("Could not initialize SSL context");
         }
         return socketFactory;

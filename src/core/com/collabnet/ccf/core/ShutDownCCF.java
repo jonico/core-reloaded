@@ -40,7 +40,7 @@ public class ShutDownCCF extends Thread {
     }
 
     public void run() {
-        if (forcedShutdownDelay == null) {
+        if (null == forcedShutdownDelay) {
             log.info("Calling System.exit with exit code " + exitCode);
             System.exit(exitCode);
         } else {

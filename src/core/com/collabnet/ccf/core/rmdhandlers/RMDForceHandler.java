@@ -42,7 +42,7 @@ public class RMDForceHandler extends AbstractRMDHandler implements ForceHandler 
 
     public String getValForRMDConfig(String rmdID) {
         String val = EMPTY_STRING;
-        if (rmdID != null && isForceEnabled(rmdID)) {
+        if (null != rmdID && isForceEnabled(rmdID)) {
             val = this.getRmdConfigExtractor().getRMDConfigValue(rmdID,
                     FORCE_KEY);
         }
@@ -70,7 +70,7 @@ public class RMDForceHandler extends AbstractRMDHandler implements ForceHandler 
 
     private void updateRepositoryMappingDirectionConfig(String newVal,
             String rmdId, String name, String oldVal) {
-        if (repositoryMappingDirectionConfigTableUpdater != null) {
+        if (null != repositoryMappingDirectionConfigTableUpdater) {
             IOrderedMap inputParameters = new OrderedHashMap();
 
             inputParameters.add(0, REPOSITORY_MAPPING_DIRECTION_CONFIG_VAL,

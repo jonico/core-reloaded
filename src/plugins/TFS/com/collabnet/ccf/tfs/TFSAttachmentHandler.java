@@ -110,7 +110,7 @@ public class TFSAttachmentHandler {
                 }
 
             } finally {
-                if (is != null) {
+                if (null != is) {
                     try {
                         is.close();
                     } catch (IOException e) {
@@ -143,23 +143,23 @@ public class TFSAttachmentHandler {
 
         WorkItem workItem = null;
 
-        if (attAction == GenericArtifact.ArtifactActionValue.CREATE) {
+        if (GenericArtifact.ArtifactActionValue.CREATE == attAction) {
 
-            if (AttachmentMetaData.AttachmentType.valueOf(contentType) == AttachmentMetaData.AttachmentType.DATA) {
+            if (AttachmentMetaData.AttachmentType.DATA == AttachmentMetaData.AttachmentType.valueOf(contentType)) {
                 workItem = this.attachFileToArtifact(connection,
                         targetParentArtifactId, attachDescription,
                         attachmentName, attachmentMimeType, ga, null);
 
-            } else if (AttachmentMetaData.AttachmentType.valueOf(contentType) == AttachmentMetaData.AttachmentType.EMPTY) {
+            } else if (AttachmentMetaData.AttachmentType.EMPTY == AttachmentMetaData.AttachmentType.valueOf(contentType)) {
                 log.error("Attachment type is unknown, doing nothing");
             }
 
-        } else if (attAction == GenericArtifact.ArtifactActionValue.UNKNOWN) {
+        } else if (GenericArtifact.ArtifactActionValue.UNKNOWN == attAction) {
 
             log.error("Attachment action value is unknown");
         }
 
-        if (workItem != null) {
+        if (null != workItem) {
 
             Date attachmentLastModifiedDate = (Date) workItem.getFields()
                     .getField(CoreFieldReferenceNames.CHANGED_DATE).getValue();
@@ -167,7 +167,7 @@ public class TFSAttachmentHandler {
             Attachment attachment = getAttachmentMetaData(connection,
                     attachmentName, attachmentLastModifiedDate,
                     targetParentArtifactId);
-            if (attachment != null) {
+            if (null != attachment) {
                 ga.setTargetArtifactLastModifiedDate(DateUtil.format(attachment
                         .getAttachmentAddedDate()));
                 ga.setTargetArtifactVersion("1");
@@ -230,7 +230,7 @@ public class TFSAttachmentHandler {
                     ga.setSourceArtifactId(String.valueOf(attachment
                             .getFileID()));
 
-                    if (artifactData != null) {
+                    if (null != artifactData) {
                         ga.setSourceArtifactVersion(artifactData
                                 .getSourceArtifactVersion());
                         ga.setSourceArtifactLastModifiedDate(artifactData
@@ -301,7 +301,7 @@ public class TFSAttachmentHandler {
                             attachment, shouldShipAttachmentsWithArtifact, ga);
 
                     if (shouldShipAttachmentsWithArtifact) {
-                        if (attachmentData != null) {
+                        if (null != attachmentData) {
                             ga.setRawAttachmentData(attachmentData);
                         }
                     }
@@ -394,10 +394,10 @@ public class TFSAttachmentHandler {
             }
         }
 
-        if (attachmentList.size() == 0) {
+        if (0 == attachmentList.size()) {
             log.warn("No attachments match with the name " + attachmentName);
         } else {
-            if (attachmentList.size() == 1) {
+            if (1 == attachmentList.size()) {
                 returnedAttachent = attachmentList.get(0);
             } else {
                 for (int i = attachmentList.size() - 1; i > -1; --i) {

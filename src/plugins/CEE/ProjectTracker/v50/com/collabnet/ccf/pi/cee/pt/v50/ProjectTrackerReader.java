@@ -238,9 +238,9 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
             ArtifactHistoryList ahl = ProjectTrackerReader.artifactHistoryList
                     .get();
             History historyList[] = null;
-            if (ahl != null)
+            if (null != ahl)
                 historyList = ahl.getHistory();
-            if (historyList != null) {
+            if (null != historyList) {
                 for (History history : historyList) {
                     HistoryTransaction[] transactions = history
                             .getHistoryTransaction();
@@ -251,7 +251,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                         String modifiedBy = ht.getModifiedBy();
                         if ((!getConnectorUserDisplayName().equals(modifiedBy) || !isIgnoreConnectorUserUpdates())
                                 && (!modifiedBy
-                                        .equals(getResyncUserDisplayName() == null ? ""
+                                        .equals(null == getResyncUserDisplayName() ? ""
                                                 : getResyncUserDisplayName()) || !isIgnoreConnectorUserUpdates())
                                 && ht.getModifiedOn() > fromTime) {
                             HistoryActivity[] haa = ht.getHistoryActivity();
@@ -266,15 +266,15 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                             String[] attachmentIds = ha
                                                     .getNewValue();
                                             for (String attachmentId : attachmentIds) {
-                                                if (attachmentId == null
-                                                        || attachmentIDNameMap == null)
+                                                if (null == attachmentId
+                                                        || null == attachmentIDNameMap)
                                                     continue;
 
                                                 String attachmentName = null;
                                                 String attachmentDescription = null;
                                                 ClientArtifactAttachment attachment = attachmentIDNameMap
                                                         .get(attachmentId);
-                                                if (attachment == null) {
+                                                if (null == attachment) {
                                                     log.warn("Attachment with id "
                                                             + attachmentId
                                                             + " does not exist!");
@@ -364,7 +364,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                                                     attachmentId);
                                                 } catch (WSException e) {
                                                     int code = e.getCode();
-                                                    if (code == 214) {
+                                                    if (214 == code) {
                                                         continue;
                                                     } else
                                                         throw e;
@@ -439,7 +439,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                                         throw new CCFRuntimeException(
                                                                 message, e);
                                                     } finally {
-                                                        if (fis != null) {
+                                                        if (null != fis) {
                                                             try {
                                                                 fis.close();
                                                             } catch (IOException e) {
@@ -448,12 +448,12 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                                                                 .getAbsolutePath());
                                                             }
                                                         }
-                                                        if (fos != null) {
+                                                        if (null != fos) {
                                                             try {
                                                                 fos.close();
                                                             } catch (IOException e) {
                                                                 String filename = "";
-                                                                if (tempFile != null) {
+                                                                if (null != tempFile) {
                                                                     filename = tempFile
                                                                             .getAbsolutePath();
                                                                 }
@@ -489,7 +489,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                             String[] attachmentIds = ha
                                                     .getOldValue();
                                             for (String attachmentId : attachmentIds) {
-                                                if (attachmentId == null)
+                                                if (null == attachmentId)
                                                     continue;
                                                 GenericArtifact ga = new GenericArtifact();
                                                 ga.setArtifactAction(GenericArtifact.ArtifactActionValue.DELETE);
@@ -521,8 +521,8 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                             String[] attachmentIds = ha
                                                     .getNewValue();
                                             for (String attachmentId : attachmentIds) {
-                                                if (linkIDNameMap == null
-                                                        || linkIDNameMap.size() == 0)
+                                                if (null == linkIDNameMap
+                                                        || 0 == linkIDNameMap.size())
                                                     continue;
                                                 Set<Entry<String, ClientArtifactAttachment>> linkIDEntry = linkIDNameMap
                                                         .entrySet();
@@ -608,7 +608,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                             String[] attachmentIds = ha
                                                     .getOldValue();
                                             for (String attachmentId : attachmentIds) {
-                                                if (attachmentId == null)
+                                                if (null == attachmentId)
                                                     continue;
                                                 GenericArtifact ga = new GenericArtifact();
                                                 ga.setArtifactAction(GenericArtifact.ArtifactActionValue.DELETE);
@@ -651,7 +651,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
             ProjectTrackerReader.artifactHistoryList.set(null);
             this.attachmentIDNameMap = null;
             this.linkIDNameMap = null;
-            if (twsclient != null) {
+            if (null != twsclient) {
                 getConnectionManager().releaseConnection(twsclient);
                 twsclient = null;
             }
@@ -714,10 +714,10 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                     .getArtifactById(artifactIdentifier);
             List<ClientArtifact> artifacts = listHelper.getAllArtifacts();
             ptHelper.processWSErrors(listHelper);
-            if (artifacts == null || artifacts.size() == 0) {
+            if (null == artifacts || 0 == artifacts.size()) {
                 throw new CCFRuntimeException("There is no artifact with id "
                         + artifactIdentifier);
-            } else if (artifacts.size() == 1) {
+            } else if (1 == artifacts.size()) {
                 artifact = artifacts.get(0);
                 String retrievedArtifactId = artifact.getArtifactID();
                 if (!artifactIdentifier.equals(retrievedArtifactId)) {
@@ -728,15 +728,15 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                 }
 
                 String retrievedProject = artifact.getProject();
-                if (retrievedProject != null) {
+                if (null != retrievedProject) {
                     String sourceRepositoryId = this
                             .getSourceRepositoryId(syncInfo);
                     String projectName = null;
-                    if (sourceRepositoryId != null) {
+                    if (null != sourceRepositoryId) {
                         String[] splitProjectName = sourceRepositoryId
                                 .split(":");
-                        if (splitProjectName != null) {
-                            if (splitProjectName.length >= 1) {
+                        if (null != splitProjectName) {
+                            if (1 <= splitProjectName.length) {
                                 projectName = splitProjectName[0];
                             } else {
                                 throw new IllegalArgumentException(
@@ -747,7 +747,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                             }
                         }
                     }
-                    if (projectName != null) {
+                    if (null != projectName) {
                         if (!retrievedProject.equals(projectName)) {
                             log.debug("PT Artifact with id "
                                     + artifactIdentifier
@@ -760,7 +760,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                         }
                     }
                 }
-            } else if (artifacts.size() > 1) {
+            } else if (1 < artifacts.size()) {
                 throw new CCFRuntimeException(
                         "More than one artifact were returned for id "
                                 + artifactIdentifier);
@@ -797,7 +797,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                 String ptAttributeType = null;
                 TrackerAttribute trackerAttribute = trackerArtifactType
                         .getAttribute(attributeName);
-                if (trackerAttribute == null) {
+                if (null == trackerAttribute) {
                     if (!reloadedArtifactType) {
                         log.warn("Unknown tracker attribute " + attributeName
                                 + ", reloading artifact type meta data ...");
@@ -812,7 +812,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                 .getTrackerArtifactType(repositoryKey,
                                         artifactTypeDisplayName, twsclient,
                                         false);
-                        if (trackerArtifactType == null) {
+                        if (null == trackerArtifactType) {
                             throw new CCFRuntimeException(
                                     "Artifact type for repository "
                                             + repositoryKey
@@ -823,7 +823,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                         trackerAttribute = trackerArtifactType
                                 .getAttribute(attributeName);
                     }
-                    if (trackerAttribute == null) {
+                    if (null == trackerAttribute) {
                         log.warn("Unknown tracker attribute "
                                 + attributeName
                                 + ", after reloading meta data, ignoring it ...");
@@ -854,7 +854,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                  * attributeNamespace, attributeTagName, attributeDisplayName,
                  * ahlVersion); }
                  */
-                if (attValues != null && attValues.size() > 0
+                if (null != attValues && 0 < attValues.size()
                         && (!CollectionUtils.isEmptyOrNull(attValues))) {
                     // do nothing
                 } else {
@@ -948,7 +948,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                         .getTrackerArtifactType(repositoryKey,
                                                 artifactTypeDisplayName,
                                                 twsclient, false);
-                                if (trackerArtifactType == null) {
+                                if (null == trackerArtifactType) {
                                     throw new CCFRuntimeException(
                                             "Artifact type for repository "
                                                     + repositoryKey
@@ -977,7 +977,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                         if (!StringUtils.isEmpty(dateStr)) {
                             dateValue = new Date(Long.parseLong(dateStr));
                         }
-                        if (dateValue != null) {
+                        if (null != dateValue) {
                             if (DateUtil.isAbsoluteDateInTimezone(dateValue,
                                     sourceSystemTimezone)) {
                                 dateValue = DateUtil.convertToGMTAbsoluteDate(
@@ -995,7 +995,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                         String modifiedOnStr = attValue;
                         long modifiedOnMilliSeconds = Long
                                 .parseLong(modifiedOnStr);
-                        if (modifiedOnMilliSeconds == 32503622400000L) {
+                        if (32503622400000L == modifiedOnMilliSeconds) {
                             // fix if modified date is not set correctly
                             log.error("Invalid last modified date detected for artifact "
                                     + artifactId);
@@ -1060,16 +1060,16 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                     field.setFieldValue(commentText);
                 }
             }
-            if (ahlVersion != null) {
+            if (null != ahlVersion) {
                 History[] historyList = ahlVersion.getHistory();
-                if (historyList != null && historyList.length == 1) {
+                if (null != historyList && 1 == historyList.length) {
                     History history = historyList[0];
-                    if (history != null) {
+                    if (null != history) {
                         HistoryTransaction[] transactions = history
                                 .getHistoryTransaction();
-                        if (transactions != null) {
+                        if (null != transactions) {
                             for (HistoryTransaction transaction : transactions) {
-                                if (transaction == null)
+                                if (null == transaction)
                                     continue;
                                 long historyTime = transaction.getModifiedOn();
                                 if (historyTime > fromTime) {
@@ -1079,7 +1079,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                                     if ((reasonUser
                                             .equals(getConnectorUserDisplayName()) && isIgnoreConnectorUserUpdates())
                                             || (reasonUser
-                                                    .equals(getResyncUserDisplayName() == null ? ""
+                                                    .equals(null == getResyncUserDisplayName() ? ""
                                                             : getResyncUserDisplayName()) && isIgnoreConnectorUserUpdates())) {
                                         continue;
                                     }
@@ -1106,10 +1106,10 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
             }
             List<ClientArtifactAttachment> atts = artifact.getAttachments();
             for (ClientArtifactAttachment attachment : atts) {
-                if (attachmentIDNameMap == null) {
+                if (null == attachmentIDNameMap) {
                     attachmentIDNameMap = new HashMap<String, ClientArtifactAttachment>();
                 }
-                if (linkIDNameMap == null) {
+                if (null == linkIDNameMap) {
                     linkIDNameMap = new HashMap<String, ClientArtifactAttachment>();
                 }
                 String attachmentId = attachment.getAttachmentId();
@@ -1119,7 +1119,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
                 long attachmentCreatedOn = Long.parseLong(attachment
                         .getCreatedOn());
                 if (attachmentCreatedOn > fromTime) {
-                    if (isFile == null || isFile.equalsIgnoreCase("false")) {
+                    if (null == isFile || isFile.equalsIgnoreCase("false")) {
                         linkIDNameMap.put(attachmentId, attachment);
                     }
                 }
@@ -1135,7 +1135,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (twsclient != null) {
+            if (null != twsclient) {
                 getConnectionManager().releaseConnection(twsclient);
                 twsclient = null;
             }
@@ -1171,13 +1171,13 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
         HashMap<String, ArtifactState> artifactIdStateMap = new HashMap<String, ArtifactState>();
         try {
             twsclient = this.getConnection(syncInfo);
-            if (trackerArtifactType == null) {
+            if (null == trackerArtifactType) {
                 trackerArtifactType = metadataHelper
                         .getTrackerArtifactType(repositoryKey,
                                 artifactTypeDisplayName, twsclient, true);
             }
 
-            if (trackerArtifactType == null) {
+            if (null == trackerArtifactType) {
                 throw new CCFRuntimeException("Artifact type for repository "
                         + repositoryKey
                         + " unknown, cannot synchronize repository.");
@@ -1192,15 +1192,15 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
             // artifactTypes, fromTime);
             HistoryTransactionList transactionList = twsclient
                     .getArtifactChanges(artifactTypes, fromTime);
-            if (transactionList != null) {
+            if (null != transactionList) {
                 HistoryTransaction[] transactions = transactionList
                         .getHistoryTransaction();
-                if (transactions != null) {
+                if (null != transactions) {
                     for (HistoryTransaction transaction : transactions) {
-                        if (transaction == null)
+                        if (null == transaction)
                             continue;
                         long modifiedOn = transaction.getModifiedOn();
-                        if (modifiedOn == 32503622400000L) {
+                        if (32503622400000L == modifiedOn) {
                             // fix if modified date is not set correctly
                             log.error("Invalid last modified date detected!");
                             continue;
@@ -1208,9 +1208,9 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
 
                         HistoryActivity[] historyActivities = transaction
                                 .getHistoryActivity();
-                        if (historyActivities != null) {
+                        if (null != historyActivities) {
                             for (HistoryActivity historyActivity : historyActivities) {
-                                if (historyActivity != null) {
+                                if (null != historyActivity) {
                                     String activityType = historyActivity
                                             .getType();
                                     if ("DependencyAdded".equals(activityType)
@@ -1303,7 +1303,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (twsclient != null) {
+            if (null != twsclient) {
                 getConnectionManager().releaseConnection(twsclient);
             }
         }
@@ -1354,7 +1354,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
     public boolean handleException(Throwable cause,
             ConnectionManager<TrackerWebServicesClient> connectionManager) {
         // TODO What about invalid sessions?
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -1484,36 +1484,36 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
     public void validate(List exceptions) {
         super.validate(exceptions);
 
-        if (getResyncUserName() == null) {
+        if (null == getResyncUserName()) {
             //			log
             //					.warn("resyncUserName-property has not been set, so that initial resyncs after artifact creation are not possible.");
         } else {
-            if (getResyncUserDisplayName() == null) {
+            if (null == getResyncUserDisplayName()) {
                 log.error("resyncUserDisplayName-property not set");
                 exceptions.add(new ValidationException(
                         "resyncUserDisplayName-property not set", this));
             }
         }
 
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property not set");
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
 
-        if (getUsername() == null) {
+        if (null == getUsername()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
 
-        if (getConnectorUserDisplayName() == null) {
+        if (null == getConnectorUserDisplayName()) {
             log.error("connectorUserDisplayName-property not set");
             exceptions.add(new ValidationException(
                     "connectorUserDisplayName-property not set", this));
         }
 
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));
@@ -1545,7 +1545,7 @@ public class ProjectTrackerReader extends AbstractReader<TrackerWebServicesClien
         if (isStateField && StringUtils.isEmpty(optionValue)) {
             optionValue = attributeValue;
         }
-        if (optionValue == null)
+        if (null == optionValue)
             throw new CCFRuntimeException("Option tagname for option "
                     + attributeValue + " is not available in {"
                     + attributeNamespace + "}" + attributeTagName);

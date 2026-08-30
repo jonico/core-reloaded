@@ -50,7 +50,7 @@ public class MetaDataHelper {
     public TrackerArtifactType getTrackerArtifactType(String key) {
         ArtifactTypeMetadata meta = getInstance().getArtifactTypeMetadata(key);
         TrackerArtifactType trackerArtifactType = null;
-        if (meta != null) {
+        if (null != meta) {
             TrackerArtifactType newArtifactType = new TrackerArtifactType(meta
                     .getArtifactType().getDisplayName(), meta.getArtifactType()
                     .getTagName(), meta.getArtifactType().getNamespace());
@@ -68,7 +68,7 @@ public class MetaDataHelper {
         if (useCache) {
             artifactTypeForDisplayName = this
                     .getTrackerArtifactType(repositoryKey);
-            if (artifactTypeForDisplayName != null) {
+            if (null != artifactTypeForDisplayName) {
                 return artifactTypeForDisplayName;
             }
         }
@@ -139,7 +139,7 @@ public class MetaDataHelper {
 
     public static MetaDataHelper getInstance() {
         synchronized (MetaDataHelper.class) {
-            if (instance == null) {
+            if (null == instance) {
                 instance = new MetaDataHelper();
             }
         }

@@ -134,7 +134,7 @@ public class XsltProcessor extends Component implements IDataProcessor {
             fileName = this.xsltFile;
         }
         transform = xsltFileNameTransformerMap.get(fileName);
-        if (transform == null) {
+        if (null == transform) {
             transform = loadXSLT(new File(fileName), record.getRootElement());
             xsltFileNameTransformerMap.put(fileName, transform);
         }
@@ -172,7 +172,7 @@ public class XsltProcessor extends Component implements IDataProcessor {
      *             if the record type is not supported
      */
     public Object[] process(Object record) throws ProcessingException {
-        if (record == null)
+        if (null == record)
             return null;
 
         Document document = null;
@@ -192,16 +192,16 @@ public class XsltProcessor extends Component implements IDataProcessor {
                             GenericArtifactHelper.ERROR_CODE);
 
                     // pass artifacts with ignore action
-                    if (artifactAction != null
+                    if (null != artifactAction
                             && artifactAction
                                     .equals(GenericArtifactHelper.ARTIFACT_ACTION_IGNORE)) {
                         return new Object[] { document };
                     }
                     // do not transform artifacts to be replayed (unless specific error code is set)
-                    if (transactionId != null
+                    if (null != transactionId
                             && !transactionId
                                     .equals(GenericArtifact.VALUE_UNKNOWN)) {
-                        if (errorCode == null
+                        if (null == errorCode
                                 || !errorCode
                                         .equals(GenericArtifact.ERROR_REPLAYED_WITH_TRANSFORMATION)) {
                             return new Object[] { document };
@@ -390,7 +390,7 @@ public class XsltProcessor extends Component implements IDataProcessor {
      *             cannot be found or there was an error parsing it
      */
     private Transformer loadXSLT(File xsltFile, Element element) {
-        if (xsltFile == null) {
+        if (null == xsltFile) {
             String cause = "xsltFile property not set";
             log.error(cause);
             XPathUtils.addAttribute(element, GenericArtifactHelper.ERROR_CODE,

@@ -41,7 +41,7 @@ public class JIRAMetaData {
 
     public static String formatDate(Date date) {
         String formattedDate = null;
-        if (date != null) {
+        if (null != date) {
             String dateString = isoLocal.format(date);
             formattedDate = dateString.substring(0, dateString.length() - 1);
         }
@@ -50,13 +50,13 @@ public class JIRAMetaData {
 
     public static JIRAType retrieveJIRATypeFromRepositoryId(String repositoryId) {
 
-        if (repositoryId == null) {
+        if (null == repositoryId) {
             return JIRAType.UNKNOWN;
         }
 
         int delimiterCounter = repositoryId.split(JIRA_REPOSITORY_DELIMITER).length;
 
-        if (delimiterCounter != 3) {
+        if (3 != delimiterCounter) {
             return JIRAType.UNKNOWN;
         } else {
             return JIRAType.ISSUE;

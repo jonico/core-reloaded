@@ -84,7 +84,7 @@ public class QCGAHelper {
         // If it is a directory, make sure it is empty
         if (f.isDirectory()) {
             String[] files = f.list();
-            if (files.length > 0)
+            if (0 < files.length)
                 throw new IllegalArgumentException(
                         "Delete: directory not empty: " + fileName);
         }
@@ -118,7 +118,7 @@ public class QCGAHelper {
             String auTime = newRs.getFieldValueAsString("AU_TIME");
             return auTime;
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -144,18 +144,18 @@ public class QCGAHelper {
             int rc = rs.getRecordCount();
 
             for (int cnt = 0; cnt < rc; cnt++, rs.next()) {
-                if (cnt == 0) {
+                if (0 == cnt) {
                     fieldValue = rs.getFieldValueAsString("AU_TIME");
                     break;
                 }
             }
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }
         }
-        if (fieldValue != null)
+        if (null != fieldValue)
             createdOn = DateUtil.parseQCDate(fieldValue);
 
         return createdOn;
@@ -189,10 +189,10 @@ public class QCGAHelper {
             log.error(message);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (fl != null) {
+            if (null != fl) {
                 fl.safeRelease();
             }
-            if (filter != null) {
+            if (null != filter) {
                 filter.safeRelease();
             }
             bf = null;
@@ -214,11 +214,11 @@ public class QCGAHelper {
         IRecordSet newRs = null;
         try {
             newRs = qcc.executeSQL(sql);
-            if (newRs != null && newRs.getRecordCount() != 0) {
+            if (null != newRs && 0 != newRs.getRecordCount()) {
                 attachmentId = newRs.getFieldValueAsString("AU_ENTITY_ID");
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -254,10 +254,10 @@ public class QCGAHelper {
             log.error(message);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (fl != null) {
+            if (null != fl) {
                 fl.safeRelease();
             }
-            if (filter != null) {
+            if (null != filter) {
                 filter.safeRelease();
             }
             rf = null;
@@ -316,9 +316,9 @@ public class QCGAHelper {
             int newRc = newRs.getRecordCount();
             log.debug("In QCHandler.getTxnIdAndAuDescriptionForDefect, sql="
                     + sql);
-            if (newRc > 0) {
+            if (0 < newRc) {
                 for (int newCnt = 0; newCnt < newRc; newCnt++, newRs.next()) {
-                    if (newCnt == 0) {
+                    if (0 == newCnt) {
                         transactionId = newRs
                                 .getFieldValueAsString("AU_ACTION_ID");
                         modifiedBy = newRs.getFieldValueAsString("AU_USER");
@@ -326,9 +326,9 @@ public class QCGAHelper {
                     String auDescription = newRs
                             .getFieldValueAsString("AU_DESCRIPTION");
                     List<String> attachDescription = getAttachmentOperation(auDescription);
-                    if (attachDescription != null
-                            && attachDescription.size() > 0) {
-                        if (attachDescription.get(1) != null) {
+                    if (null != attachDescription
+                            && 0 < attachDescription.size()) {
+                        if (null != attachDescription.get(1)) {
                             if (attachDescription.get(1).equals("added")) {
                                 String addTransactionId = newRs
                                         .getFieldValueAsString("AU_ACTION_ID");
@@ -356,7 +356,7 @@ public class QCGAHelper {
                 }
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -420,7 +420,7 @@ public class QCGAHelper {
             int newRc = newRs.getRecordCount();
             log.debug("In QCHandler.getTxnIdAndAuDescriptionForRequirement, sql="
                     + sql);
-            if (newRc > 0) {
+            if (0 < newRc) {
                 for (int newCnt = 0; newCnt < newRc; newCnt++, newRs.next()) {
                     if (!shipArtifact) {
                         transactionId = newRs
@@ -430,15 +430,15 @@ public class QCGAHelper {
                     String auDescription = newRs
                             .getFieldValueAsString("AU_DESCRIPTION");
                     List<String> attachDescription = getAttachmentOperation(auDescription);
-                    if (attachDescription != null
-                            && attachDescription.size() > 0) {
-                        if (attachDescription.get(1) != null) {
+                    if (null != attachDescription
+                            && 0 < attachDescription.size()) {
+                        if (null != attachDescription.get(1)) {
                             if (attachDescription.get(1).equals("added")) {
                                 String attachmentName = attachDescription
                                         .get(2);
                                 // here we have to check whether attachment already exists
-                                if (getFromTable(qcc, requirementId,
-                                        attachmentName) != null) {
+                                if (null != getFromTable(qcc, requirementId,
+                                        attachmentName)) {
                                     String addTransactionId = newRs
                                             .getFieldValueAsString("AU_ACTION_ID");
                                     String addTime = newRs
@@ -457,8 +457,8 @@ public class QCGAHelper {
                                 String attachmentName = attachDescription
                                         .get(2);
                                 // here we have to check whether attachment still exists
-                                if (getFromTable(qcc, requirementId,
-                                        attachmentName) == null) {
+                                if (null == getFromTable(qcc, requirementId,
+                                        attachmentName)) {
                                     String deleteTransactionId = newRs
                                             .getFieldValueAsString("AU_ACTION_ID");
                                     String deleteTime = newRs
@@ -483,7 +483,7 @@ public class QCGAHelper {
                 }
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -568,7 +568,7 @@ public class QCGAHelper {
     public static List<String> getAttachmentOperation(String auDescription) {
 
         List<String> attachDescription = new ArrayList<String>();
-        if (auDescription != null && auDescription.startsWith("Attachment")) {
+        if (null != auDescription && auDescription.startsWith("Attachment")) {
             int colonPosition = auDescription.indexOf(": ");
             String attachLabelAndOperation = auDescription.substring(0,
                     colonPosition);
@@ -611,7 +611,7 @@ public class QCGAHelper {
             int newRc = newRs.getRecordCount();
             log.debug("In QCHandler.getTxnIdAndAuDescriptionForDefect, sql="
                     + sql);
-            if (newRc > 0) {
+            if (0 < newRc) {
                 res.lastTransactionId = newRs
                         .getFieldValueAsString("AU_ACTION_ID");
                 res.lastModifiedBy = newRs.getFieldValueAsString("AU_USER");
@@ -624,7 +624,7 @@ public class QCGAHelper {
             }
 
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -638,14 +638,14 @@ public class QCGAHelper {
                             artifactType);
             newRs = qcc.executeSQL(sql);
             int newRc = newRs.getRecordCount();
-            if (newRc > 0) {
+            if (0 < newRc) {
                 String creationDate = newRs.getFieldValueAsString("AU_TIME");
                 res.creationDate = DateUtil.parseQCDate(creationDate);
                 res.creationTransactionId = newRs
                         .getFieldValueAsString("AU_ACTION_ID");
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -674,7 +674,7 @@ public class QCGAHelper {
         IRecordSet newRs = null;
         try {
             newRs = qcc.executeSQL(sql);
-            if (newRs != null && newRs.getRecordCount() != 0) {
+            if (null != newRs && 0 != newRs.getRecordCount()) {
                 attachmentDetails = new ArrayList<String>();
                 String crRefId = newRs.getFieldValueAsString("CR_REF_ID");
                 attachmentDetails.add(crRefId);
@@ -685,7 +685,7 @@ public class QCGAHelper {
                 attachmentDetails.add(crDescription);
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
             }
         }
@@ -710,7 +710,7 @@ public class QCGAHelper {
             int newRc = newRs.getRecordCount();
             log.debug("In QCHandler.getTxnIdAndAuDescriptionForRequirement, sql="
                     + sql);
-            if (newRc > 0) {
+            if (0 < newRc) {
                 for (int newCnt = 0; newCnt < newRc; newCnt++, newRs.next()) {
                     if (!shipArtifact) {
                         res.lastTransactionId = newRs
@@ -723,15 +723,15 @@ public class QCGAHelper {
                     String auDescription = newRs
                             .getFieldValueAsString("AU_DESCRIPTION");
                     List<String> attachDescription = getAttachmentOperation(auDescription);
-                    if (attachDescription != null
-                            && attachDescription.size() > 0) {
-                        if (attachDescription.get(1) != null) {
+                    if (null != attachDescription
+                            && 0 < attachDescription.size()) {
+                        if (null != attachDescription.get(1)) {
                             if (attachDescription.get(1).equals("added")) {
                                 String attachmentName = attachDescription
                                         .get(2);
                                 // here we have to check whether attachment already exists
-                                if (getFromTable(qcc, requirementId,
-                                        attachmentName) != null) {
+                                if (null != getFromTable(qcc, requirementId,
+                                        attachmentName)) {
                                     shipArtifact = true;
                                 } else {
                                     log.debug("Looks as if attachment transaction has not yet completed.");
@@ -741,8 +741,8 @@ public class QCGAHelper {
                                 String attachmentName = attachDescription
                                         .get(2);
                                 // here we have to check whether attachment still exists
-                                if (getFromTable(qcc, requirementId,
-                                        attachmentName) == null) {
+                                if (null == getFromTable(qcc, requirementId,
+                                        attachmentName)) {
                                     shipArtifact = true;
                                 } else {
                                     log.debug("Looks as if attachment transaction has not yet completed.");
@@ -757,7 +757,7 @@ public class QCGAHelper {
                 }
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }
@@ -775,14 +775,14 @@ public class QCGAHelper {
 
             newRs = qcc.executeSQL(sql);
             int newRc = newRs.getRecordCount();
-            if (newRc > 0) {
+            if (0 < newRc) {
                 String creationDate = newRs.getFieldValueAsString("AU_TIME");
                 res.creationDate = DateUtil.parseQCDate(creationDate);
                 res.creationTransactionId = newRs
                         .getFieldValueAsString("AU_ACTION_ID");
             }
         } finally {
-            if (newRs != null) {
+            if (null != newRs) {
                 newRs.safeRelease();
                 newRs = null;
             }

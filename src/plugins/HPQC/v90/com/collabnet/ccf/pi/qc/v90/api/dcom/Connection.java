@@ -62,15 +62,15 @@ public class Connection extends ActiveXComponent implements IConnection {
 
     public void disconnect() {
         loggedIn = false;
-        if (bugFactory != null) {
+        if (null != bugFactory) {
             bugFactory.safeRelease();
             bugFactory = null;
         }
-        if (requirementsFactory != null) {
+        if (null != requirementsFactory) {
             requirementsFactory.safeRelease();
             requirementsFactory = null;
         }
-        if (command != null) {
+        if (null != command) {
             command.safeRelease();
             command = null;
         }
@@ -99,14 +99,14 @@ public class Connection extends ActiveXComponent implements IConnection {
     }
 
     public IBugFactory getBugFactory() {
-        if (bugFactory == null) {
+        if (null == bugFactory) {
             bugFactory = new BugFactory(getPropertyAsComponent("BugFactory"));
         }
         return bugFactory;
     }
 
     public ICommand getCommand() {
-        if (command == null) {
+        if (null == command) {
             command = new Command(getPropertyAsComponent("Command"));
         }
         return command;
@@ -126,7 +126,7 @@ public class Connection extends ActiveXComponent implements IConnection {
     }
 
     public IRequirementsFactory getRequirementsFactory() {
-        if (requirementsFactory == null) {
+        if (null == requirementsFactory) {
             requirementsFactory = new RequirementsFactory(
                     getPropertyAsComponent("ReqFactory"));
         }
@@ -163,7 +163,7 @@ public class Connection extends ActiveXComponent implements IConnection {
      */
     @Override
     public boolean isOracle() {
-        if (oracleSupport != null) {
+        if (null != oracleSupport) {
             return oracleSupport.booleanValue();
         }
         IRecordSet rs = null;
@@ -172,7 +172,7 @@ public class Connection extends ActiveXComponent implements IConnection {
             oracleSupport = (rs != null && rs.getRecordCount() == 0);
             return oracleSupport.booleanValue();
         } finally {
-            if (rs != null) {
+            if (null != rs) {
                 rs.safeRelease();
                 rs = null;
             }

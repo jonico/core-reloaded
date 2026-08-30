@@ -55,7 +55,7 @@ public class RMDDryModeHandler implements DryModeHandler {
 
     private String getDryRunValue(String rmdId) {
         String val = null;
-        if (this.getRmdConfigExtractor() != null) {
+        if (null != this.getRmdConfigExtractor()) {
             val = rmdConfigExtractor.getRMDConfigValue(rmdId, DRYRUN_KEY);
         }
         return val;
@@ -63,7 +63,7 @@ public class RMDDryModeHandler implements DryModeHandler {
 
     private void updateRepositoryMappingDirectionConfig(String value,
             String rmdId, String name, String oldValue) {
-        if (repositoryMappingDirectionConfigTableUpdater != null) {
+        if (null != repositoryMappingDirectionConfigTableUpdater) {
             IOrderedMap inputParameters = new OrderedHashMap();
 
             inputParameters.add(0, REPOSITORY_MAPPING_DIRECTION_CONFIG_VAL,

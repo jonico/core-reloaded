@@ -27,7 +27,7 @@ public class VersionControl extends ActiveXComponent implements IVersionControl 
         } catch (IllegalStateException e) {
             return false;
         }
-        if (result == null) {
+        if (null == result) {
             return false;
         } else {
             return true;

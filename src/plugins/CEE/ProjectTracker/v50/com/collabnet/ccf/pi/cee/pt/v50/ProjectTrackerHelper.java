@@ -41,7 +41,7 @@ public class ProjectTrackerHelper {
             String fullyQualifiedArtifactType) {
         int indexOfClosingCurlyBrace = fullyQualifiedArtifactType
                 .lastIndexOf("}");
-        if (indexOfClosingCurlyBrace != -1) {
+        if (-1 != indexOfClosingCurlyBrace) {
             String artifactTypeNamespace = fullyQualifiedArtifactType
                     .substring(1, indexOfClosingCurlyBrace);
             return artifactTypeNamespace;
@@ -60,7 +60,7 @@ public class ProjectTrackerHelper {
             String fullyQualifiedArtifactId) {
         int lastIndexOfCurlyBrace = fullyQualifiedArtifactId.lastIndexOf("}");
         int lastIndexOfColon = fullyQualifiedArtifactId.lastIndexOf(":");
-        if (lastIndexOfCurlyBrace != -1 && lastIndexOfColon != -1) {
+        if (-1 != lastIndexOfCurlyBrace && -1 != lastIndexOfColon) {
             String artifactTypeTagName = fullyQualifiedArtifactId.substring(
                     lastIndexOfCurlyBrace + 1, lastIndexOfColon);
             return artifactTypeTagName;
@@ -85,9 +85,9 @@ public class ProjectTrackerHelper {
     public String getEntityName(String input) {
         int start = input.indexOf("}");
         String entityName = null;
-        if (start < 0) {
+        if (0 > start) {
             entityName = input;
-        } else if (start >= 0) {
+        } else if (0 <= start) {
             entityName = input.substring(start + 1);
         }
         return entityName;
@@ -97,7 +97,7 @@ public class ProjectTrackerHelper {
         int start = input.indexOf("{");
         int end = input.indexOf("}");
         String namespace = null;
-        if (start >= 0 && end >= 2) {
+        if (0 <= start && 2 <= end) {
             namespace = input.substring(start + 1, end);
         }
         return namespace;
@@ -106,7 +106,7 @@ public class ProjectTrackerHelper {
     public void processWSErrors(ClientArtifactListXMLHelper soapResponse) {
         List<ClientXMLOperationError> errors = soapResponse.getErrors();
         String cause = null;
-        if (errors.size() > 0) {
+        if (0 < errors.size()) {
             cause = "";
             for (ClientXMLOperationError error : errors) {
                 String message = error.getMsg();
@@ -123,7 +123,7 @@ public class ProjectTrackerHelper {
 
     public static ProjectTrackerHelper getInstance() {
         synchronized (ProjectTrackerHelper.class) {
-            if (instance == null) {
+            if (null == instance) {
                 instance = new ProjectTrackerHelper();
             }
         }
@@ -134,7 +134,7 @@ public class ProjectTrackerHelper {
         int start = input.indexOf("{");
         int end = input.indexOf("}");
         String namespace = null;
-        if (start >= 0 && end >= 2) {
+        if (0 <= start && 2 <= end) {
             namespace = input.substring(start, end + 1);
         } else {
             namespace = "";

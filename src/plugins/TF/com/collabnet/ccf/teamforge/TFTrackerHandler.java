@@ -156,7 +156,7 @@ public class TFTrackerHandler {
         }
 
         // we have to increase the version number to add the comments
-        if (comments.length != 0) {
+        if (0 != comments.length) {
             artifactData.setVersion(artifactData.getVersion() + 1);
         }
 
@@ -191,7 +191,7 @@ public class TFTrackerHandler {
         // it looks as if since TF 5.3, not every update call automatically
         // increases the version number
         // hence we retrieve the artifact version here again
-        if (comments.length == 0) {
+        if (0 == comments.length) {
             // artifactData.setVersion(artifactData.getVersion() + 1);
             artifactData = connection.getTrackerClient().getArtifactData(
                     artifactData.getId());
@@ -251,7 +251,7 @@ public class TFTrackerHandler {
         // retrieve artifact details
         log.debug("Getting the details of the changed planning folders");
         boolean duplicateFound = false;
-        if (rows != null) {
+        if (null != rows) {
             for (int i = 0; i < rows.length; ++i) {
                 if (!rows[i].getLastModifiedOn().after(lastModifiedDate)) {
                     continue;
@@ -316,7 +316,7 @@ public class TFTrackerHandler {
                 .getArtifactDetailList(trackerId, selectedColumns, filter,
                         sortKeys, 0, -1, false, true).getDataRows();
 
-        if (rows != null) {
+        if (null != rows) {
             log.debug("There were " + rows.length + " artifacts changed");
         }
         ArrayList<ArtifactDetailRow> detailRowsFull = new ArrayList<ArtifactDetailRow>();
@@ -324,7 +324,7 @@ public class TFTrackerHandler {
         // retrieve artifact details
         log.debug("Getting the details of the changed artifacts");
         boolean duplicateFound = false;
-        if (rows != null) {
+        if (null != rows) {
             for (int i = 0; i < rows.length; ++i) {
                 String id = rows[i].getId();
                 if (id.equals(lastArtifactId)
@@ -586,7 +586,7 @@ public class TFTrackerHandler {
                 // efforts fields
                 boolean autoSummingTurnedOn = artifactData.getAutosumming();
 
-                if (autosumming != null
+                if (null != autosumming
                         && autosumming.getFieldValueHasChanged()) {
                     Object fieldValueObj = autosumming.getFieldValue();
                     Boolean fieldValue = false;
@@ -606,38 +606,38 @@ public class TFTrackerHandler {
                 }
 
                 String folderIdString = artifactData.getFolderId();
-                if (trackerId != null && trackerId.getFieldValueHasChanged()) {
+                if (null != trackerId && trackerId.getFieldValueHasChanged()) {
                     folderIdString = (String) trackerId.getFieldValue();
                     artifactData.setFolderId(folderIdString);
                 }
 
-                if (title != null && title.getFieldValueHasChanged()) {
+                if (null != title && title.getFieldValueHasChanged()) {
                     artifactData.setTitle((String) title.getFieldValue());
                 }
 
-                if (description != null
+                if (null != description
                         && description.getFieldValueHasChanged()) {
                     artifactData.setDescription((String) description
                             .getFieldValue());
                 }
 
-                if (group != null && group.getFieldValueHasChanged()) {
+                if (null != group && group.getFieldValueHasChanged()) {
                     artifactData.setGroup((String) group.getFieldValue());
                 }
 
-                if (category != null && category.getFieldValueHasChanged()) {
+                if (null != category && category.getFieldValueHasChanged()) {
                     artifactData.setCategory((String) category.getFieldValue());
                 }
 
-                if (status != null && status.getFieldValueHasChanged()) {
+                if (null != status && status.getFieldValueHasChanged()) {
                     artifactData.setStatus((String) status.getFieldValue());
                 }
 
-                if (customer != null && customer.getFieldValueHasChanged()) {
+                if (null != customer && customer.getFieldValueHasChanged()) {
                     artifactData.setCustomer((String) customer.getFieldValue());
                 }
 
-                if (priority != null && priority.getFieldValueHasChanged()) {
+                if (null != priority && priority.getFieldValueHasChanged()) {
                     Object fieldValueObj = priority.getFieldValue();
                     int fieldValue = 0;
                     if (fieldValueObj instanceof String) {
@@ -655,7 +655,7 @@ public class TFTrackerHandler {
                     artifactData.setPriority(fieldValue);
                 }
 
-                if (!autoSummingTurnedOn && estimatedEfforts != null
+                if (!autoSummingTurnedOn && null != estimatedEfforts
                         && estimatedEfforts.getFieldValueHasChanged()) {
                     Object fieldValueObj = estimatedEfforts.getFieldValue();
                     int fieldValue = 0;
@@ -674,7 +674,7 @@ public class TFTrackerHandler {
                     artifactData.setEstimatedEffort(fieldValue);
                 }
 
-                if (!autoSummingTurnedOn && actualEfforts != null
+                if (!autoSummingTurnedOn && null != actualEfforts
                         && actualEfforts.getFieldValueHasChanged()) {
                     Object fieldValueObj = actualEfforts.getFieldValue();
                     int fieldValue = 0;
@@ -693,7 +693,7 @@ public class TFTrackerHandler {
                     artifactData.setActualEffort(fieldValue);
                 }
 
-                if (!autoSummingTurnedOn && remainingEfforts != null
+                if (!autoSummingTurnedOn && null != remainingEfforts
                         && remainingEfforts.getFieldValueHasChanged()) {
                     Object fieldValueObj = remainingEfforts.getFieldValue();
                     int fieldValue = 0;
@@ -712,24 +712,24 @@ public class TFTrackerHandler {
                     artifactData.setRemainingEffort(fieldValue);
                 }
 
-                if (assignedTo != null && assignedTo.getFieldValueHasChanged()) {
+                if (null != assignedTo && assignedTo.getFieldValueHasChanged()) {
                     artifactData.setAssignedTo((String) assignedTo
                             .getFieldValue());
                 }
 
-                if (planningFolderId != null
+                if (null != planningFolderId
                         && planningFolderId.getFieldValueHasChanged()) {
                     artifactData.setPlanningFolderId((String) planningFolderId
                             .getFieldValue());
                 }
 
-                if (statusClass != null
+                if (null != statusClass
                         && statusClass.getFieldValueHasChanged()) {
                     artifactData.setStatusClass((String) statusClass
                             .getFieldValue());
                 }
 
-                if (closeDate != null && closeDate.getFieldValueHasChanged()) {
+                if (null != closeDate && closeDate.getFieldValueHasChanged()) {
                     Object fieldValueObj = closeDate.getFieldValue();
                     Date fieldValue = null;
                     if (fieldValueObj instanceof String) {
@@ -741,7 +741,7 @@ public class TFTrackerHandler {
                     artifactData.setCloseDate(fieldValue);
                 }
 
-                if (reportedReleaseId != null
+                if (null != reportedReleaseId
                         && reportedReleaseId.getFieldValueHasChanged()) {
                     String reportedReleaseIdString = (String) reportedReleaseId
                             .getFieldValue();
@@ -753,7 +753,7 @@ public class TFTrackerHandler {
                     artifactData.setReportedReleaseId(reportedReleaseIdString);
                 }
 
-                if (resolvedReleaseId != null
+                if (null != resolvedReleaseId
                         && resolvedReleaseId.getFieldValueHasChanged()) {
                     String resolvedReleaseIdString = (String) resolvedReleaseId
                             .getFieldValue();
@@ -765,7 +765,7 @@ public class TFTrackerHandler {
                     artifactData.setResolvedReleaseId(resolvedReleaseIdString);
                 }
 
-                if (storyPoints != null
+                if (null != storyPoints
                         && storyPoints.getFieldValueHasChanged()) {
                     Object fieldValueObj = storyPoints.getFieldValue();
                     int fieldValue = 0;
@@ -800,7 +800,7 @@ public class TFTrackerHandler {
             }
         }
         // increase version number for comment updates
-        if (comments.length != 0) {
+        if (0 != comments.length) {
             artifactData.setVersion(artifactData.getVersion() + 1);
         }
 
@@ -889,7 +889,7 @@ public class TFTrackerHandler {
                             break;
                         }
                     }
-                    if (trackerField == null) {
+                    if (null == trackerField) {
                         throw new CCFRuntimeException("Field " + fieldName
                                 + " of tracker " + trackerId
                                 + " could not be found.");
@@ -987,7 +987,7 @@ public class TFTrackerHandler {
                 }
             }
         }
-        if (exception != null) {
+        if (null != exception) {
             throw new CCFRuntimeException(
                     "During TF tracker meta data update, at least one exception occured.",
                     exception);
@@ -999,7 +999,7 @@ public class TFTrackerHandler {
             TrackerFieldValueDO insertedValue) {
         int index = 0;
         for (TrackerFieldValueDO fieldValue : updatedValuesList) {
-            if (fieldValue.getValue().compareTo(insertedValue.getValue()) > 0) {
+            if (0 < fieldValue.getValue().compareTo(insertedValue.getValue())) {
                 break;
             }
             ++index;
@@ -1041,11 +1041,11 @@ public class TFTrackerHandler {
             return null;
         }
         String packageTitle = null;
-        if (packageReleaseSeparatorString != null) {
+        if (null != packageReleaseSeparatorString) {
             // we have to extract the package title from the releaseId string
             int packageDelimiter = releaseId
                     .indexOf(packageReleaseSeparatorString);
-            if (packageDelimiter != -1) {
+            if (-1 != packageDelimiter) {
                 // found separator, now extract package and release title
                 packageTitle = releaseId.substring(0, packageDelimiter);
                 releaseId = releaseId.substring(packageDelimiter
@@ -1059,11 +1059,11 @@ public class TFTrackerHandler {
         }
         PackageList packageList = connection.getFrsClient().getPackageList(
                 projectId);
-        if (packageList != null) {
+        if (null != packageList) {
             PackageRow[] packages = packageList.getDataRows();
-            if (packages != null) {
+            if (null != packages) {
                 for (PackageRow packageRow : packages) {
-                    if (packageTitle != null
+                    if (null != packageTitle
                             && !packageTitle.equals(packageRow.getTitle())) {
                         // this is not the package we are looking for, proceed
                         continue;
@@ -1071,9 +1071,9 @@ public class TFTrackerHandler {
                     String packageId = packageRow.getId();
                     ReleaseList releasesList = connection.getFrsClient()
                             .getReleaseList(packageId);
-                    if (releasesList != null) {
+                    if (null != releasesList) {
                         ReleaseRow[] releases = releasesList.getDataRows();
-                        if (releases != null) {
+                        if (null != releases) {
                             for (ReleaseRow release : releases) {
                                 String title = release.getTitle();
                                 if (title.equals(releaseId)) {
@@ -1092,7 +1092,7 @@ public class TFTrackerHandler {
             String trackerUnitIdValue, String projectId) throws RemoteException {
         String key = projectId + "-" + trackerUnitIdValue;
         String trackerUnitId = trackerUnitIdMap.get(key);
-        if (trackerUnitId != null) {
+        if (null != trackerUnitId) {
             return trackerUnitId;
         } else {
             TrackerUnitList trackerUnitList = connection.getTrackerClient()

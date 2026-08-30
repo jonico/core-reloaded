@@ -109,7 +109,7 @@ public class TFAttachmentHandler {
             try {
                 byte[] data = null;
                 if (StringUtils.isEmpty(attachmentDataFileName)) {
-                    if (linkUrl == null) {
+                    if (null == linkUrl) {
                         data = att.getRawAttachmentData();
                     } else {
                         data = linkUrl;
@@ -187,7 +187,7 @@ public class TFAttachmentHandler {
                 attachmentId);
         ArtifactDO artifact = connection.getTrackerClient().getArtifactData(
                 artifactId);
-        if (artifact != null) {
+        if (null != artifact) {
             Date attachmentLastModifiedDate = artifact.getLastModifiedDate();
             att.setTargetArtifactLastModifiedDate(DateUtil
                     .format(attachmentLastModifiedDate));
@@ -267,7 +267,7 @@ public class TFAttachmentHandler {
                 }
 
             } finally {
-                if (is != null) {
+                if (null != is) {
                     try {
                         is.close();
                     } catch (IOException e) {
@@ -311,33 +311,33 @@ public class TFAttachmentHandler {
                 AttachmentMetaData.ATTACHMENT_SOURCE_URL, att);
         GenericArtifact.ArtifactActionValue attAction = att.getArtifactAction();
         ArtifactDO artifact = null;
-        if (attAction == GenericArtifact.ArtifactActionValue.CREATE) {
-            if (AttachmentMetaData.AttachmentType.valueOf(contentType) == AttachmentMetaData.AttachmentType.DATA) {
+        if (GenericArtifact.ArtifactActionValue.CREATE == attAction) {
+            if (AttachmentMetaData.AttachmentType.DATA == AttachmentMetaData.AttachmentType.valueOf(contentType)) {
                 artifact = this.attachFileToArtifact(connection, artifactId,
                         attachDescription, attachmentName, attachmentMimeType,
                         att, null);
-            } else if (AttachmentMetaData.AttachmentType.valueOf(contentType) == AttachmentMetaData.AttachmentType.LINK) {
+            } else if (AttachmentMetaData.AttachmentType.LINK == AttachmentMetaData.AttachmentType.valueOf(contentType)) {
                 attachmentName = attachmentName + "link.txt";
                 artifact = this.attachFileToArtifact(connection, artifactId,
                         attachDescription, attachmentName,
                         AttachmentMetaData.TEXT_PLAIN, att,
                         attachmentURL.getBytes());
-            } else if (AttachmentMetaData.AttachmentType.valueOf(contentType) == AttachmentMetaData.AttachmentType.EMPTY) {
+            } else if (AttachmentMetaData.AttachmentType.EMPTY == AttachmentMetaData.AttachmentType.valueOf(contentType)) {
                 // TODO What should I do now?
             }
             // else if(contentType ==
             // AttachmentMetaData.AttachmentType.UNKNOWN){
             // //TODO What should I do now?
             // }
-        } else if (attAction == GenericArtifact.ArtifactActionValue.UNKNOWN) {
+        } else if (GenericArtifact.ArtifactActionValue.UNKNOWN == attAction) {
             // TODO What should be done if attachment action value is unknown
             log.error("Attachment action value is unknown");
         }
-        if (artifact != null) {
+        if (null != artifact) {
             Date attachmentLastModifiedDate = artifact.getLastModifiedDate();
             AttachmentRow attachmentRow = getAttachmentMetaData(connection,
                     attachmentName, attachmentLastModifiedDate, artifactId);
-            if (attachmentRow != null) {
+            if (null != attachmentRow) {
                 att.setTargetArtifactLastModifiedDate(DateUtil
                         .format(attachmentRow.getDateCreated()));
                 att.setTargetArtifactVersion("1");
@@ -389,7 +389,7 @@ public class TFAttachmentHandler {
                         || fileName.startsWith(username + "_")) {
                     continue;
                 }
-                if (resyncUsername != null
+                if (null != resyncUsername
                         && fileName.startsWith(resyncUsername + "_")) {
                     continue;
                 }
@@ -408,7 +408,7 @@ public class TFAttachmentHandler {
                     ga.setArtifactType(GenericArtifact.ArtifactTypeValue.ATTACHMENT);
                     ga.setDepParentSourceArtifactId(artifactId);
                     ga.setSourceArtifactId(row.getAttachmentId());
-                    if (artifactData != null) {
+                    if (null != artifactData) {
                         ga.setSourceArtifactVersion(artifactData
                                 .getSourceArtifactVersion());
                         ga.setSourceArtifactLastModifiedDate(artifactData
@@ -473,7 +473,7 @@ public class TFAttachmentHandler {
                             Long.parseLong(row.getFileSize()), artifactId,
                             shouldShipAttachmentsWithArtifact, ga);
                     if (shouldShipAttachmentsWithArtifact) {
-                        if (attachmentData != null) {
+                        if (null != attachmentData) {
                             ga.setRawAttachmentData(attachmentData);
                         }
                     }
@@ -499,7 +499,7 @@ public class TFAttachmentHandler {
                 returnRow = row;
             }
         }
-        if (returnRow == null) {
+        if (null == returnRow) {
             log.warn("No attachments match with the name " + fileName);
         }
         return returnRow;

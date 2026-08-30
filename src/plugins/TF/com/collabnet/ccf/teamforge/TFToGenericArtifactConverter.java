@@ -60,7 +60,7 @@ public class TFToGenericArtifactConverter {
             String reportedInRelaseHumanReadableName,
             String resolvedInReleaseHumanReadableName,
             String planningFolderHumanReadableName) {
-        if (dataObject != null) {
+        if (null != dataObject) {
             ArtifactDO artifactRow = dataObject;
             GenericArtifact genericArtifact = new GenericArtifact();
             genericArtifact
@@ -196,21 +196,21 @@ public class TFToGenericArtifactConverter {
 
             genericArtifact.setSourceArtifactVersion(Integer.toString(version));
 
-            if (reportedInRelaseHumanReadableName != null) {
+            if (null != reportedInRelaseHumanReadableName) {
                 createGenericArtifactField(
                         TFArtifactMetaData.TFFields.reportedReleaseHumanReadableName,
                         reportedInRelaseHumanReadableName, genericArtifact,
                         fieldsMap, includeFieldMetaData);
             }
 
-            if (resolvedInReleaseHumanReadableName != null) {
+            if (null != resolvedInReleaseHumanReadableName) {
                 createGenericArtifactField(
                         TFArtifactMetaData.TFFields.resolvedReleaseHumanReadableName,
                         resolvedInReleaseHumanReadableName, genericArtifact,
                         fieldsMap, includeFieldMetaData);
             }
 
-            if (planningFolderHumanReadableName != null) {
+            if (null != planningFolderHumanReadableName) {
                 createGenericArtifactField(
                         TFArtifactMetaData.TFFields.planningFolderHumanReadableName,
                         planningFolderHumanReadableName, genericArtifact,
@@ -270,7 +270,7 @@ public class TFToGenericArtifactConverter {
             PlanningFolderDO planningFolder, Date lastReadDate,
             boolean includeFieldMetaData, String sourceSystemTimezone,
             String releaseHumandReadableName) {
-        if (planningFolder != null) {
+        if (null != planningFolder) {
             PlanningFolderDO planningRow = planningFolder;
             GenericArtifact genericArtifact = new GenericArtifact();
             genericArtifact
@@ -354,7 +354,7 @@ public class TFToGenericArtifactConverter {
             TFArtifactMetaData.setPFDateFieldValue(endDate,
                     sourceSystemTimezone, endDateField);
 
-            if (releaseHumandReadableName != null) {
+            if (null != releaseHumandReadableName) {
                 createGenericArtifactField(
                         TFArtifactMetaData.TFFields.releaseHumanReadableName,
                         releaseHumandReadableName, genericArtifact, null,
@@ -432,30 +432,30 @@ public class TFToGenericArtifactConverter {
         field.setFieldAction(GenericArtifactField.FieldActionValue.REPLACE);
         field.setFieldValueType(fieldValueType);
         field.setFieldValueHasChanged(true);
-        if (value != null) {
+        if (null != value) {
             field.setFieldValue(value);
         }
         if (includeFieldMetaData) {
             field.setAlternativeFieldName(sfField.getDisplayName());
             // TODO How do we determine if a field value can be null or not?
             // field.setNullValueSupported(nullValueSupported);
-            if (sfField.getFieldType() == TFArtifactMetaData.FIELD_TYPE.SYSTEM_DEFINED) {
+            if (TFArtifactMetaData.FIELD_TYPE.SYSTEM_DEFINED == sfField.getFieldType()) {
                 if (sfField.isRequired()) {
                     field.setMinOccurs(1);
                 } else {
                     field.setMinOccurs(0);
                 }
                 field.setMaxOccurs(1);
-            } else if (sfField.getFieldType() == TFArtifactMetaData.FIELD_TYPE.CONFIGURABLE) {
+            } else if (TFArtifactMetaData.FIELD_TYPE.CONFIGURABLE == sfField.getFieldType()) {
                 TrackerFieldDO fieldSoapDO = TFAppHandler
                         .getTrackerFieldSoapDOForFlexField(fieldsMap, fieldName);
-                if (fieldSoapDO == null) {
+                if (null == fieldSoapDO) {
                     fieldSoapDO = TFAppHandler
                             .getTrackerFieldSoapDOForFlexField(fieldsMap,
                                     sfField.getAlternateName());
                 }
                 boolean required = false;
-                if (fieldSoapDO != null) {
+                if (null != fieldSoapDO) {
                     required = fieldSoapDO.getRequired();
                 }
                 if (required) {

@@ -68,7 +68,7 @@ public class TFUserHandler {
 
     public static Connection getConnection() throws ConnectionException {
         Connection connectionVal;
-        if (connection != null && getConnectionFactory().isAlive(connection)) {
+        if (null != connection && getConnectionFactory().isAlive(connection)) {
             connectionVal = connection;
         } else {
             connectionVal = getConnectionFactory().createConnection("TF", "TF",

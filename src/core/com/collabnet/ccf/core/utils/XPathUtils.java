@@ -86,7 +86,7 @@ public class XPathUtils {
         XPath xpath = new DefaultXPath("@" + attributeName);
         xpath.setNamespaceURIs(ccfNamespaceMap);
         Node attributeNode = xpath.selectSingleNode(element);
-        if (attributeNode == null) {
+        if (null == attributeNode) {
             if (failIfNotFound) {
                 throw new GenericArtifactParsingException("Missing attribute: "
                         + attributeName + " in element " + element.getName());
@@ -111,7 +111,7 @@ public class XPathUtils {
     public static Element getRootElement(Document document)
             throws GenericArtifactParsingException {
         Element rootElement = document.getRootElement();
-        if (rootElement == null) {
+        if (null == rootElement) {
             throw new GenericArtifactParsingException(
                     "Received empty XML document. The reason might be an invalid data mapping.");
         }

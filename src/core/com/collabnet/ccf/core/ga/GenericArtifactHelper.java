@@ -324,7 +324,7 @@ public class GenericArtifactHelper {
                 root, INCLUDES_FIELD_META_DATA, includesFieldMetaDataHashMap);
         genericArtifact.setIncludesFieldMetaData(includesFieldMetaData);
 
-        if (artifactType == GenericArtifact.ArtifactTypeValue.ATTACHMENT) {
+        if (GenericArtifact.ArtifactTypeValue.ATTACHMENT == artifactType) {
             genericArtifact.setArtifactValue(getValue(root));
         }
 
@@ -337,9 +337,9 @@ public class GenericArtifactHelper {
         genericArtifact
                 .setTransactionId(getAttributeValue(root, TRANSACTION_ID));
         // only read optional attributes if necessary
-        if (artifactType == ArtifactTypeValue.DEPENDENCY
-                || artifactType == ArtifactTypeValue.ATTACHMENT
-                || artifactType == ArtifactTypeValue.PLAINARTIFACT) {
+        if (ArtifactTypeValue.DEPENDENCY == artifactType
+                || ArtifactTypeValue.ATTACHMENT == artifactType
+                || ArtifactTypeValue.PLAINARTIFACT == artifactType) {
             genericArtifact.setDepParentSourceArtifactId(getAttributeValue(
                     root, DEP_PARENT_SOURCE_ARTIFACT_ID));
             genericArtifact.setDepParentSourceRepositoryId(getAttributeValue(
@@ -355,7 +355,7 @@ public class GenericArtifactHelper {
         }
 
         // dependencies have even more optional attributes
-        if (artifactType == ArtifactTypeValue.DEPENDENCY) {
+        if (ArtifactTypeValue.DEPENDENCY == artifactType) {
             genericArtifact.setDepChildSourceArtifactId(getAttributeValue(root,
                     DEP_CHILD_SOURCE_ARTIFACT_ID));
             genericArtifact.setDepChildSourceRepositoryId(getAttributeValue(
@@ -440,7 +440,7 @@ public class GenericArtifactHelper {
                 // try to set alternativeFieldName if set
                 String alternativeFieldName = getAttributeValueWithoutException(
                         field, ALTERNATIVE_FIELD_NAME);
-                if (alternativeFieldName != null) {
+                if (null != alternativeFieldName) {
                     genericArtifactField
                             .setAlternativeFieldName(alternativeFieldName);
                 }
@@ -538,7 +538,7 @@ public class GenericArtifactHelper {
                 addAttribute(root, ARTIFACT_TYPE, ARTIFACT_TYPE_ATTACHMENT);
                 String content = genericArtifact.getArtifactValue();
                 // TODO BASE64 validation?
-                if (content != null)
+                if (null != content)
                     // embed content in CDATA section
                     setValue(root, content, true);
                 break;
@@ -595,9 +595,9 @@ public class GenericArtifactHelper {
                 genericArtifact.getConflictResolutionPriority());
 
         // only create optional attributes if necessary
-        if (artifactType == ArtifactTypeValue.DEPENDENCY
-                || artifactType == ArtifactTypeValue.ATTACHMENT
-                || artifactType == ArtifactTypeValue.PLAINARTIFACT) {
+        if (ArtifactTypeValue.DEPENDENCY == artifactType
+                || ArtifactTypeValue.ATTACHMENT == artifactType
+                || ArtifactTypeValue.PLAINARTIFACT == artifactType) {
             addAttribute(root, DEP_PARENT_SOURCE_ARTIFACT_ID,
                     genericArtifact.getDepParentSourceArtifactId());
             addAttribute(root, DEP_PARENT_SOURCE_REPOSITORY_ID,
@@ -613,7 +613,7 @@ public class GenericArtifactHelper {
         }
 
         // dependencies have even more optional attributes
-        if (artifactType == ArtifactTypeValue.DEPENDENCY) {
+        if (ArtifactTypeValue.DEPENDENCY == artifactType) {
             addAttribute(root, DEP_CHILD_SOURCE_ARTIFACT_ID,
                     genericArtifact.getDepChildSourceArtifactId());
             addAttribute(root, DEP_CHILD_SOURCE_REPOSITORY_ID,
@@ -658,7 +658,7 @@ public class GenericArtifactHelper {
         // .getTargetSystemEncoding());
         addAttribute(root, TRANSACTION_ID, genericArtifact.getTransactionId());
 
-        if (genericArtifact.getAllGenericArtifactFields() != null) {
+        if (null != genericArtifact.getAllGenericArtifactFields()) {
             // now add fields
             for (GenericArtifactField genericArtifactField : genericArtifact
                     .getAllGenericArtifactFields()) {
@@ -710,7 +710,7 @@ public class GenericArtifactHelper {
                             genericArtifactField.getNullValueSupported());
                 } else if (!GenericArtifactField.VALUE_UNKNOWN
                         .equals(genericArtifactField.getAlternativeFieldName())
-                        && genericArtifactField.getAlternativeFieldName() != null) {
+                        && null != genericArtifactField.getAlternativeFieldName()) {
                     // if the alternative field name field has been set, we will ship it even if the other meta data has not been populated
                     addAttribute(field, ALTERNATIVE_FIELD_NAME,
                             genericArtifactField.getAlternativeFieldName());
@@ -730,7 +730,7 @@ public class GenericArtifactHelper {
             GenericArtifact ga) {
         Boolean fieldValue = false;
         GenericArtifactField gaField = getMandatoryGAField(fieldName, ga);
-        if (gaField != null) {
+        if (null != gaField) {
             Object fieldValueObj = gaField.getFieldValue();
             if (fieldValueObj instanceof String) {
                 String fieldValueString = (String) fieldValueObj;
@@ -746,12 +746,12 @@ public class GenericArtifactHelper {
             GenericArtifact ga) {
         Date fieldValue = null;
         GenericArtifactField gaField = getMandatoryGAField(fieldName, ga);
-        if (gaField != null) {
+        if (null != gaField) {
             Object fieldValueObj = gaField.getFieldValue();
             if (fieldValueObj instanceof String) {
                 String fieldValueString = (String) fieldValueObj;
                 fieldValue = DateUtil.parse(fieldValueString);
-                if (fieldValue == null) {
+                if (null == fieldValue) {
                     throw new CCFRuntimeException(
                             "Date parsing error occured for mandatory field "
                                     + fieldName);
@@ -768,9 +768,9 @@ public class GenericArtifactHelper {
         List<GenericArtifactField> gaFields = ga
                 .getAllGenericArtifactFieldsWithSameFieldTypeAndFieldName(
                         GenericArtifactField.VALUE_FIELD_TYPE_FLEX_FIELD, name);
-        if (gaFields == null || gaFields.size() == 0) {
+        if (null == gaFields || 0 == gaFields.size()) {
             return null;
-        } else if (gaFields.size() == 1) {
+        } else if (1 == gaFields.size()) {
             GenericArtifactField field = gaFields.get(0);
             return field;
         } else {
@@ -784,9 +784,9 @@ public class GenericArtifactHelper {
             GenericArtifact ga) {
         List<GenericArtifactField> gaFields = ga
                 .getAllGenericArtifactFieldsWithSameFieldName(name);
-        if (gaFields == null || gaFields.size() == 0) {
+        if (null == gaFields || 0 == gaFields.size()) {
             return null;
-        } else if (gaFields.size() == 1) {
+        } else if (1 == gaFields.size()) {
             GenericArtifactField field = gaFields.get(0);
             return field;
         } else {
@@ -801,7 +801,7 @@ public class GenericArtifactHelper {
         try {
             int fieldValue = 0;
             GenericArtifactField gaField = getMandatoryGAField(fieldName, ga);
-            if (gaField != null) {
+            if (null != gaField) {
                 Object fieldValueObj = gaField.getFieldValue();
                 if (fieldValueObj instanceof String) {
                     String fieldValueString = (String) fieldValueObj;
@@ -827,9 +827,9 @@ public class GenericArtifactHelper {
                 .getAllGenericArtifactFieldsWithSameFieldTypeAndFieldName(
                         GenericArtifactField.VALUE_FIELD_TYPE_MANDATORY_FIELD,
                         name);
-        if (gaFields == null || gaFields.size() == 0) {
+        if (null == gaFields || 0 == gaFields.size()) {
             return null;
-        } else if (gaFields.size() == 1) {
+        } else if (1 == gaFields.size()) {
             GenericArtifactField field = gaFields.get(0);
             return field;
         } else {
@@ -843,7 +843,7 @@ public class GenericArtifactHelper {
             GenericArtifact ga) {
         String fieldValue = null;
         GenericArtifactField gaField = getFlexGAField(fieldName, ga);
-        if (gaField != null) {
+        if (null != gaField) {
             fieldValue = (String) gaField.getFieldValue();
         }
         return fieldValue;
@@ -853,7 +853,7 @@ public class GenericArtifactHelper {
         String fieldValue = null;
         GenericArtifactField gaField = GenericArtifactHelper.getGAField(
                 fieldName, ga);
-        if (gaField != null) {
+        if (null != gaField) {
             fieldValue = (String) gaField.getFieldValue();
         }
         return fieldValue;
@@ -863,7 +863,7 @@ public class GenericArtifactHelper {
             GenericArtifact ga) {
         String fieldValue = null;
         GenericArtifactField gaField = getMandatoryGAField(fieldName, ga);
-        if (gaField != null) {
+        if (null != gaField) {
             fieldValue = (String) gaField.getFieldValue();
         }
         return fieldValue;
@@ -934,7 +934,7 @@ public class GenericArtifactHelper {
             Boolean fieldValueIsNull, FieldValueTypeValue fieldValueType,
             String value) throws ParseException {
         // TODO Think carefully about all type conversions
-        if (value.length() == 0 && fieldValueIsNull) {
+        if (0 == value.length() && fieldValueIsNull) {
             genericArtifactField.setFieldValue(null);
         } else
             switch (fieldValueType) {
@@ -1008,7 +1008,7 @@ public class GenericArtifactHelper {
         // dom4j 2.x narrowed XPath.selectNodes() from raw List to List<Node>
         List<Element> fieldElements = (List<Element>) (List<?>) fieldSelector
                 .selectNodes(root);
-        if (fieldElements == null)
+        if (null == fieldElements)
             return new ArrayList<Element>();
         else
             return fieldElements;
@@ -1033,7 +1033,7 @@ public class GenericArtifactHelper {
         XPath xpath = new DefaultXPath("@" + attributeName);
         xpath.setNamespaceURIs(ccfNamespaceMap);
         Node attributeNode = xpath.selectSingleNode(element);
-        if (attributeNode == null)
+        if (null == attributeNode)
             throw new GenericArtifactParsingException("Missing attribute: "
                     + attributeName + " in element " + element.getName());
         else
@@ -1059,7 +1059,7 @@ public class GenericArtifactHelper {
         XPath xpath = new DefaultXPath("@" + attributeName);
         xpath.setNamespaceURIs(ccfNamespaceMap);
         Node attributeNode = xpath.selectSingleNode(element);
-        if (attributeNode == null)
+        if (null == attributeNode)
             return null;
         else
             return attributeNode.getText();
@@ -1103,7 +1103,7 @@ public class GenericArtifactHelper {
     }
 
     private static final String removeInvalidXmlCharacters(String input) {
-        if (input == null) {
+        if (null == input) {
             return input;
         }
         char character;
@@ -1112,10 +1112,10 @@ public class GenericArtifactHelper {
             character = input.charAt(i);
             // see http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char for valid
             // XML character list.
-            if ((character == 0x9) || (character == 0xA) || (character == 0xD)
-                    || ((character >= 0x20) && (character <= 0xD7FF))
-                    || ((character >= 0xE000) && (character <= 0xFFFD))
-                    || ((character >= 0x10000) && (character <= 0x10FFFF))) {
+            if ((0x9 == character) || (0xA == character) || (0xD == character)
+                    || ((0x20 <= character) && (0xD7FF >= character))
+                    || ((0xE000 <= character) && (0xFFFD >= character))
+                    || ((0x10000 <= character) && (0x10FFFF >= character))) {
                 sb.append(character);
             }
         }
@@ -1138,7 +1138,7 @@ public class GenericArtifactHelper {
             FieldValueTypeValue fieldValueType)
             throws GenericArtifactParsingException {
         // TODO Carefully specify conversion for every single type
-        if (fieldValueType == null) {
+        if (null == fieldValueType) {
             throw new GenericArtifactParsingException(
                     "Non valid value for field-attribute "
                             + field.attributeValue(FIELD_NAME) + " specified.");
@@ -1201,7 +1201,7 @@ public class GenericArtifactHelper {
                                 + FIELD_VALUE_TYPE + " specified.");
             }
         }
-        if (fieldValue == null) {
+        if (null == fieldValue) {
             addAttribute(field, FIELD_VALUE_IS_NULL, FIELD_VALUE_IS_NULL_TRUE);
         } else {
             addAttribute(field, FIELD_VALUE_IS_NULL, FIELD_VALUE_IS_NULL_FALSE);
@@ -1266,7 +1266,7 @@ public class GenericArtifactHelper {
             throws GenericArtifactParsingException {
         String attributeValueString = getAttributeValue(element, attributeName);
         T translatedAttributeValue = translationTable.get(attributeValueString);
-        if (translatedAttributeValue == null)
+        if (null == translatedAttributeValue)
             throw new GenericArtifactParsingException("Non-valid value "
                     + attributeValueString + " for attribute " + attributeName
                     + " of element " + element.getName());

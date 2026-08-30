@@ -33,7 +33,7 @@ public class RMDConfigDBExtractor implements RMDConfigExtractor {
 
     public String getRMDConfigValue(String rmdID, String key) {
         Map<String, String> rmdConfigCache = getRMDConfigMapFromCache(rmdID);
-        if (rmdConfigCache != null) {
+        if (null != rmdConfigCache) {
             return getRMDConfigMapFromCache(rmdID).get(key);
         }
         return null;
@@ -41,7 +41,7 @@ public class RMDConfigDBExtractor implements RMDConfigExtractor {
 
     public void populateRMDAndRMDConfigValues(String rmdID) {
         Map<String, String> associatedRMDConfig = new HashMap<String, String>();
-        if (rmdConfigJDBCReadConnector != null) {
+        if (null != rmdConfigJDBCReadConnector) {
             try {
                 IOrderedMap inputParameters = new OrderedHashMap();
                 inputParameters.add(rmdID);

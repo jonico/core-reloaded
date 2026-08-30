@@ -280,8 +280,8 @@ public class QCReader extends AbstractReader<IConnection> {
         boolean isDefectRepository = QCConnectionFactory
                 .isDefectRepository(sourceRepositoryId);
         try {
-            if (getIdentityMappingDatabaseReader() != null
-                    && artifactTransactionID != null) {
+            if (null != getIdentityMappingDatabaseReader()
+                    && null != artifactTransactionID) {
                 transactionId = artifactTransactionID;
             }
             attachments = attachmentHandler
@@ -301,7 +301,7 @@ public class QCReader extends AbstractReader<IConnection> {
                                     .isShipAttachmentsWithArtifact(),
                             isDefectRepository, artifactData
                                     .getSourceArtifactVersion());
-            if (attachments != null) {
+            if (null != attachments) {
                 for (GenericArtifact ga : attachments) {
                     ga.setSourceArtifactLastModifiedDate(artifactData
                             .getSourceArtifactLastModifiedDate());
@@ -375,7 +375,7 @@ public class QCReader extends AbstractReader<IConnection> {
         GenericArtifact latestArtifact = null;
         if (QCConnectionFactory.isDefectRepository(sourceRepositoryId)) {
             try {
-                if (isArtifactForced && artifactLastModifiedVersion != null) {
+                if (isArtifactForced && null != artifactLastModifiedVersion) {
                     // we are swapping the lastmodifiedVersion from IdentityMapping
                     // reason for swapping is to make sure we get artifactInfo provides
                     // info for forced artifacts
@@ -391,8 +391,8 @@ public class QCReader extends AbstractReader<IConnection> {
                 // we like to get the comments in case of an export even if the
                 // last
                 // user was the resync user
-                if (info.lastModifiedBy == null
-                        || info.lastTransactionId == null) {
+                if (null == info.lastModifiedBy
+                        || null == info.lastTransactionId) {
                     return null;
                 }
                 if (info.lastModifiedBy.equalsIgnoreCase(this
@@ -415,8 +415,8 @@ public class QCReader extends AbstractReader<IConnection> {
                 }
                 QCDefect latestDefect = null;
                 try {
-                    if (getIdentityMappingDatabaseReader() != null
-                            && artifactLastModifiedVersion != null) {
+                    if (null != getIdentityMappingDatabaseReader()
+                            && null != artifactLastModifiedVersion) {
                         syncInfoTransactionId = artifactLastModifiedVersion;
                     }
                     if (ignoreArtifact) {
@@ -466,7 +466,7 @@ public class QCReader extends AbstractReader<IConnection> {
                     }
 
                 } finally {
-                    if (latestDefect != null) {
+                    if (null != latestDefect) {
                         latestDefect.safeRelease();
                         latestDefect = null;
                     }
@@ -484,7 +484,7 @@ public class QCReader extends AbstractReader<IConnection> {
                 String technicalRequirementsTypeId = QCConnectionFactory
                         .extractTechnicalRequirementsType(sourceRepositoryId,
                                 connection);
-                if (isArtifactForced && artifactLastModifiedVersion != null) {
+                if (isArtifactForced && null != artifactLastModifiedVersion) {
                     // we are swapping the lastmodifiedVersion from IdentityMapping
                     // reason for swapping is to make sure we get artifactInfo provides
                     // info for forced artifacts
@@ -494,8 +494,8 @@ public class QCReader extends AbstractReader<IConnection> {
                         .getRequirementInformation(connection, artifactId,
                                 syncInfoTransactionId);
                 boolean isResync = false;
-                if (info == null || info.lastModifiedBy == null
-                        || info.lastTransactionId == null) {
+                if (null == info || null == info.lastModifiedBy
+                        || null == info.lastTransactionId) {
                     return null;
                 }
                 // we like to get the comments in case of an export even if the
@@ -523,8 +523,8 @@ public class QCReader extends AbstractReader<IConnection> {
 
                 QCRequirement latestRequirement = null;
                 try {
-                    if (getIdentityMappingDatabaseReader() != null
-                            && artifactLastModifiedVersion != null) {
+                    if (null != getIdentityMappingDatabaseReader()
+                            && null != artifactLastModifiedVersion) {
                         syncInfoTransactionId = artifactLastModifiedVersion;
                     }
                     // don't retrieve the complete artifact if we'll just ignore it anyway
@@ -564,7 +564,7 @@ public class QCReader extends AbstractReader<IConnection> {
                         }
                         // set information about parent artifact
                         String parentId = latestRequirement.getParentId();
-                        if (parentId != null) {
+                        if (null != parentId) {
                             if (parentId.equals("-1")) {
                                 latestArtifact
                                         .setDepParentSourceArtifactId(GenericArtifact.VALUE_NONE);
@@ -597,7 +597,7 @@ public class QCReader extends AbstractReader<IConnection> {
 
                                     }
                                 } finally {
-                                    if (parentRequirement != null) {
+                                    if (null != parentRequirement) {
                                         parentRequirement.safeRelease();
                                         parentRequirement = null;
                                     }
@@ -631,7 +631,7 @@ public class QCReader extends AbstractReader<IConnection> {
                                 .setArtifactAction(GenericArtifact.ArtifactActionValue.RESYNC);
                     }
                 } finally {
-                    if (latestRequirement != null) {
+                    if (null != latestRequirement) {
                         latestRequirement.safeRelease();
                         latestRequirement = null;
                     }
@@ -856,7 +856,7 @@ public class QCReader extends AbstractReader<IConnection> {
     @Override
     public boolean handleException(Throwable rootCause,
             ConnectionManager<IConnection> connectionManager) {
-        if (rootCause == null)
+        if (null == rootCause)
             return false;
         if (rootCause instanceof ConnectionException) {
             Throwable cause = rootCause.getCause();
@@ -947,7 +947,7 @@ public class QCReader extends AbstractReader<IConnection> {
 
     public Object[] process(Object data) {
         Object[] result = null;
-        if (this.connectCounts == 0) {
+        if (0 == this.connectCounts) {
             initCOM();
         }
         try {
@@ -1104,20 +1104,20 @@ public class QCReader extends AbstractReader<IConnection> {
          * ); }
          */
 
-        if (this.getServerUrl() == null) {
+        if (null == this.getServerUrl()) {
             exceptions.add(new ValidationException(
                     "serverUrl property is not set for the QCReader", this));
         }
-        if (this.getUserName() == null) {
+        if (null == this.getUserName()) {
             exceptions.add(new ValidationException(
                     "userName property is not set for the QCReader", this));
         }
-        if (this.getPassword() == null) {
+        if (null == this.getPassword()) {
             exceptions.add(new ValidationException(
                     "password property is not set for the QCReader", this));
         }
 
-        if (exceptions.size() == 0) {
+        if (0 == exceptions.size()) {
             artifactHandler = new QCHandler(isUseAlternativeFieldName());
             attachmentHandler = new QCAttachmentHandler();
             attachmentHandler

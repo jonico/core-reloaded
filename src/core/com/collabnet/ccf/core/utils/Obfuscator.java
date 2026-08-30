@@ -7,7 +7,7 @@ public class Obfuscator {
     private static final String OBFUSCATED_PASSWORD_PREFIX = "OBF:";
 
     public static String deObfuscatePassword(String password) {
-        if (password == null) {
+        if (null == password) {
             return "";
         }
         if (!password.startsWith(OBFUSCATED_PASSWORD_PREFIX)) {
@@ -27,7 +27,7 @@ public class Obfuscator {
     }
 
     public static void main(String[] args) {
-        if (args.length != 1) {
+        if (1 != args.length) {
             usage();
             System.exit(1);
         }
@@ -49,22 +49,22 @@ public class Obfuscator {
     }
 
     private static byte cyclicShiftBitsLeft(int b, int i) {
-        if (b < 0) {
+        if (0 > b) {
             b += 256;
         }
         int j = ((b << i) | ((b >>> (8 - i)) % 256));
-        if (j > 127) {
+        if (127 < j) {
             j -= 256;
         }
         return (byte) j;
     }
 
     private static byte cyclicShiftBitsRight(int b, int i) {
-        if (b < 0) {
+        if (0 > b) {
             b += 256;
         }
         int j = (((b >>> i) % 256) | (b << (8 - i)));
-        if (j > 127) {
+        if (127 < j) {
             j -= 256;
         }
         return (byte) j;

@@ -60,7 +60,7 @@ public class QCMigrator extends QCWriter {
         ids.add(qcDefectId);
         List<IQCDefect> defects = defectHandler.getDefectsWithIds(connection,
                 ids);
-        if (defects.size() == 0) {
+        if (0 == defects.size()) {
             log.warn("Target artifact id " + targetArtifactId
                     + " does not exist in the repository "
                     + genericArtifact.getTargetRepositoryId());
@@ -89,7 +89,7 @@ public class QCMigrator extends QCWriter {
 
     protected Object[] processXMLDocument(Document gaDocument) {
         Object[] result = super.processXMLDocument(gaDocument);
-        if (result != null && result.length == 1) {
+        if (null != result && 1 == result.length) {
             Document returnDoc1 = (Document) result[0];
             GenericArtifact inDoc = getArtifactFromDocument(returnDoc1);
             GenericArtifact outDoc = new GenericArtifact();

@@ -275,7 +275,7 @@ public class JIRAReader extends AbstractReader<JIRAConnection> {
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<JIRAConnection> connectionManager) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -347,7 +347,7 @@ public class JIRAReader extends AbstractReader<JIRAConnection> {
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }

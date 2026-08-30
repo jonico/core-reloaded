@@ -48,7 +48,7 @@ public class TrackerClientManager {
     }
 
     public synchronized static TrackerClientManager getInstance() {
-        if (manager == null)
+        if (null == manager)
             manager = new TrackerClientManager();
         return manager;
     }

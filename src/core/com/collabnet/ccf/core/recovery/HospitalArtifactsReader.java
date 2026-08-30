@@ -44,7 +44,7 @@ public class HospitalArtifactsReader {
     }
 
     public void close() {
-        if (reader != null) {
+        if (null != reader) {
             try {
                 reader.close();
             } catch (IOException e) {
@@ -86,7 +86,7 @@ public class HospitalArtifactsReader {
             }
             if (line.contains(EXCEPTION_END)) {
                 readingTrace = false;
-                if (line.indexOf(EXCEPTION_START) > 0) {
+                if (0 < line.indexOf(EXCEPTION_START)) {
                     exceptionTrace.append(line.substring(0,
                             line.indexOf(EXCEPTION_START)));
                 }
@@ -103,7 +103,7 @@ public class HospitalArtifactsReader {
     }
 
     private void init() throws FileNotFoundException {
-        if (reader == null) {
+        if (null == reader) {
             reader = new BufferedReader(new InputStreamReader(
                     new FileInputStream(hospitalFileName)));
         }

@@ -141,7 +141,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
         try {
             if ((!ga.getArtifactAction().equals(
                     GenericArtifact.ArtifactActionValue.CREATE))
-                    || getResyncUserName() == null) {
+                    || null == getResyncUserName()) {
                 connection = connect(targetSystemId, targetSystemKind,
                         targetRepositoryId, targetRepositoryKind, serverUrl,
                         getUsername() + TFConnectionFactory.PARAM_DELIMITER
@@ -422,7 +422,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                         throw e;
                     }
                 }
-                if (artifact != null) {
+                if (null != artifact) {
                     deletedArtifact.setTargetArtifactLastModifiedDate(DateUtil
                             .format(artifact.getLastModifiedDate()));
                     deletedArtifact.setTargetArtifactVersion(Integer
@@ -458,7 +458,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                         throw e;
                     }
                 }
-                if (artifact != null) {
+                if (null != artifact) {
                     deletedArtifact.setTargetArtifactLastModifiedDate(DateUtil
                             .format(artifact.getLastModifiedDate()));
                     deletedArtifact.setTargetArtifactVersion(Integer
@@ -489,7 +489,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (connection != null) {
+            if (null != connection) {
                 this.disconnect(connection);
             }
         }
@@ -603,7 +603,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
             log.error(message, e);
             throw new CCFRuntimeException(message, e);
         } finally {
-            if (connection != null) {
+            if (null != connection) {
                 this.disconnect(connection);
             }
         }
@@ -675,7 +675,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
     @Override
     public boolean handleException(Throwable cause,
             ConnectionManager<Connection> connectionManager, Document ga) {
-        if (cause == null)
+        if (null == cause)
             return false;
         if ((cause instanceof java.net.SocketException || cause instanceof java.net.UnknownHostException)
                 && connectionManager.isEnableRetryAfterNetworkTimeout()) {
@@ -878,7 +878,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 // otherwise a conflict has happened and the generic artifact
                 // has been
                 // already prepared
-                if (result != null) {
+                if (null != result) {
                     this.populateTargetArtifactAttributes(ga, result);
                 }
                 return this.returnDocument(ga);
@@ -919,7 +919,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 // otherwise a conflict has happened and the generic artifact
                 // has been
                 // already prepared
-                if (result != null) {
+                if (null != result) {
                     populateTargetArtifactAttributesFromPlanningFolder(ga,
                             result);
                 }
@@ -971,25 +971,25 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
          * ); }
          */
 
-        if (getUpdateComment() == null) {
+        if (null == getUpdateComment()) {
             log.error("updateComment-property not set");
             exceptions.add(new ValidationException(
                     "updateComment-property not set", this));
         }
 
-        if (getPassword() == null) {
+        if (null == getPassword()) {
             log.error("password-property not set");
             exceptions.add(new ValidationException("password-property not set",
                     this));
         }
 
-        if (getUsername() == null) {
+        if (null == getUsername()) {
             log.error("userName-property not set");
             exceptions.add(new ValidationException("userName-property not set",
                     this));
         }
 
-        if (getServerUrl() == null) {
+        if (null == getServerUrl()) {
             log.error("serverUrl-property not set");
             exceptions.add(new ValidationException(
                     "serverUrl-property not set", this));
@@ -997,7 +997,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
 
         ConnectionManager<Connection> connectionManager = getConnectionManager();
 
-        if (exceptions.size() == 0) {
+        if (0 == exceptions.size()) {
             trackerHandler = new TFTrackerHandler(getServerUrl(),
                     connectionManager);
             attachmentHandler = new TFAttachmentHandler(getServerUrl(),
@@ -1026,7 +1026,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
         List<GenericArtifactField> gaFields = ga
                 .getAllGenericArtifactFieldsWithSameFieldType(GenericArtifactField.VALUE_FIELD_TYPE_FLEX_FIELD);
         String targetSystemTimezone = ga.getTargetSystemTimezone();
-        if (gaFields != null) {
+        if (null != gaFields) {
             for (GenericArtifactField gaField : gaFields) {
                 String fieldName = gaField.getFieldName();
                 if (COMMENT_TEXT.equals(fieldName)) {
@@ -1041,10 +1041,10 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 FieldValueTypeValue fieldType = gaField.getFieldValueType();
                 if (trackerFieldValueType
                         .equals(TrackerFieldSoapDO.FIELD_VALUE_TYPE_DATE)) {
-                    if (fieldType == FieldValueTypeValue.DATE) {
+                    if (FieldValueTypeValue.DATE == fieldType) {
                         GregorianCalendar gc = (GregorianCalendar) gaField
                                 .getFieldValue();
-                        if (gc != null) {
+                        if (null != gc) {
                             Date dateValue = gc.getTime();
                             if (DateUtil.isAbsoluteDateInTimezone(dateValue,
                                     "GMT")) {
@@ -1055,7 +1055,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                                 value = dateValue;
                             }
                         }
-                    } else if (fieldType == FieldValueTypeValue.DATETIME) {
+                    } else if (FieldValueTypeValue.DATETIME == fieldType) {
                         value = gaField.getFieldValue();
                     }
                 } else {
@@ -1149,7 +1149,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
             // now we have to deal with the parent dependencies
             String parentId = ga.getDepParentTargetArtifactId();
             boolean associateWithParent = false;
-            if (parentId != null
+            if (null != parentId
                     && !parentId.equals(GenericArtifact.VALUE_UNKNOWN)
                     && !parentId.equals(GenericArtifact.VALUE_NONE)) {
                 // parent is a planning folder
@@ -1157,7 +1157,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                     planningFolder = parentId;
                 } else {
                     associateWithParent = true;
-                    if (planningFolder == null) {
+                    if (null == planningFolder) {
                         ArtifactDO parentArtifact = connection
                                 .getTrackerClient().getArtifactData(parentId);
                         planningFolder = parentArtifact.getPlanningFolderId();
@@ -1205,7 +1205,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
         String parentId = project;
         String targetParentArtifactId = ga.getDepParentTargetArtifactId();
 
-        if (targetParentArtifactId != null
+        if (null != targetParentArtifactId
                 && !targetParentArtifactId.equals(GenericArtifact.VALUE_NONE)
                 && !targetParentArtifactId
                         .equals(GenericArtifact.VALUE_UNKNOWN)) {
@@ -1226,10 +1226,10 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                         TFArtifactMetaData.TFFields.startDate.getFieldName(),
                         ga);
 
-        if (startDateField != null) {
+        if (null != startDateField) {
             GregorianCalendar gc = (GregorianCalendar) startDateField
                     .getFieldValue();
-            if (gc != null) {
+            if (null != gc) {
                 Date dateValue = gc.getTime();
                 if (DateUtil.isAbsoluteDateInTimezone(dateValue, "GMT")) {
                     startDate = DateUtil.convertGMTToTimezoneAbsoluteDate(
@@ -1244,10 +1244,10 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 .getMandatoryGAField(
                         TFArtifactMetaData.TFFields.endDate.getFieldName(), ga);
 
-        if (endDateField != null) {
+        if (null != endDateField) {
             GregorianCalendar gc = (GregorianCalendar) endDateField
                     .getFieldValue();
-            if (gc != null) {
+            if (null != gc) {
                 Date dateValue = gc.getTime();
                 if (DateUtil.isAbsoluteDateInTimezone(dateValue, "GMT")) {
                     endDate = DateUtil.convertGMTToTimezoneAbsoluteDate(
@@ -1334,10 +1334,10 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                         GenericArtifactField.VALUE_FIELD_TYPE_FLEX_FIELD,
                         TFArtifactMetaData.TFFields.commentText.getFieldName());
         int commentsSize = 0;
-        if (gaFields != null) {
+        if (null != gaFields) {
             commentsSize = gaFields.size();
         }
-        if (commentsSize > 0) {
+        if (0 < commentsSize) {
             comments = new String[commentsSize];
             for (int i = 0; i < commentsSize; i++) {
                 GenericArtifactField field = gaFields.get(i);
@@ -1345,7 +1345,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 comments[i] = comment;
             }
         }
-        if (comments == null) {
+        if (null == comments) {
             comments = new String[0];
         }
         return comments;
@@ -1392,7 +1392,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
         String targetArtifactId = ga.getTargetArtifactId();
         String tracker = targetRepositoryId;
 
-        if (artifactAction == GenericArtifact.ArtifactActionValue.UPDATE) {
+        if (GenericArtifact.ArtifactActionValue.UPDATE == artifactAction) {
             if (TFGAHelper.containsSingleMandatoryField(ga,
                     TFArtifactMetaData.TFFields.id.getFieldName())) {
                 TFGAHelper.updateSingleMandatoryField(ga,
@@ -1471,7 +1471,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
         List<GenericArtifactField> gaFields = ga
                 .getAllGenericArtifactFieldsWithSameFieldType(GenericArtifactField.VALUE_FIELD_TYPE_FLEX_FIELD);
         String targetSystemTimezone = ga.getTargetSystemTimezone();
-        if (gaFields != null) {
+        if (null != gaFields) {
             for (GenericArtifactField gaField : gaFields) {
                 String fieldName = gaField.getFieldName();
                 if (COMMENT_TEXT.equals(fieldName)) {
@@ -1491,10 +1491,10 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 FieldValueTypeValue fieldType = gaField.getFieldValueType();
                 if (trackerFieldValueType
                         .equals(TrackerFieldSoapDO.FIELD_VALUE_TYPE_DATE)) {
-                    if (fieldType == FieldValueTypeValue.DATE) {
+                    if (FieldValueTypeValue.DATE == fieldType) {
                         GregorianCalendar gc = (GregorianCalendar) gaField
                                 .getFieldValue();
-                        if (gc != null) {
+                        if (null != gc) {
                             Date dateValue = gc.getTime();
                             if (DateUtil.isAbsoluteDateInTimezone(dateValue,
                                     "GMT")) {
@@ -1505,7 +1505,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                                 value = dateValue;
                             }
                         }
-                    } else if (fieldType == FieldValueTypeValue.DATETIME) {
+                    } else if (FieldValueTypeValue.DATETIME == fieldType) {
                         value = gaField.getFieldValue();
                     }
                 } else {
@@ -1597,12 +1597,12 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
             boolean deleteOldParentAssociation = false;
             String currentParentId = null;
 
-            if (newParentId != null
+            if (null != newParentId
                     && !newParentId.equals(GenericArtifact.VALUE_UNKNOWN)) {
                 // now find out current parent id
                 ArtifactDependencyRow[] parents = trackerHandler
                         .getArtifactParentDependencies(connection, id);
-                if (parents.length != 0) {
+                if (0 != parents.length) {
                     // only take first entry of this record
                     ArtifactDependencyRow parent = parents[0];
                     currentParentId = parent.getOriginId();
@@ -1616,7 +1616,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                                     null, ga, null, false);
 
                     // we have to deassociate the old parent
-                    if (currentParentId != null) {
+                    if (null != currentParentId) {
                         deleteOldParentAssociation = true;
                     }
                 }
@@ -1629,7 +1629,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                                     newParentId, ga, null, false);
 
                     // we have to deassociate the old parent
-                    if (currentParentId != null) {
+                    if (null != currentParentId) {
                         deleteOldParentAssociation = true;
                     }
                 }
@@ -1637,14 +1637,14 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 else if (!newParentId.equals(currentParentId)) {
                     // new parent is a tracker item
                     // we have to deassociate the old parent
-                    if (currentParentId != null) {
+                    if (null != currentParentId) {
                         deleteOldParentAssociation = true;
                     }
                     associateWithParent = true;
                     // we have to change the planning folder if there was no
                     // special value requested for this
                     if (connection.supports53()
-                            && (planningFolder == null || !planningFolder
+                            && (null == planningFolder || !planningFolder
                                     .getFieldValueHasChanged())) {
                         ArtifactDO parentArtifact = trackerHandler
                                 .getTrackerItem(connection, newParentId);
@@ -1694,7 +1694,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                             isReleaseIdFieldsContainFileReleasePackageName() ? getPackageReleaseSeparatorString()
                                     : null);
 
-            if (result != null) {
+            if (null != result) {
                 log.info("Artifact " + id + " is updated successfully");
             }
         } catch (RemoteException e) {
@@ -1760,10 +1760,10 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                         TFArtifactMetaData.TFFields.startDate.getFieldName(),
                         ga);
 
-        if (startDateField != null && startDateField.getFieldValueHasChanged()) {
+        if (null != startDateField && startDateField.getFieldValueHasChanged()) {
             GregorianCalendar gc = (GregorianCalendar) startDateField
                     .getFieldValue();
-            if (gc != null) {
+            if (null != gc) {
                 Date dateValue = gc.getTime();
                 if (DateUtil.isAbsoluteDateInTimezone(dateValue, "GMT")) {
                     startDateField.setFieldValue(DateUtil
@@ -1779,10 +1779,10 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                 .getMandatoryGAField(
                         TFArtifactMetaData.TFFields.endDate.getFieldName(), ga);
 
-        if (endDateField != null && endDateField.getFieldValueHasChanged()) {
+        if (null != endDateField && endDateField.getFieldValueHasChanged()) {
             GregorianCalendar gc = (GregorianCalendar) endDateField
                     .getFieldValue();
-            if (gc != null) {
+            if (null != gc) {
                 Date dateValue = gc.getTime();
                 if (DateUtil.isAbsoluteDateInTimezone(dateValue, "GMT")) {
                     endDateField.setFieldValue(DateUtil
@@ -1808,32 +1808,32 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                     return null;
                 }
 
-                if (title != null && title.getFieldValueHasChanged()) {
+                if (null != title && title.getFieldValueHasChanged()) {
                     planningFolder.setTitle((String) title.getFieldValue());
                 }
-                if (description != null
+                if (null != description
                         && description.getFieldValueHasChanged()) {
                     planningFolder.setDescription((String) description
                             .getFieldValue());
                 }
-                if (startDateField != null
+                if (null != startDateField
                         && startDateField.getFieldValueHasChanged()) {
                     planningFolder.setStartDate((Date) startDateField
                             .getFieldValue());
                 }
-                if (endDateField != null
+                if (null != endDateField
                         && endDateField.getFieldValueHasChanged()) {
                     planningFolder.setEndDate((Date) endDateField
                             .getFieldValue());
                 }
 
-                if (statusField != null
+                if (null != statusField
                         && statusField.getFieldValueHasChanged()) {
                     planningFolder.setStatus((String) statusField
                             .getFieldValue());
                 }
 
-                if (releaseIdField != null
+                if (null != releaseIdField
                         && releaseIdField.getFieldValueHasChanged()) {
                     String releaseId = (String) releaseIdField.getFieldValue();
                     if (translateTechnicalReleaseIds) {
@@ -1849,7 +1849,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                     planningFolder.setReleaseId(releaseId);
                 }
 
-                if (capacityField != null
+                if (null != capacityField
                         && capacityField.getFieldValueHasChanged()) {
                     Object fieldValueObj = capacityField.getFieldValue();
                     int fieldValue = 0;
@@ -1869,7 +1869,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
 
                 }
 
-                if (pointsCapacityField != null
+                if (null != pointsCapacityField
                         && pointsCapacityField.getFieldValueHasChanged()) {
                     Object fieldValueObj = pointsCapacityField.getFieldValue();
                     int fieldValue = 0;
@@ -1887,7 +1887,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
                     }
                     planningFolder.setPointsCapacity(fieldValue);
 
-                    if (trackerUnitIdField != null
+                    if (null != trackerUnitIdField
                             && trackerUnitIdField.getFieldValueHasChanged()) {
                         String trackerUnitId = (String) trackerUnitIdField
                                 .getFieldValue();
@@ -1921,7 +1921,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
         // now we have to cope with moving planning folders around
         String parentArtifactId = ga.getDepParentTargetArtifactId();
         // first of all, if parent is unknown or null, we do not change anything
-        if (parentArtifactId != null
+        if (null != parentArtifactId
                 && !parentArtifactId.equals(GenericArtifact.VALUE_UNKNOWN)) {
             // check for the special case this is a top level PF
             if (parentArtifactId.equals(GenericArtifact.VALUE_NONE)) {
@@ -1961,11 +1961,11 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
             String fieldName = genericArtifactField.getFieldName();
             Object fieldValue = genericArtifactField.getFieldValue();
             SortedSet<String> values = fieldsToBeChanged.get(fieldName);
-            if (values == null) {
+            if (null == values) {
                 values = new TreeSet<String>();
                 fieldsToBeChanged.put(fieldName, values);
             }
-            if (fieldValue != null) {
+            if (null != fieldValue) {
                 values.add(fieldValue.toString());
             }
         }
@@ -1980,7 +1980,7 @@ public class TFWriter extends AbstractWriter<Connection> implements IDataProcess
             ga.setErrorCode(GenericArtifact.ERROR_META_DATA_WRITE);
             throw new CCFRuntimeException(cause, e);
         }
-        if (result != null) {
+        if (null != result) {
             log.info("Successfully updated meta data of tracker "
                     + result.getId());
         }

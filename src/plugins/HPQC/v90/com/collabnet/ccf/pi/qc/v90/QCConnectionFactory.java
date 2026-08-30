@@ -66,11 +66,11 @@ public class QCConnectionFactory implements ConnectionFactory<IConnection> {
             throws ConnectionException {
         String domain = null;
         String project = null;
-        if (repositoryId != null) {
+        if (null != repositoryId) {
             String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-            if (splitRepoId != null) {
+            if (null != splitRepoId) {
                 // we now also accept a double hyphen to synchronize requirement types as well
-                if (splitRepoId.length == 2 || splitRepoId.length == 3) {
+                if (2 == splitRepoId.length || 3 == splitRepoId.length) {
                     domain = splitRepoId[0];
                     project = splitRepoId[1];
                 } else {
@@ -84,18 +84,18 @@ public class QCConnectionFactory implements ConnectionFactory<IConnection> {
 
         String username = null;
         String password = null;
-        if (credentialInfo != null) {
+        if (null != credentialInfo) {
             String[] splitCredentials = credentialInfo.split(PARAM_DELIMITER);
-            if (splitCredentials != null) {
-                if (splitCredentials.length == 1) {
+            if (null != splitCredentials) {
+                if (1 == splitCredentials.length) {
                     username = splitCredentials[0];
                     password = "";
-                } else if (splitCredentials.length == 2) {
+                } else if (2 == splitCredentials.length) {
                     username = splitCredentials[0];
                     // this will also work if password ends with hyphen(s)
                     password = credentialInfo.substring(credentialInfo
                             .indexOf(PARAM_DELIMITER) + 1);
-                } else if (splitCredentials.length > 2) {
+                } else if (2 < splitCredentials.length) {
                     username = splitCredentials[0];
                     password = credentialInfo.substring(credentialInfo
                             .indexOf(PARAM_DELIMITER) + 1);
@@ -125,12 +125,12 @@ public class QCConnectionFactory implements ConnectionFactory<IConnection> {
      * @return informal requirements type
      */
     public static String extractInformalRequirementsType(String repositoryId) {
-        if (repositoryId != null) {
+        if (null != repositoryId) {
             // we have to extract the requirements type now
             String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-            if (splitRepoId != null) {
+            if (null != splitRepoId) {
                 // we now also accept a double hyphen to synchronize requirement types as well
-                if (splitRepoId.length == 3) {
+                if (3 == splitRepoId.length) {
                     return splitRepoId[2];
                 } else {
                     throw new IllegalArgumentException("Repository Id "
@@ -161,12 +161,12 @@ public class QCConnectionFactory implements ConnectionFactory<IConnection> {
         // first lookup the map
         String requirementsType = repositoryIdToTechnicalRequirementsTypeIdMap
                 .get(repositoryId);
-        if (requirementsType == null) {
+        if (null == requirementsType) {
             // we have to extract the requirements type now
             String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-            if (splitRepoId != null) {
+            if (null != splitRepoId) {
                 // we now also accept a double hyphen to synchronize requirement types as well
-                if (splitRepoId.length == 3) {
+                if (3 == splitRepoId.length) {
                     requirementsType = splitRepoId[2];
                     if (QCHandler.REQUIREMENT_TYPE_ALL.equals(requirementsType)) {
                         //if requirementsType is "ALL" we cache it and return it
@@ -206,8 +206,8 @@ public class QCConnectionFactory implements ConnectionFactory<IConnection> {
     public static String generateDependentRepositoryId(String repositoryId,
             String dependentRequirementsType) {
         String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-        if (splitRepoId != null) {
-            if (splitRepoId.length == 3) {
+        if (null != splitRepoId) {
+            if (3 == splitRepoId.length) {
                 String domain = splitRepoId[0];
                 String project = splitRepoId[1];
                 return domain + PARAM_DELIMITER + project + PARAM_DELIMITER
@@ -231,11 +231,11 @@ public class QCConnectionFactory implements ConnectionFactory<IConnection> {
      */
     public static boolean isDefectRepository(String repositoryId) {
         String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-        if (splitRepoId != null) {
+        if (null != splitRepoId) {
             // we now also accept a double hyphen to synchronize requirement types as well
-            if (splitRepoId.length == 2) {
+            if (2 == splitRepoId.length) {
                 return true;
-            } else if (splitRepoId.length == 3) {
+            } else if (3 == splitRepoId.length) {
                 return false;
             } else {
                 throw new IllegalArgumentException("Repository Id "

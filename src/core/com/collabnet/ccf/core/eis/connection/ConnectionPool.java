@@ -190,7 +190,7 @@ public class ConnectionPool<T> {
             String repositoryId, String repositoryKind, String connectionInfo,
             String credentialInfo, ConnectionManager<T> connectionManager)
             throws MaxConnectionsReachedException, ConnectionException {
-        if (factory == null) {
+        if (null == factory) {
             throw new IllegalArgumentException("Connection Factory is not set");
         }
         // always clean up connection pool before we request free connections
@@ -198,7 +198,7 @@ public class ConnectionPool<T> {
         log.debug("Requesting a free connection");
         T connection = getFreeConnectionForKey(systemId, systemKind,
                 repositoryId, repositoryKind, connectionInfo, credentialInfo);
-        if (connection == null) {
+        if (null == connection) {
             log.debug("No free connection... Creating a connection");
             connection = createConnection(systemId, systemKind, repositoryId,
                     repositoryKind, connectionInfo, credentialInfo,
@@ -253,7 +253,7 @@ public class ConnectionPool<T> {
      */
     public void releaseConnection(T connection) {
         ConnectionInfo info = reversePoolMap.get(connection);
-        if (info != null) {
+        if (null != info) {
             String key = info.getKey();
             ArrayList<ConnectionInfo> connectionInfos = connectionPool.get(key);
             log.debug("Returning connection to pool...!");
@@ -369,7 +369,7 @@ public class ConnectionPool<T> {
     private void addToPool(String key, ConnectionInfo info) {
         ArrayList<ConnectionInfo> connections = connectionPool.get(key);
         synchronized (this) {
-            if (connections == null) {
+            if (null == connections) {
                 connections = new ArrayList<ConnectionInfo>();
                 connectionPool.put(key, connections);
             }
@@ -477,7 +477,7 @@ public class ConnectionPool<T> {
                 repositoryKind, connectionInfo, credentialInfo);
         T connection = null;
         ArrayList<ConnectionInfo> connectionInfos = connectionPool.get(key);
-        if (connectionInfos != null) {
+        if (null != connectionInfos) {
             synchronized (connectionInfos) {
                 for (ConnectionInfo info : connectionInfos) {
                     boolean isConnectionFree = info.isFree();
@@ -530,7 +530,7 @@ public class ConnectionPool<T> {
      */
     private boolean isPoolReachedMaxConnections(String key) {
         ArrayList<ConnectionInfo> connections = connectionPool.get(key);
-        if (connections != null) {
+        if (null != connections) {
             synchronized (connections) {
                 int connectionsCount = connections.size();
                 if (connectionsCount < maxConnectionsPerPool) {

@@ -42,7 +42,7 @@ public class HospitalFilter extends ScriptProcessor implements IDataProcessor {
     public Object[] process(Object input) {
         Object[] scriptResult = super.process(input);
         Object result = getLastResult();
-        if (result != null && result instanceof Boolean
+        if (null != result && result instanceof Boolean
                 && ((Boolean) result).booleanValue()) {
             return scriptResult;
         } else {

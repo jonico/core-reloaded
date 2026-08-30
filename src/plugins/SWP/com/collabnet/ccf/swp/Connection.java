@@ -70,13 +70,13 @@ public class Connection {
             String connectionInfo, String credentialInfo,
             ConnectionManager<Connection> connectionManager)
             throws ServiceException, MalformedURLException {
-        if (credentialInfo != null) {
+        if (null != credentialInfo) {
             String[] splitCredentials = credentialInfo.split(PARAM_DELIMITER);
-            if (splitCredentials != null) {
-                if (splitCredentials.length == 1) {
+            if (null != splitCredentials) {
+                if (1 == splitCredentials.length) {
                     username = splitCredentials[0];
                     password = "";
-                } else if (splitCredentials.length == 2) {
+                } else if (2 == splitCredentials.length) {
                     username = splitCredentials[0];
                     password = splitCredentials[1];
                 } else {

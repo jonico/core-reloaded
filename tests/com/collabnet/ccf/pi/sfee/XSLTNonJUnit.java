@@ -81,12 +81,12 @@ public class XSLTNonJUnit {
     }
 
     private static void loadXSLT() {
-        if (xsltFile == null)
+        if (null == xsltFile)
             throw new RuntimeException("xsltFile property not set");
 
         // if the file doesn't exist try to get it via the classpath
         URL url = FileUtils.toURL(xsltFile);
-        if (url == null)
+        if (null == url)
             throw new RuntimeException("File not found: " + xsltFile);
 
         // load the transform
