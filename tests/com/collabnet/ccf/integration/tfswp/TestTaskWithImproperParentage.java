@@ -1,10 +1,10 @@
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.teamforge.api.FieldValues;
 import com.collabnet.teamforge.api.tracker.ArtifactDO;
@@ -43,7 +43,7 @@ public class TestTaskWithImproperParentage extends TFSWPIntegrationTest {
     Task                scrumWorksChildTask;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         final String parentTaskTitle = "parent task";
         final String childTaskTitle = "child task";

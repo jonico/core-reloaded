@@ -23,16 +23,16 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
-import junit.framework.TestCase;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.io.DocumentResult;
 import org.dom4j.io.DocumentSource;
 import org.openadaptor.util.FileUtils;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class XSLTNonJUnit extends TestCase {
+public class XSLTNonJUnit {
     private static String      xsltFile = "C:/madhu-work/CCF/svn/ccf-qc/samples/QC-PT/bidirectionalMirroring/xslt/cu023+mseethar-test+10_2_1_114+QC_PLUGIN_TESTING-PRJ_4.xsl";
     private static String      xmlFile  = "C:/madhu-work/CCF/svn/ccf/temp.xml";
     private static Transformer transform;

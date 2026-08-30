@@ -14,8 +14,6 @@ package com.collabnet.ccf.pi.sfee.v44;
 import java.rmi.RemoteException;
 import java.util.Date;
 
-import junit.framework.TestCase;
-
 import com.collabnet.ccf.core.eis.connection.ConnectionException;
 import com.collabnet.ccf.core.eis.connection.ConnectionManager;
 import com.collabnet.ccf.core.eis.connection.MaxConnectionsReachedException;
@@ -31,8 +29,12 @@ import com.vasoftware.sf.soap44.webservices.sfmain.ISourceForgeSoap;
 import com.vasoftware.sf.soap44.webservices.tracker.ArtifactDetailSoapRow;
 import com.vasoftware.sf.soap44.webservices.tracker.ArtifactSoapDO;
 import com.vasoftware.sf.soap44.webservices.tracker.ITrackerAppSoap;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SFEEReaderTest extends TestCase {
+public class SFEEReaderTest {
     SFEEReader     sfeeReader = null;
     String         username   = "mseethar";
     String         password   = "password";
@@ -124,8 +126,8 @@ public class SFEEReaderTest extends TestCase {
         }
     }
 
+    @BeforeEach
     public void setUp() throws Exception {
-        super.setUp();
         systemKind = "kind";
         credentialInfo = username + SFEEConnectionFactory.PARAM_DELIMITER
                 + password;
@@ -145,10 +147,11 @@ public class SFEEReaderTest extends TestCase {
         sfeeReader.validate(null);
     }
 
+    @AfterEach
     public void tearDown() throws Exception {
-        super.tearDown();
     }
 
+    @Test
     public void testArtfactRetreival() throws RemoteException,
             MaxConnectionsReachedException, ConnectionException {
         repositoryId = "tracker1215";

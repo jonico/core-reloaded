@@ -1,8 +1,8 @@
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.rmi.RemoteException;
 import java.util.Calendar;
@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.teamforge.api.planning.PlanningFolderDO;
 import com.collabnet.teamforge.api.planning.PlanningFolderRow;
@@ -34,12 +34,12 @@ public class TestScrumWorksCreateUpdateAndDeleteReleaseInTeamForge extends TFSWP
     /**
      * Creates a backlog item.
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws ScrumWorksException, RemoteException {
         if (swpRelease != null) {
             getSWPTester().getSWPEndpoint().deleteEmptyRelease(

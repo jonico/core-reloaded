@@ -1,15 +1,15 @@
 package com.collabnet.ccf.integration.tfswp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.teamforge.api.FieldValues;
 import com.collabnet.teamforge.api.tracker.ArtifactDO;
@@ -34,7 +34,7 @@ public class TestTeamForgeUpdateBacklogItemInScrumWorks extends TFSWPIntegration
     /**
      * Creates a backlog item.
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         final String title = "TFPBI";
         final String description = "TFPBIDescription";
@@ -136,7 +136,6 @@ public class TestTeamForgeUpdateBacklogItemInScrumWorks extends TFSWPIntegration
         // verify 
         BacklogItem doneDateUpdatedPbi = getSWPTester()
                 .waitForBacklogItemToUpdate(revisedTitle);
-        assertNotNull("Done date should have been set",
-                doneDateUpdatedPbi.getCompletedDate());
+        assertNotNull(doneDateUpdatedPbi.getCompletedDate(), "Done date should have been set");
     }
 }

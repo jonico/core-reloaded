@@ -3,9 +3,9 @@ package com.collabnet.ccf.core.rmdhandlers;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Assert;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.collabnet.ccf.core.db.RMDConfigDBExtractor;
 
@@ -16,17 +16,17 @@ public class RMDFilterHandlerTest {
     @Test
     public void test11Values() {
         RMDFilterHandler filterHandler = getFilterHandler("values:artf1234");
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "testValue"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "testValue"));
 
     }
 
     @Test
     public void test12CommaSeperatedForValues() {
         RMDFilterHandler filterHandler = getFilterHandler("values:artf111,artf1234");
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf111"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "testValue"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf111"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "testValue"));
 
     }
 
@@ -45,26 +45,26 @@ public class RMDFilterHandlerTest {
     @Test
     public void test15NullForValues() {
         RMDFilterHandler filterHandler = getFilterHandler(null);
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234")); //containsId returns true if filter is not enabled
-        Assert.assertTrue(filterHandler.containsId(rmdID, ""));//containsId returns true if filter is not enabled
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234")); //containsId returns true if filter is not enabled
+        Assertions.assertTrue(filterHandler.containsId(rmdID, ""));//containsId returns true if filter is not enabled
 
     }
 
     @Test
     public void test20Regex() {
         RMDFilterHandler filterHandler = getFilterHandler("regex:^artf123.$");
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1235"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "artf12345"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "testValue"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1235"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "artf12345"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "testValue"));
 
     }
 
     @Test
     public void test21RegexWithMistake() {
         RMDFilterHandler filterHandler = getFilterHandler("regex:^artf123.+*$");
-        Assert.assertFalse(filterHandler.containsId(rmdID, "artf1234"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "testValue"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "testValue"));
 
     }
 
@@ -78,22 +78,22 @@ public class RMDFilterHandlerTest {
     public void test30Ranges() {
         RMDFilterHandler filterHandler = getFilterHandler("ranges:jira-1234$jira-1237");
         filterHandler.setRangeSeperator("$");
-        Assert.assertTrue(filterHandler.containsId(rmdID, "jira-1234"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "jira-1235"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "jira-1236"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "jira-1237"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "testValue"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "jira-1234"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "jira-1235"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "jira-1236"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "jira-1237"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "testValue"));
 
     }
 
     @Test
     public void test31Ranges() {
         RMDFilterHandler filterHandler = getFilterHandler("ranges:artf111-artf1234");
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf112"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1230"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf111"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "testValue"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf112"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1230"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf111"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "testValue"));
 
     }
 
@@ -106,33 +106,33 @@ public class RMDFilterHandlerTest {
     @Test
     public void test33MisMatchQueryForRanges() {
         RMDFilterHandler filterHandler = getFilterHandler("ranges:artf1234-abc1235");
-        Assert.assertFalse(filterHandler.containsId(rmdID, "artf1234"));
-        Assert.assertFalse(filterHandler.containsId(rmdID, "abc1235"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertFalse(filterHandler.containsId(rmdID, "abc1235"));
     }
 
     @Test
     public void test33RangeSeperatorAsQueryRanges() {
         RMDFilterHandler filterHandler = getFilterHandler("ranges: - ");
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
     }
 
     @Test
     public void test40HospitalOnly() {
         RMDFilterHandler filterHandler = getFilterHandler("ignoreOrdinaryArtifactUpdates");
-        Assert.assertTrue(filterHandler.ignoreOrdinaryArtifactUpdates(rmdID));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertTrue(filterHandler.ignoreOrdinaryArtifactUpdates(rmdID));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
     }
 
     @Test
     public void test41NullForHospitalOnly() {
         RMDFilterHandler filterHandler = getFilterHandler(null);
-        Assert.assertFalse(filterHandler.ignoreOrdinaryArtifactUpdates(rmdID));
+        Assertions.assertFalse(filterHandler.ignoreOrdinaryArtifactUpdates(rmdID));
     }
 
     @Test
     public void test42EmptyForHospitalOnly() {
         RMDFilterHandler filterHandler = getFilterHandler("");
-        Assert.assertFalse(filterHandler.ignoreOrdinaryArtifactUpdates(rmdID));
+        Assertions.assertFalse(filterHandler.ignoreOrdinaryArtifactUpdates(rmdID));
     }
 
     @Test
@@ -183,7 +183,7 @@ public class RMDFilterHandlerTest {
     }
 
     private void validateAssert(RMDFilterHandler filterHandler) {
-        Assert.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
-        Assert.assertTrue(filterHandler.containsId(rmdID, "testValue"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "artf1234"));
+        Assertions.assertTrue(filterHandler.containsId(rmdID, "testValue"));
     }
 }
