@@ -740,7 +740,8 @@ public class DynamicXsltProcessor extends Component implements IDataProcessor {
         XPath xpath = buildXpath(xslt, functionCall);
         @SuppressWarnings("unchecked")
         // jaxen doesn't do generics
-        List<Element> nodes = xpath.selectNodes(xslt);
+        // dom4j 2.x narrowed XPath.selectNodes() from raw List to List<Node>
+        List<Element> nodes = (List<Element>) (List<?>) xpath.selectNodes(xslt);
         return nodes;
     }
 }
